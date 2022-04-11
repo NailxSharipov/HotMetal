@@ -7,18 +7,23 @@
 
 import Metal
 
-public final class SpriteMaterial {
+public final class SpriteMaterial: Material {
 
-    public let renderPipelineState: MTLRenderPipelineState
-    public let texture: Texture
+    private let renderPipelineState: MTLRenderPipelineState
+    private let texture: Texture
+    private let cullMode: MTLCullMode
     
     public init(
         render: Render,
         vertexName: String,
         fragmentName: String,
-        texture: Texture
+        texture: Texture,
+        cullMode: MTLCullMode = .back
     ) {
         self.texture = texture
+        self.cullMode = cullMode
+        
+        let bufferIndex = Render.firstFreeVertexBufferIndex
         
         let pipelineDescriptor = render.defaultPipelineDescriptor()
         let fragmentProgram = render.library.makeFunction(name: fragmentName)
@@ -26,14 +31,17 @@ public final class SpriteMaterial {
       
         let vertexDescriptor = MTLVertexDescriptor()
         
+        // position x,y
         vertexDescriptor.attributes[0].format = .float2
-        vertexDescriptor.attributes[0].bufferIndex = Render.firstFreeVertexBufferIndex
+        vertexDescriptor.attributes[0].bufferIndex = bufferIndex
         vertexDescriptor.attributes[0].offset = 0
-        vertexDescriptor.layouts[0].stride = MemoryLayout<Vertex2>.stride
-        
+
+        // texture u,v
         vertexDescriptor.attributes[1].format = .float2
-        vertexDescriptor.attributes[1].bufferIndex = Render.firstFreeVertexBufferIndex
-        vertexDescriptor.attributes[1].offset = MemoryLayout<UV>.stride
+        vertexDescriptor.attributes[1].bufferIndex = bufferIndex
+        vertexDescriptor.attributes[1].offset = MemoryLayout<Vertex2>.stride
+
+        vertexDescriptor.layouts[0].stride = 2 * MemoryLayout<Vertex2>.stride
         
         pipelineDescriptor.vertexFunction = vertexProgram
         pipelineDescriptor.fragmentFunction = fragmentProgram
@@ -41,6 +49,16 @@ public final class SpriteMaterial {
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
 
         self.renderPipelineState = try! render.device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+    }
+    
+    public override func install(encoder: MTLRenderCommandEncoder) {
+        
+        encoder.setCullMode(cullMode)
+        
+        encoder.setFragmentTexture(texture.mltTexture, index: 0)
+        encoder.setFragmentSamplerState(texture.sampler, index: 0)
+        
+        encoder.setRenderPipelineState(renderPipelineState)
     }
     
 }

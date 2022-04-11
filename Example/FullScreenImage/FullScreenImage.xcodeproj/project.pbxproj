@@ -23,6 +23,8 @@
 		54DE0090280437650014F64B /* MeshBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE008E280437650014F64B /* MeshBuilder.swift */; };
 		54DE009628043C720014F64B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54DE009528043C720014F64B /* Shaders.metal */; };
 		54DE009728043C720014F64B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54DE009528043C720014F64B /* Shaders.metal */; };
+		54DE009928048F650014F64B /* ImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE009828048F650014F64B /* ImageNode.swift */; };
+		54DE009A28048F650014F64B /* ImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE009828048F650014F64B /* ImageNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,7 @@
 		54DE008B280437430014F64B /* ImageScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScene.swift; sourceTree = "<group>"; };
 		54DE008E280437650014F64B /* MeshBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshBuilder.swift; sourceTree = "<group>"; };
 		54DE009528043C720014F64B /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		54DE009828048F650014F64B /* ImageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +65,6 @@
 		54DE005D280428580014F64B = {
 			isa = PBXGroup;
 			children = (
-				54DE009528043C720014F64B /* Shaders.metal */,
 				54DE0081280428810014F64B /* Packages */,
 				54DE0062280428580014F64B /* Shared */,
 				54DE00712804285A0014F64B /* macOS */,
@@ -78,6 +80,7 @@
 				54DE0063280428580014F64B /* FullScreenImageApp.swift */,
 				54DE0064280428580014F64B /* ContentView.swift */,
 				54DE0088280433390014F64B /* ContentView+ViewModel.swift */,
+				54DE009528043C720014F64B /* Shaders.metal */,
 				54DE0065280428590014F64B /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -120,6 +123,7 @@
 			children = (
 				54DE008B280437430014F64B /* ImageScene.swift */,
 				54DE008E280437650014F64B /* MeshBuilder.swift */,
+				54DE009828048F650014F64B /* ImageNode.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -228,6 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54DE009928048F650014F64B /* ImageNode.swift in Sources */,
 				54DE009628043C720014F64B /* Shaders.metal in Sources */,
 				54DE008C280437430014F64B /* ImageScene.swift in Sources */,
 				54DE008F280437650014F64B /* MeshBuilder.swift in Sources */,
@@ -241,6 +246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54DE009A28048F650014F64B /* ImageNode.swift in Sources */,
 				54DE009728043C720014F64B /* Shaders.metal in Sources */,
 				54DE008D280437430014F64B /* ImageScene.swift in Sources */,
 				54DE0090280437650014F64B /* MeshBuilder.swift in Sources */,

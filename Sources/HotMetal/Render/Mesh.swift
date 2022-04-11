@@ -7,7 +7,7 @@
 
 import MetalKit
 
-public struct Mesh {
+public final class Mesh {
     
     public let vertexBuffer: MTLBuffer
     public let indexBuffer: MTLBuffer
@@ -17,6 +17,11 @@ public struct Mesh {
         self.vertexBuffer = vertexBuffer
         self.indexBuffer = indexBuffer
         self.count = count
+    }
+    
+    func draw(context: DrawContext) {
+        context.encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        context.encoder.drawIndexedPrimitives(type: .triangle, indexCount: count, indexType: .uint16, indexBuffer: indexBuffer, indexBufferOffset: 0)
     }
     
 }

@@ -13,14 +13,15 @@ final class ImageScene {
     private let meshBuilder = MeshBuilder()
     private var imageSize: CGSize = .zero
     private var material: SpriteMaterial?
+    private let node = ImageNode()
     
     let clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
     
     func set(render: Render, image: CGImage) {
-        let texture = render.loadTexture(image: image)
+        let texture = render.loadTexture(image: image, mipmaps: false)
         self.imageSize = image.size
         
-        self.material = SpriteMaterial(
+        node.material = SpriteMaterial(
             render: render,
             vertexName: "vertexShader",
             fragmentName: "fragmentShader",
@@ -32,24 +33,15 @@ final class ImageScene {
 
 extension ImageScene: Renderable {
     
-    func draw(render: Render, encoder: MTLRenderCommandEncoder) {
-        guard let material = self.material else { return }
-        guard let mesh = meshBuilder.mesh(device: render.device) else {
-            return
-        }
-
-        encoder.setRenderPipelineState(material.renderPipelineState)
-        encoder.setVertexBuffer(mesh.vertexBuffer, offset: 0, index: 0)
-        
-//        encoder.setFragmentTexture(texture, index: 0)
-//        encoder.setFragmentSamplerState(sampler, index: 0)
-
-        encoder.drawIndexedPrimitives(type: .triangle, indexCount: mesh.count, indexType: .uint16, indexBuffer: mesh.indexBuffer, indexBufferOffset: 0)
+    func draw(context: DrawContext) {
+        node.draw(context: context)
     }
     
-    func drawableSizeWillChange(_ view: MTKView, size: CGSize) {
-        meshBuilder.viewSize = view.bounds.size
-        meshBuilder.cropRect = CGRect(origin: .zero, size: imageSize)
+    func drawableSizeWillChange(_ view: MTKView, render: Render, size: CGSize) {
+        let viewSize = view.bounds.size
+        let cropRect = CGRect(origin: .zero, size: imageSize)
+        
+        node.update(device: render.device, viewSize: viewSize, cropRect: cropRect)
     }
 
 }

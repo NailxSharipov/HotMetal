@@ -7,6 +7,16 @@
 
 import Metal
 
-public struct Material {
-    public let renderPipelineState: MTLRenderPipelineState
+open class Material: Equatable {
+
+    let id = UUID()
+    
+    func install(encoder: MTLRenderCommandEncoder) {
+        assertionFailure("Not implemented")
+    }
+    
+    public static func == (lhs: Material, rhs: Material) -> Bool {
+        lhs.id == rhs.id
+    }
+    
 }

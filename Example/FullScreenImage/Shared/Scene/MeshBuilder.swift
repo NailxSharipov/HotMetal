@@ -43,17 +43,17 @@ extension MeshBuilder {
         let a = Float(wdWidth) - 0.01
         let b = Float(wdHeight) - 0.01
         
-        let points: [Vertex2] = [
-            .init(x: -a, y: -b),
-            .init(x: -a, y: b),
-            .init(x:  a, y: b),
-            .init(x:  a, y: -b)
+        let vertices: [TVertex2] = [
+            .init(vertex: .init(x: -a, y: -b), uv: .init(x: 0, y: 1)),
+            .init(vertex: .init(x: -a, y:  b), uv: .init(x: 0, y: 0)),
+            .init(vertex: .init(x:  a, y:  b), uv: .init(x: 1, y: 0)),
+            .init(vertex: .init(x:  a, y: -b), uv: .init(x: 1, y: 1))
         ]
-        
+
         let indices: [UInt16] = [0, 1, 2, 0, 2, 3]
         
-        let vertexSize = points.count * MemoryLayout.size(ofValue: points[0])
-        guard let vertexBuffer = device.makeBuffer(bytes: points, length: vertexSize, options: [.cpuCacheModeWriteCombined]) else {
+        let vertexSize = vertices.count * MemoryLayout.size(ofValue: vertices[0])
+        guard let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertexSize, options: [.cpuCacheModeWriteCombined]) else {
             return nil
         }
 

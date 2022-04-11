@@ -11,8 +11,8 @@ public protocol Renderable {
 
     var clearColor: MTLClearColor { get }
     
-    func draw(render: Render, encoder: MTLRenderCommandEncoder)
+    func draw(context: DrawContext)
     
-    func drawableSizeWillChange(_ view: MTKView, size: CGSize)
+    func drawableSizeWillChange(_ view: MTKView, render: Render, size: CGSize)
     
 }

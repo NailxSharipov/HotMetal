@@ -9,7 +9,7 @@ import MetalKit
 
 public extension Render {
  
-    public func loadTexture(
+    func loadTexture(
         image: CGImage,
         samplerDescriptor: MTLSamplerDescriptor = .linear,
         mipmaps: Bool = true
@@ -26,7 +26,7 @@ public extension Render {
         return Texture(mltTexture: mltTexture, sampler: sampler)
     }
 
-    public func loadTexture(
+    func loadTexture(
         name: String,
         samplerDescriptor: MTLSamplerDescriptor = .linear,
         mipmaps: Bool = true

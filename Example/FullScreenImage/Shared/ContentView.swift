@@ -23,18 +23,6 @@ struct ContentView: View {
         }
     }
 }
-//MetalView(image: UIImage(named: "Tailand")!.cgImage!)
-//#elseif os(macOS)
-//struct ContentView: View {
-//    var body: some View {
-//        ZStack {
-//            Color.yellow
-//            MetalView(image: NSImage(named: "Tailand")!.cgImage(forProposedRect: nil, context: nil, hints: nil)!)
-//        }
-//    }
-//}
-//#endif
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
