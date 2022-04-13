@@ -13,7 +13,8 @@ public final class Render: NSObject {
     public static let firstFreeVertexBufferIndex = 2
     
     public let device: MTLDevice
-    public let library: Material.Library
+    public let materialLibrary: Material.Library
+    public let textureLibrary: Texture.Library
     public let commandQueue: MTLCommandQueue
     public var scene: Scene?
     
@@ -31,7 +32,8 @@ public final class Render: NSObject {
         self.onReady = onReady
         
         self.device = MTLCreateSystemDefaultDevice()!
-        self.library = Material.Library(device: self.device)
+        self.materialLibrary = Material.Library(device: self.device)
+        self.textureLibrary = Texture.Library(device: self.device)
 
         self.commandQueue = device.makeCommandQueue()!
 
@@ -52,7 +54,7 @@ public final class Render: NSObject {
         
         super.init()
         
-        self.library.render = self
+        self.materialLibrary.render = self
     }
     
     public func attach(view: MTKView) {

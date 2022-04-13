@@ -1,18 +1,17 @@
 //
-//  Material+Color.swift
-//  
+//  Material+Sprite.swift
+//  HotMetal
 //
-//  Created by Nail Sharipov on 13.04.2022.
+//  Created by Nail Sharipov on 11.04.2022.
 //
 
 import Metal
 
-extension Material {
+public extension Material {
 
-    static func color(render: Render, blendMode: BlendMode) -> MTLRenderPipelineState {
-
+    static func texture(render: Render, blendMode: BlendMode) -> MTLRenderPipelineState {
         let bufferIndex = Render.firstFreeVertexBufferIndex
-        
+      
         let vertexDescriptor = MTLVertexDescriptor()
         
         // position x,y,z
@@ -27,26 +26,31 @@ extension Material {
         vertexDescriptor.attributes[1].bufferIndex = bufferIndex
         vertexDescriptor.attributes[1].offset = size
         size += 4 * MemoryLayout<Float>.stride
+        
+        // texture u,v
+        vertexDescriptor.attributes[2].format = .float2
+        vertexDescriptor.attributes[2].bufferIndex = bufferIndex
+        vertexDescriptor.attributes[2].offset = size
+        size += 2 * MemoryLayout<Float>.stride
 
         vertexDescriptor.layouts[bufferIndex].stride = size
 
         let descriptor = render.defaultPipelineDescriptor()
-
         if let colorAttachment = descriptor.colorAttachments[0] {
             colorAttachment.set(blendMode: blendMode)
         }
 
-        let fragmentProgram = render.materialLibrary.load(.framework("fragmentColor"))
-        let vertexProgram = render.materialLibrary.load(.framework("vertexColor"))
+        let vertexProgram = render.materialLibrary.load(.framework("vertexTexture"))
+        let fragmentProgram = render.materialLibrary.load(.framework("fragmentTexture"))
         
         descriptor.vertexFunction = vertexProgram
         descriptor.fragmentFunction = fragmentProgram
         descriptor.vertexDescriptor = vertexDescriptor
-        
+
         let state = (try? render.device.makeRenderPipelineState(descriptor: descriptor))!
 
         return state
     }
+
     
 }
-

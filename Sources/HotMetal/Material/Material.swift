@@ -7,20 +7,17 @@
 
 import Metal
 
-public struct Material: Hashable {
-
-    public let id: Int
+public final class Material: Hashable {
+    
+    public let id: UInt
     public var cullMode: MTLCullMode = .front
     public var isAffectDepthBuffer: Bool = true
+    public var textures: [Texture] = []
+    
     let state: MTLRenderPipelineState
 
-    init(id: Int, state: MTLRenderPipelineState) {
+    init(id: UInt, state: MTLRenderPipelineState) {
         self.id = id
-        self.state = state
-    }
-    
-    init(category: Library.Category, state: MTLRenderPipelineState) {
-        self.id = category.rawValue
         self.state = state
     }
     

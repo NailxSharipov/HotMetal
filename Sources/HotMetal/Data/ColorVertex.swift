@@ -9,7 +9,7 @@ import CoreGraphics
 
 public struct ColorVertex {
 
-    public var x, y, z : Float
+    public var x, y, z: Float
     public var r, g, b, a: Float
     
     public init(position: Vector3, color: Vector4) {

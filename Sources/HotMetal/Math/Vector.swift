@@ -8,20 +8,12 @@
 import CoreGraphics
 
 public typealias Vector2 = SIMD2<Float>
-public typealias Vector2UI = SIMD2<UInt32>
-public typealias Vector2I = SIMD2<Int>
 public typealias Vector3 = SIMD3<Float>
-public typealias Vector3I = SIMD3<Int>
 public typealias Vector4 = SIMD4<Float>
 
 extension Vector3 {
 
-    static let up = Vector3(Float(0), Float(1), Float(0))
-    
-    init(v: Vector3I) {
-        self.init(Float(v.x), Float(v.y), Float(v.z))
-    }
-
+ 
     init(v: Vector4) {
         self.init(x: v.x, y: v.y, z: v.z)
     }
@@ -35,7 +27,7 @@ extension Vector3 {
     }
 }
 
-extension Vector4 {
+public extension Vector4 {
 
     init(v: Vector3, w: Float) {
         self.init(x: v.x, y: v.y, z: v.z, w: w)

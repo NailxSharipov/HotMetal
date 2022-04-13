@@ -9,25 +9,25 @@ import CoreGraphics
 
 public struct TextureVertex {
 
-    public var x, y, z : Float
-    public var u, v: Float
+    public var x, y, z: Float
     public var r, g, b, a: Float
+    public var u, v: Float
     
-    public init(position: Vector3, uv: Vector2, color: Vector4) {
+    public init(position: Vector3, color: Vector4, uv: Vector2) {
         self.x = position.x
         self.y = position.y
         self.z = position.z
-
-        self.u = uv.x
-        self.v = uv.y
         
         self.r = color.x
         self.g = color.y
         self.b = color.z
         self.a = color.w
+        
+        self.u = uv.x
+        self.v = uv.y
     }
     
-    public init(position: Vector3, uv: Vector2, color: CGColor) {
-        self.init(position: position, uv: uv, color: Vector4(color))
+    public init(position: Vector3, color: CGColor, uv: Vector2) {
+        self.init(position: position, color: Vector4(color), uv: uv)
     }
 }

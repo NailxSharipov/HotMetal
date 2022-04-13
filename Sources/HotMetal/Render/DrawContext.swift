@@ -13,7 +13,7 @@ public final class DrawContext {
     let encoder: MTLRenderCommandEncoder
     var camera: Camera?
     
-    private var currentMaterialId: Int = -1
+    private var currentMaterialId: UInt?
     
     init(render: Render, encoder: MTLRenderCommandEncoder) {
         self.render = render
@@ -33,6 +33,15 @@ public final class DrawContext {
         }
         
         encoder.setCullMode(material.cullMode)
+        
+        if !material.textures.isEmpty {
+            for i in 0..<material.textures.count {
+                // TODO validate textures ID
+                let texture = material.textures[i]
+                encoder.setFragmentTexture(texture.mltTexture, index: i)
+                encoder.setFragmentSamplerState(texture.sampler, index: i)
+            }
+        }
     }
     
 }

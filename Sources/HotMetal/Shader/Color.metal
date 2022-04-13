@@ -20,6 +20,10 @@ struct VertexOut {
     float4 color;
 };
 
+struct FragmentOut {
+    float4 color0 [[color(0)]];
+};
+
 struct Uniforms {
     float time;
     float4x4 view;
@@ -30,10 +34,6 @@ struct Uniforms {
 struct ModelTransform {
     float4x4 modelMatrix;
     float4x4 inverseModelMatrix;
-};
-
-struct FragmentOut {
-    float4 color0 [[color(0)]];
 };
 
 vertex VertexOut vertexColor(

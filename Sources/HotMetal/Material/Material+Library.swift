@@ -19,13 +19,13 @@ public extension Material {
         public enum Category: Int {
             case solid
             case color
-            case sprite
+            case texture
         }
 
         unowned var render: Render!
         
-        private var customIndexId: Int = 100
-        private var store: [Int: Material] = [:]
+        private var nextId: UInt = 0
+        private var store: [UInt: Material] = [:]
         private let framework: MTLLibrary
         private let local: MTLLibrary?
 
@@ -50,43 +50,34 @@ public extension Material.Library {
         }
     }
     
-    func get(id: Int) -> Material? {
-        if let material = store[id] {
-            return material
-        }
-
-        guard let category = Category(rawValue: id) else {
-            return nil
-        }
-        
-        return self.get(category: category)
+    func get(id: UInt) -> Material? {
+        store[id]
     }
     
-    func get(category: Category) -> Material {
-        let id = category.rawValue
-        if let stored = store[id] {
-            return stored
-        }
-        
-        let material: Material
+    func register(category: Category, blendMode: Material.BlendMode) -> Material {
+        let id = nextId
+        nextId += 1
+        let state: MTLRenderPipelineState
         
         switch category {
         case .solid:
-            material = Material.solid(render: render)
+            state = Material.solid(render: render, blendMode: blendMode)
         case .color:
-            material = Material.color(render: render)
-        case .sprite:
-            material = Material.sprite2d(render: render)
+            state = Material.color(render: render, blendMode: blendMode)
+        case .texture:
+            state = Material.texture(render: render, blendMode: blendMode)
         }
 
+        let material = Material(id: id, state: state)
+        
         store[id] = material
         
         return material
     }
     
     func register(state: MTLRenderPipelineState) -> Material {
-        let id = customIndexId
-        customIndexId += 1
+        let id = nextId
+        nextId += 1
 
         let material = Material(id: id, state: state)
         

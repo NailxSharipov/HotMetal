@@ -1,14 +1,14 @@
 //
-//  FullScreenImageApp.swift
+//  ImageApp.swift
 //  Shared
 //
-//  Created by Nail Sharipov on 11.04.2022.
+//  Created by Nail Sharipov on 13.04.2022.
 //
 
 import SwiftUI
 
 @main
-struct FullScreenImageApp: App {
+struct ImageApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

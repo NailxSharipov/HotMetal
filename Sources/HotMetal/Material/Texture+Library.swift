@@ -1,14 +1,33 @@
 //
-//  Render+LoadTexture.swift
-//  HotMetal
+//  Texture+Library.swift
+//  
 //
-//  Created by Nail Sharipov on 11.04.2022.
+//  Created by Nail Sharipov on 14.04.2022.
 //
 
 import MetalKit
 
-public extension Render {
- 
+public extension Texture {
+
+    final class Library {
+
+        private var nextId: UInt = 0
+        private var store: [UInt: Texture] = [:]
+        private let device: MTLDevice
+        
+        init(device: MTLDevice) {
+            self.device = device
+        }
+        
+    }
+}
+
+public extension Texture.Library {
+
+    func get(id: UInt) -> Texture? {
+        store[id]
+    }
+
     func loadTexture(
         image: CGImage,
         samplerDescriptor: MTLSamplerDescriptor = .linear,
@@ -26,7 +45,10 @@ public extension Render {
         
         let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor)!
         
-        return Texture(mltTexture: mltTexture, sampler: sampler)
+        let id = nextId
+        nextId += 1
+        
+        return Texture(id: id, mltTexture: mltTexture, sampler: sampler)
     }
 
     func loadTexture(
@@ -48,7 +70,10 @@ public extension Render {
         
         let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor)!
         
-        return Texture(mltTexture: mltTexture, sampler: sampler)
+        let id = nextId
+        nextId += 1
+        
+        return Texture(id: id, mltTexture: mltTexture, sampler: sampler)
     }
     
 }
