@@ -1,6 +1,6 @@
 //
 //  Mesh.swift
-//  MetalImageView
+//  HotMetal
 //
 //  Created by Nail Sharipov on 10.04.2022.
 //

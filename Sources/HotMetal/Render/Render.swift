@@ -1,6 +1,6 @@
 //
 //  Render.swift
-//  MetalImageView
+//  HotMetal
 //
 //  Created by Nail Sharipov on 11.04.2022.
 //
@@ -35,7 +35,7 @@ public final class Render: NSObject {
 
         self.commandQueue = device.makeCommandQueue()!
 
-        self.uniformBuffers = BufferManager(device: device, length: MemoryLayout<Uniforms>.size, size: 4)
+        self.uniformBuffers = BufferManager(device: device, length: MemoryLayout<Uniforms>.size)
 
         let enabledDepthDescriptor = MTLDepthStencilDescriptor()
         enabledDepthDescriptor.isDepthWriteEnabled = true
@@ -115,6 +115,8 @@ extension Render: MTKViewDelegate {
         
         if let scene = self.scene {
 
+            scene.update(time: time)
+            
             guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
                 return
             }
@@ -126,7 +128,7 @@ extension Render: MTKViewDelegate {
             let context = DrawContext(render: self, encoder: encoder)
             
             // The uniform buffers store values that are constant across the entire frame
-            let uniformBuffer = uniformBuffers.getNext(device: device)
+            let uniformBuffer = uniformBuffers.getNext()
             let uniformContent = uniformBuffer.contents().bindMemory(to: Uniforms.self, capacity: 1)
 
             let viewMatrix = scene.camera.viewMatrix
@@ -144,9 +146,10 @@ extension Render: MTKViewDelegate {
 
             encoder.endEncoding()
             
-//            commandBuffer.addCompletedHandler { [weak self, weak uniformBuffer] _ in
-//
-//            }
+            commandBuffer.addCompletedHandler { [weak self] _ in
+                guard let self = self else { return }
+                self.uniformBuffers.release(buffer: uniformBuffer)
+            }
         }
 
         commandBuffer.present(drawable)

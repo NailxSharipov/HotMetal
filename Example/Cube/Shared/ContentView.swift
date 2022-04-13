@@ -20,7 +20,13 @@ struct ContentView: View {
                 .onAppear() {
                     viewModel.onAppear()
                 }
-        }
+        }.gesture(DragGesture()
+            .onChanged { data in
+                viewModel.onDrag(translation: data.translation)
+            }
+            .onEnded { data in
+                viewModel.onEnd(translation: data.translation)
+            })
     }
 }
 

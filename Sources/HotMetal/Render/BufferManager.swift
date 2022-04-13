@@ -1,32 +1,42 @@
 //
 //  BufferManager.swift
-//  
+//  HotMetal
 //
 //  Created by Nail Sharipov on 12.04.2022.
 //
 
 import Metal
+import Foundation
 
 final class BufferManager {
 
-    private let buffers: [MTLBuffer]
-    private var index: Int
+    private var buffers: [MTLBuffer] = []
+    private let device: MTLDevice
+    private let length: Int
 
-    init(device: MTLDevice, length: Int, size: Int) {
-        var buffers = [MTLBuffer]()
-        buffers.reserveCapacity(size)
-        for _ in 0..<size {
-            let buffer = device.makeBuffer(length: length, options: [])!
-            buffers.append(buffer)
-        }
-        index = buffers.count - 1
-        self.buffers = buffers
+    init(device: MTLDevice, length: Int) {
+        self.device = device
+        self.length = length
     }
     
-    func getNext(device: MTLDevice) -> MTLBuffer {
+    func getNext() -> MTLBuffer {
         assert(Thread.isMainThread)
-        index = (index + 1) % buffers.count
-        return buffers[index]
+        guard !buffers.isEmpty else {
+            let buffer = device.makeBuffer(length: length, options: [])!
+            return buffer
+        }
+
+        return buffers.removeLast()
     }
 
+    func release(buffer: MTLBuffer) {
+        if Thread.isMainThread {
+            buffers.append(buffer)
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                self?.buffers.append(buffer)
+            }
+        }
+    }
+    
 }

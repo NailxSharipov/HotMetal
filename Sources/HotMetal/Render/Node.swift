@@ -1,6 +1,6 @@
 //
 //  Node.swift
-//  MetalImageView
+//  HotMetal
 //
 //  Created by Nail Sharipov on 11.04.2022.
 //
@@ -44,6 +44,12 @@ open class Node {
     public init() {
         self.mesh = nil
         self.material = nil
+    }
+    
+    open func update(time: Time) {
+        for node in nodes {
+            node.update(time: time)
+        }
     }
 
     public func draw(context: DrawContext, parentTransform: Matrix4) {

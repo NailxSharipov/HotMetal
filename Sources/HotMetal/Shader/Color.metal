@@ -12,10 +12,12 @@ using namespace metal;
 
 struct VertexIn {
     float3 position [[attribute(0)]];
+    float4 color [[attribute(1)]];
 };
 
 struct VertexOut {
     float4 position [[position]];
+    float4 color;
 };
 
 struct Uniforms {
@@ -34,23 +36,24 @@ struct FragmentOut {
     float4 color0 [[color(0)]];
 };
 
-vertex VertexOut vertexSolid(
+vertex VertexOut vertexColor(
                              const VertexIn vIn [[ stage_in ]],
                              const device Uniforms& uniforms [[ buffer(0) ]],
                              const device ModelTransform& transform [[ buffer(1) ]])
 {
     VertexOut vOut;
     vOut.position = uniforms.viewProjection * transform.modelMatrix * float4(vIn.position, 1.0);
+    vOut.color = vIn.color;
     
     return vOut;
 }
 
-fragment FragmentOut fragmentSolid(
+fragment FragmentOut fragmentColor(
                                    VertexOut interpolated [[ stage_in ]])
 {
     FragmentOut out;
 
-    out.color0 = float4(1, 1, 0, 0.6);
+    out.color0 = interpolated.color;
         
     return out;
 }

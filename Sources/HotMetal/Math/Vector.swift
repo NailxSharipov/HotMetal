@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  Vector.swift
+//  HotMetal
 //
 //  Created by Nail Sharipov on 12.04.2022.
 //
@@ -16,6 +16,8 @@ public typealias Vector4 = SIMD4<Float>
 
 extension Vector3 {
 
+    static let up = Vector3(Float(0), Float(1), Float(0))
+    
     init(v: Vector3I) {
         self.init(Float(v.x), Float(v.y), Float(v.z))
     }
@@ -23,7 +25,7 @@ extension Vector3 {
     init(v: Vector4) {
         self.init(x: v.x, y: v.y, z: v.z)
     }
-    
+
     public static func random() -> Vector3 {
         [
             Float.random(in: -1.0...1.0),

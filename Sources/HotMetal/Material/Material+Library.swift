@@ -1,6 +1,6 @@
 //
 //  MaterialLibrary.swift
-//  
+//  HotMetal
 //
 //  Created by Nail Sharipov on 13.04.2022.
 //
@@ -18,6 +18,7 @@ public extension Material {
         
         public enum Category: Int {
             case solid
+            case color
             case sprite
         }
 
@@ -72,6 +73,8 @@ public extension Material.Library {
         switch category {
         case .solid:
             material = Material.solid(render: render)
+        case .color:
+            material = Material.color(render: render)
         case .sprite:
             material = Material.sprite2d(render: render)
         }

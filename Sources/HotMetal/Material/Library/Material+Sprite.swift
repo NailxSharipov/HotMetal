@@ -1,6 +1,6 @@
 //
-//  SpriteMaterial.swift
-//  MetalImageView
+//  Material+Sprite.swift
+//  HotMetal
 //
 //  Created by Nail Sharipov on 11.04.2022.
 //

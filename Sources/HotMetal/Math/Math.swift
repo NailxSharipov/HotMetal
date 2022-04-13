@@ -1,6 +1,6 @@
 //
 //  Math.swift
-//  
+//  HotMetal
 //
 //  Created by Nail Sharipov on 12.04.2022.
 //
@@ -60,6 +60,19 @@ public enum Math {
         
         return GLKMatrix4.toFloat4x4(matrix: persp)
     }
+    
+    public static func makeOrtho(
+        size: Float,
+        aspectRatio: Float,
+        nearZ: Float,
+        farZ: Float
+    ) -> Matrix4 {
+        let dx = aspectRatio * size
+        let ortho = GLKMatrix4MakeOrtho(-dx, dx, -size, size, nearZ, farZ)
+        
+        return GLKMatrix4.toFloat4x4(matrix: ortho)
+    }
+    
 }
 
 extension GLKMatrix4 {

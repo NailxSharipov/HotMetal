@@ -1,6 +1,6 @@
 //
 //  Material.swift
-//  MetalImageView
+//  HotMetal
 //
 //  Created by Nail Sharipov on 11.04.2022.
 //
@@ -10,7 +10,7 @@ import Metal
 public struct Material: Hashable {
 
     public let id: Int
-    public var cullMode: MTLCullMode = .none
+    public var cullMode: MTLCullMode = .front
     public var isAffectDepthBuffer: Bool = true
     let state: MTLRenderPipelineState
 
