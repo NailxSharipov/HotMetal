@@ -21,12 +21,7 @@ final class ImageScene {
         let texture = render.loadTexture(image: image, mipmaps: false)
         self.imageSize = image.size
         
-        node.material = SpriteMaterial(
-            render: render,
-            vertexName: "vertexShader",
-            fragmentName: "fragmentShader",
-            texture: texture
-        )
+        node.material = SpriteMaterial(render: render, texture: texture)
     }
     
 }

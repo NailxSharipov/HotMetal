@@ -20,7 +20,7 @@ public final class Mesh {
     }
     
     func draw(context: DrawContext) {
-        context.encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        context.encoder.setVertexBuffer(vertexBuffer, offset: 0, index: Render.firstFreeVertexBufferIndex)
         context.encoder.drawIndexedPrimitives(type: .triangle, indexCount: count, indexType: .uint16, indexBuffer: indexBuffer, indexBufferOffset: 0)
     }
     

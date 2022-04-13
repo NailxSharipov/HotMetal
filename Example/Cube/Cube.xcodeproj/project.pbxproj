@@ -7,193 +7,181 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		54DE00732804285A0014F64B /* FullScreenImageApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE0063280428580014F64B /* FullScreenImageApp.swift */; };
-		54DE00742804285A0014F64B /* FullScreenImageApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE0063280428580014F64B /* FullScreenImageApp.swift */; };
-		54DE00752804285A0014F64B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE0064280428580014F64B /* ContentView.swift */; };
-		54DE00762804285A0014F64B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE0064280428580014F64B /* ContentView.swift */; };
-		54DE00772804285A0014F64B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54DE0065280428590014F64B /* Assets.xcassets */; };
-		54DE00782804285A0014F64B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54DE0065280428590014F64B /* Assets.xcassets */; };
-		54DE008528042A980014F64B /* HotMetal in Frameworks */ = {isa = PBXBuildFile; productRef = 54DE008428042A980014F64B /* HotMetal */; };
-		54DE008728042A9D0014F64B /* HotMetal in Frameworks */ = {isa = PBXBuildFile; productRef = 54DE008628042A9D0014F64B /* HotMetal */; };
-		54DE0089280433390014F64B /* ContentView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE0088280433390014F64B /* ContentView+ViewModel.swift */; };
-		54DE008A280433390014F64B /* ContentView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE0088280433390014F64B /* ContentView+ViewModel.swift */; };
-		54DE008C280437430014F64B /* ImageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE008B280437430014F64B /* ImageScene.swift */; };
-		54DE008D280437430014F64B /* ImageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE008B280437430014F64B /* ImageScene.swift */; };
-		54DE008F280437650014F64B /* MeshBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE008E280437650014F64B /* MeshBuilder.swift */; };
-		54DE0090280437650014F64B /* MeshBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE008E280437650014F64B /* MeshBuilder.swift */; };
-		54DE009928048F650014F64B /* ImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE009828048F650014F64B /* ImageNode.swift */; };
-		54DE009A28048F650014F64B /* ImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE009828048F650014F64B /* ImageNode.swift */; };
+		54B0ED082805C4BB00D27A4A /* CubNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B0ED072805C4BB00D27A4A /* CubNode.swift */; };
+		54B0ED092805C4BB00D27A4A /* CubNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B0ED072805C4BB00D27A4A /* CubNode.swift */; };
+		54DE00B128058C510014F64B /* CubeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE00A128058C4F0014F64B /* CubeApp.swift */; };
+		54DE00B228058C510014F64B /* CubeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE00A128058C4F0014F64B /* CubeApp.swift */; };
+		54DE00B328058C510014F64B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE00A228058C4F0014F64B /* ContentView.swift */; };
+		54DE00B428058C510014F64B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE00A228058C4F0014F64B /* ContentView.swift */; };
+		54DE00B528058C510014F64B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54DE00A328058C510014F64B /* Assets.xcassets */; };
+		54DE00B628058C510014F64B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54DE00A328058C510014F64B /* Assets.xcassets */; };
+		54DE00C328058CB80014F64B /* HotMetal in Frameworks */ = {isa = PBXBuildFile; productRef = 54DE00C228058CB80014F64B /* HotMetal */; };
+		54DE00C528058CBD0014F64B /* HotMetal in Frameworks */ = {isa = PBXBuildFile; productRef = 54DE00C428058CBD0014F64B /* HotMetal */; };
+		54DE00C728058D020014F64B /* ContentView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE00C628058D020014F64B /* ContentView+ViewModel.swift */; };
+		54DE00C828058D020014F64B /* ContentView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE00C628058D020014F64B /* ContentView+ViewModel.swift */; };
+		54DE00CB28058D330014F64B /* CubeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE00CA28058D330014F64B /* CubeScene.swift */; };
+		54DE00CC28058D330014F64B /* CubeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE00CA28058D330014F64B /* CubeScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		54DE0063280428580014F64B /* FullScreenImageApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageApp.swift; sourceTree = "<group>"; };
-		54DE0064280428580014F64B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		54DE0065280428590014F64B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		54DE006A2804285A0014F64B /* FullScreenImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullScreenImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		54DE00702804285A0014F64B /* FullScreenImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullScreenImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		54DE00722804285A0014F64B /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
-		54DE0082280428810014F64B /* HotMetal */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = HotMetal; path = ../..; sourceTree = "<group>"; };
-		54DE0088280433390014F64B /* ContentView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+ViewModel.swift"; sourceTree = "<group>"; };
-		54DE008B280437430014F64B /* ImageScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScene.swift; sourceTree = "<group>"; };
-		54DE008E280437650014F64B /* MeshBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshBuilder.swift; sourceTree = "<group>"; };
-		54DE009828048F650014F64B /* ImageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNode.swift; sourceTree = "<group>"; };
+		54B0ED072805C4BB00D27A4A /* CubNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubNode.swift; sourceTree = "<group>"; };
+		54DE00A128058C4F0014F64B /* CubeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeApp.swift; sourceTree = "<group>"; };
+		54DE00A228058C4F0014F64B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		54DE00A328058C510014F64B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		54DE00A828058C510014F64B /* Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cube.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		54DE00AE28058C510014F64B /* Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cube.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		54DE00B028058C510014F64B /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		54DE00C028058C6F0014F64B /* HotMetal */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = HotMetal; path = ../..; sourceTree = "<group>"; };
+		54DE00C628058D020014F64B /* ContentView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+ViewModel.swift"; sourceTree = "<group>"; };
+		54DE00CA28058D330014F64B /* CubeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		54DE00672804285A0014F64B /* Frameworks */ = {
+		54DE00A528058C510014F64B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54DE008528042A980014F64B /* HotMetal in Frameworks */,
+				54DE00C328058CB80014F64B /* HotMetal in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		54DE006D2804285A0014F64B /* Frameworks */ = {
+		54DE00AB28058C510014F64B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54DE008728042A9D0014F64B /* HotMetal in Frameworks */,
+				54DE00C528058CBD0014F64B /* HotMetal in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		54DE005D280428580014F64B = {
+		54DE009B28058C4F0014F64B = {
 			isa = PBXGroup;
 			children = (
-				54DE0081280428810014F64B /* Packages */,
-				54DE0062280428580014F64B /* Shared */,
-				54DE00712804285A0014F64B /* macOS */,
-				54DE006B2804285A0014F64B /* Products */,
-				54DE008328042A980014F64B /* Frameworks */,
+				54DE00BF28058C6F0014F64B /* Packages */,
+				54DE00A028058C4F0014F64B /* Shared */,
+				54DE00AF28058C510014F64B /* macOS */,
+				54DE00A928058C510014F64B /* Products */,
+				54DE00C128058CB80014F64B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		54DE0062280428580014F64B /* Shared */ = {
+		54DE00A028058C4F0014F64B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				54DE00D328058EDA0014F64B /* Shaders */,
-				54DE0091280437910014F64B /* Scene */,
-				54DE0063280428580014F64B /* FullScreenImageApp.swift */,
-				54DE0064280428580014F64B /* ContentView.swift */,
-				54DE0088280433390014F64B /* ContentView+ViewModel.swift */,
-				54DE0065280428590014F64B /* Assets.xcassets */,
+				54DE00C928058D180014F64B /* Scene */,
+				54DE00A128058C4F0014F64B /* CubeApp.swift */,
+				54DE00A228058C4F0014F64B /* ContentView.swift */,
+				54DE00C628058D020014F64B /* ContentView+ViewModel.swift */,
+				54DE00A328058C510014F64B /* Assets.xcassets */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		54DE006B2804285A0014F64B /* Products */ = {
+		54DE00A928058C510014F64B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				54DE006A2804285A0014F64B /* FullScreenImage.app */,
-				54DE00702804285A0014F64B /* FullScreenImage.app */,
+				54DE00A828058C510014F64B /* Cube.app */,
+				54DE00AE28058C510014F64B /* Cube.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		54DE00712804285A0014F64B /* macOS */ = {
+		54DE00AF28058C510014F64B /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				54DE00722804285A0014F64B /* macOS.entitlements */,
+				54DE00B028058C510014F64B /* macOS.entitlements */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
 		};
-		54DE0081280428810014F64B /* Packages */ = {
+		54DE00BF28058C6F0014F64B /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				54DE0082280428810014F64B /* HotMetal */,
+				54DE00C028058C6F0014F64B /* HotMetal */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
 		};
-		54DE008328042A980014F64B /* Frameworks */ = {
+		54DE00C128058CB80014F64B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		54DE0091280437910014F64B /* Scene */ = {
+		54DE00C928058D180014F64B /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				54DE008B280437430014F64B /* ImageScene.swift */,
-				54DE008E280437650014F64B /* MeshBuilder.swift */,
-				54DE009828048F650014F64B /* ImageNode.swift */,
+				54DE00CA28058D330014F64B /* CubeScene.swift */,
+				54B0ED072805C4BB00D27A4A /* CubNode.swift */,
 			);
 			path = Scene;
-			sourceTree = "<group>";
-		};
-		54DE00D328058EDA0014F64B /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		54DE00692804285A0014F64B /* FullScreenImage (iOS) */ = {
+		54DE00A728058C510014F64B /* Cube (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 54DE007B2804285A0014F64B /* Build configuration list for PBXNativeTarget "FullScreenImage (iOS)" */;
+			buildConfigurationList = 54DE00B928058C510014F64B /* Build configuration list for PBXNativeTarget "Cube (iOS)" */;
 			buildPhases = (
-				54DE00662804285A0014F64B /* Sources */,
-				54DE00672804285A0014F64B /* Frameworks */,
-				54DE00682804285A0014F64B /* Resources */,
+				54DE00A428058C510014F64B /* Sources */,
+				54DE00A528058C510014F64B /* Frameworks */,
+				54DE00A628058C510014F64B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "FullScreenImage (iOS)";
+			name = "Cube (iOS)";
 			packageProductDependencies = (
-				54DE008428042A980014F64B /* HotMetal */,
+				54DE00C228058CB80014F64B /* HotMetal */,
 			);
-			productName = "FullScreenImage (iOS)";
-			productReference = 54DE006A2804285A0014F64B /* FullScreenImage.app */;
+			productName = "Cube (iOS)";
+			productReference = 54DE00A828058C510014F64B /* Cube.app */;
 			productType = "com.apple.product-type.application";
 		};
-		54DE006F2804285A0014F64B /* FullScreenImage (macOS) */ = {
+		54DE00AD28058C510014F64B /* Cube (macOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 54DE007E2804285A0014F64B /* Build configuration list for PBXNativeTarget "FullScreenImage (macOS)" */;
+			buildConfigurationList = 54DE00BC28058C510014F64B /* Build configuration list for PBXNativeTarget "Cube (macOS)" */;
 			buildPhases = (
-				54DE006C2804285A0014F64B /* Sources */,
-				54DE006D2804285A0014F64B /* Frameworks */,
-				54DE006E2804285A0014F64B /* Resources */,
+				54DE00AA28058C510014F64B /* Sources */,
+				54DE00AB28058C510014F64B /* Frameworks */,
+				54DE00AC28058C510014F64B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "FullScreenImage (macOS)";
+			name = "Cube (macOS)";
 			packageProductDependencies = (
-				54DE008628042A9D0014F64B /* HotMetal */,
+				54DE00C428058CBD0014F64B /* HotMetal */,
 			);
-			productName = "FullScreenImage (macOS)";
-			productReference = 54DE00702804285A0014F64B /* FullScreenImage.app */;
+			productName = "Cube (macOS)";
+			productReference = 54DE00AE28058C510014F64B /* Cube.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		54DE005E280428580014F64B /* Project object */ = {
+		54DE009C28058C4F0014F64B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1330;
 				TargetAttributes = {
-					54DE00692804285A0014F64B = {
+					54DE00A728058C510014F64B = {
 						CreatedOnToolsVersion = 13.3;
 					};
-					54DE006F2804285A0014F64B = {
+					54DE00AD28058C510014F64B = {
 						CreatedOnToolsVersion = 13.3;
 					};
 				};
 			};
-			buildConfigurationList = 54DE0061280428580014F64B /* Build configuration list for PBXProject "FullScreenImage" */;
+			buildConfigurationList = 54DE009F28058C4F0014F64B /* Build configuration list for PBXProject "Cube" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -201,67 +189,65 @@
 				en,
 				Base,
 			);
-			mainGroup = 54DE005D280428580014F64B;
-			productRefGroup = 54DE006B2804285A0014F64B /* Products */;
+			mainGroup = 54DE009B28058C4F0014F64B;
+			productRefGroup = 54DE00A928058C510014F64B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				54DE00692804285A0014F64B /* FullScreenImage (iOS) */,
-				54DE006F2804285A0014F64B /* FullScreenImage (macOS) */,
+				54DE00A728058C510014F64B /* Cube (iOS) */,
+				54DE00AD28058C510014F64B /* Cube (macOS) */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		54DE00682804285A0014F64B /* Resources */ = {
+		54DE00A628058C510014F64B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54DE00772804285A0014F64B /* Assets.xcassets in Resources */,
+				54DE00B528058C510014F64B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		54DE006E2804285A0014F64B /* Resources */ = {
+		54DE00AC28058C510014F64B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54DE00782804285A0014F64B /* Assets.xcassets in Resources */,
+				54DE00B628058C510014F64B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		54DE00662804285A0014F64B /* Sources */ = {
+		54DE00A428058C510014F64B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54DE009928048F650014F64B /* ImageNode.swift in Sources */,
-				54DE008C280437430014F64B /* ImageScene.swift in Sources */,
-				54DE008F280437650014F64B /* MeshBuilder.swift in Sources */,
-				54DE00752804285A0014F64B /* ContentView.swift in Sources */,
-				54DE00732804285A0014F64B /* FullScreenImageApp.swift in Sources */,
-				54DE0089280433390014F64B /* ContentView+ViewModel.swift in Sources */,
+				54DE00B328058C510014F64B /* ContentView.swift in Sources */,
+				54DE00B128058C510014F64B /* CubeApp.swift in Sources */,
+				54DE00C728058D020014F64B /* ContentView+ViewModel.swift in Sources */,
+				54B0ED082805C4BB00D27A4A /* CubNode.swift in Sources */,
+				54DE00CB28058D330014F64B /* CubeScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		54DE006C2804285A0014F64B /* Sources */ = {
+		54DE00AA28058C510014F64B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54DE009A28048F650014F64B /* ImageNode.swift in Sources */,
-				54DE008D280437430014F64B /* ImageScene.swift in Sources */,
-				54DE0090280437650014F64B /* MeshBuilder.swift in Sources */,
-				54DE00762804285A0014F64B /* ContentView.swift in Sources */,
-				54DE00742804285A0014F64B /* FullScreenImageApp.swift in Sources */,
-				54DE008A280433390014F64B /* ContentView+ViewModel.swift in Sources */,
+				54DE00B428058C510014F64B /* ContentView.swift in Sources */,
+				54DE00B228058C510014F64B /* CubeApp.swift in Sources */,
+				54DE00C828058D020014F64B /* ContentView+ViewModel.swift in Sources */,
+				54B0ED092805C4BB00D27A4A /* CubNode.swift in Sources */,
+				54DE00CC28058D330014F64B /* CubeScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		54DE00792804285A0014F64B /* Debug */ = {
+		54DE00B728058C510014F64B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -319,7 +305,7 @@
 			};
 			name = Debug;
 		};
-		54DE007A2804285A0014F64B /* Release */ = {
+		54DE00B828058C510014F64B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -370,7 +356,7 @@
 			};
 			name = Release;
 		};
-		54DE007C2804285A0014F64B /* Debug */ = {
+		54DE00BA28058C510014F64B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -391,8 +377,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.FullScreenImage;
-				PRODUCT_NAME = FullScreenImage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.Cube;
+				PRODUCT_NAME = Cube;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -400,7 +386,7 @@
 			};
 			name = Debug;
 		};
-		54DE007D2804285A0014F64B /* Release */ = {
+		54DE00BB28058C510014F64B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -421,8 +407,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.FullScreenImage;
-				PRODUCT_NAME = FullScreenImage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.Cube;
+				PRODUCT_NAME = Cube;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -431,7 +417,7 @@
 			};
 			name = Release;
 		};
-		54DE007F2804285A0014F64B /* Debug */ = {
+		54DE00BD28058C510014F64B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -451,15 +437,15 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.FullScreenImage;
-				PRODUCT_NAME = FullScreenImage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.Cube;
+				PRODUCT_NAME = Cube;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		54DE00802804285A0014F64B /* Release */ = {
+		54DE00BE28058C510014F64B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -479,8 +465,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.FullScreenImage;
-				PRODUCT_NAME = FullScreenImage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.Cube;
+				PRODUCT_NAME = Cube;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -490,29 +476,29 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		54DE0061280428580014F64B /* Build configuration list for PBXProject "FullScreenImage" */ = {
+		54DE009F28058C4F0014F64B /* Build configuration list for PBXProject "Cube" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				54DE00792804285A0014F64B /* Debug */,
-				54DE007A2804285A0014F64B /* Release */,
+				54DE00B728058C510014F64B /* Debug */,
+				54DE00B828058C510014F64B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		54DE007B2804285A0014F64B /* Build configuration list for PBXNativeTarget "FullScreenImage (iOS)" */ = {
+		54DE00B928058C510014F64B /* Build configuration list for PBXNativeTarget "Cube (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				54DE007C2804285A0014F64B /* Debug */,
-				54DE007D2804285A0014F64B /* Release */,
+				54DE00BA28058C510014F64B /* Debug */,
+				54DE00BB28058C510014F64B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		54DE007E2804285A0014F64B /* Build configuration list for PBXNativeTarget "FullScreenImage (macOS)" */ = {
+		54DE00BC28058C510014F64B /* Build configuration list for PBXNativeTarget "Cube (macOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				54DE007F2804285A0014F64B /* Debug */,
-				54DE00802804285A0014F64B /* Release */,
+				54DE00BD28058C510014F64B /* Debug */,
+				54DE00BE28058C510014F64B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -520,15 +506,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		54DE008428042A980014F64B /* HotMetal */ = {
+		54DE00C228058CB80014F64B /* HotMetal */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HotMetal;
 		};
-		54DE008628042A9D0014F64B /* HotMetal */ = {
+		54DE00C428058CBD0014F64B /* HotMetal */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HotMetal;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 54DE005E280428580014F64B /* Project object */;
+	rootObject = 54DE009C28058C4F0014F64B /* Project object */;
 }

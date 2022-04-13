@@ -30,7 +30,7 @@ public struct HotMetalView: UIViewRepresentable {
     
     public func updateUIView(_ uiView: MTKView, context: UIViewRepresentableContext<HotMetalView>) {
         if let render = self.render {
-            render.attach(view: nsView)
+            render.attach(view: uiView)
         }
     }
 

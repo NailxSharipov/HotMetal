@@ -4,11 +4,9 @@
 //
 //  Created by Nail Sharipov on 11.04.2022.
 //
-
+/*
 #include <metal_stdlib>
-#include <simd/simd.h>
 using namespace metal;
-
 
 struct VertexIn {
     float2 position [[attribute(0)]];
@@ -24,7 +22,7 @@ struct FragmentOut {
     float4 color0 [[color(0)]];
 };
 
-vertex VertexOut vertexShader(const VertexIn vIn [[stage_in]]) {
+vertex VertexOut vertexSprite2d(const VertexIn vIn [[stage_in]]) {
     VertexOut vOut;
     
     float2 p = vIn.position;
@@ -34,7 +32,7 @@ vertex VertexOut vertexShader(const VertexIn vIn [[stage_in]]) {
     return vOut;
 }
 
-fragment FragmentOut fragmentShader(
+fragment FragmentOut fragmentSprite2d(
                                     VertexOut interpolated [[stage_in]],
                                     texture2d<float, access::sample> diffuseTexture [[texture(0)]],
                                     sampler diffuseSampler [[sampler(0)]])
@@ -45,4 +43,4 @@ fragment FragmentOut fragmentShader(
     return out;
 }
 
-
+*/

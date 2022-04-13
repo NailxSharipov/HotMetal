@@ -24,7 +24,11 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "HotMetal",
-            dependencies: []),
+            dependencies: [],
+            resources: [
+                .process("Shader/Sprite2d.metal")
+            ]
+        ),
         .testTarget(
             name: "HotMetalTests",
             dependencies: ["HotMetal"]),

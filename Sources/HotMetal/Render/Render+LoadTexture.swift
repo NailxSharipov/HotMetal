@@ -18,7 +18,10 @@ public extension Render {
         
         let mltTexture = try! loader.newTexture(
             cgImage: image,
-            options: [.generateMipmaps: mipmaps]
+            options: [
+                .generateMipmaps: mipmaps,
+                MTKTextureLoader.Option.SRGB: false
+            ]
         )
         
         let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor)!
@@ -37,7 +40,10 @@ public extension Render {
             name: name,
             scaleFactor: 1.0,
             bundle: nil,
-            options: [.generateMipmaps: mipmaps]
+            options: [
+                .generateMipmaps: mipmaps,
+                MTKTextureLoader.Option.SRGB: false
+            ]
         )
         
         let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor)!
