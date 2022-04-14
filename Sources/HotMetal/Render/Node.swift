@@ -52,7 +52,7 @@ open class Node {
         }
     }
 
-    public func draw(context: DrawContext, parentTransform: Matrix4) {
+    open func draw(context: DrawContext, parentTransform: Matrix4) {
         guard !isHidden else { return }
         
         guard

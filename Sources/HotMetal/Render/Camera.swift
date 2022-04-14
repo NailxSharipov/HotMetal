@@ -7,6 +7,16 @@
 
 public final class Camera {
 
+    public static let defaultCamera: Camera = Camera(
+        origin: [0, 0, 10],
+        look: [0, 0, -1],
+        up: [0, 1, 0],
+        projection: .perspective(90),
+        aspectRatio: 1.0,
+        zNear: 0.001,
+        zFar: 100.0
+    )
+
     public enum Projection {
         case perspective(Float)
         case ortographic(Float)
@@ -41,7 +51,12 @@ public final class Camera {
                     farZ: zFar
                 )
             case .ortographic(let size):
-                _projectionMatrix = Math.makeOrtho(size: size, aspectRatio: aspectRatio, nearZ: zNear, farZ: zFar)
+                _projectionMatrix = Math.makeOrtho(
+                    size: size,
+                    aspectRatio: aspectRatio,
+                    nearZ: zNear,
+                    farZ: zFar
+                )
             }
             
             return _projectionMatrix

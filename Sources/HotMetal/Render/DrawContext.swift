@@ -9,9 +9,9 @@ import Metal
 
 public final class DrawContext {
     
-    unowned let render: Render
-    let encoder: MTLRenderCommandEncoder
-    var camera: Camera?
+    public unowned let render: Render
+    public let encoder: MTLRenderCommandEncoder
+    public internal (set) var camera: Camera?
     
     private var currentMaterialId: UInt?
     

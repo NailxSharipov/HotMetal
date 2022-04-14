@@ -12,15 +12,7 @@ open class Scene {
     
     public var clearColor: MTLClearColor = .init(red: 0, green: 0, blue: 0, alpha: 0.0)
     public var nodes: [Node] = []
-    public var camera: Camera = Camera(
-        origin: [0, 0, -10],
-        look: [0, 0, 1],
-        up: [0, 1, 0],
-        projection: .perspective(90),
-        aspectRatio: 1.0,
-        zNear: 0.001,
-        zFar: 1000.0
-    )
+    public var camera: Camera = Camera.defaultCamera
 
     public init() { }
     

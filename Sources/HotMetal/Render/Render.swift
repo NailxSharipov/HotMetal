@@ -17,6 +17,7 @@ public final class Render: NSObject {
     public let textureLibrary: Texture.Library
     public let commandQueue: MTLCommandQueue
     public var scene: Scene?
+    public private (set) weak var view: MTKView?
     
     var enabledDepthStencilState: MTLDepthStencilState
     var disabledDepthStencilState: MTLDepthStencilState
@@ -24,7 +25,6 @@ public final class Render: NSObject {
     private var lastTime: TimeInterval
     private let creationTime: TimeInterval
     private let uniformBuffers: BufferManager
-    private weak var view: MTKView?
 
     public let onReady: (Render) -> ()
 

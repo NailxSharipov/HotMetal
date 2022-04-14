@@ -9,7 +9,12 @@ import Metal
 
 extension Material {
 
-    static func color(render: Render, blendMode: BlendMode) -> MTLRenderPipelineState {
+    static func color(
+        render: Render,
+        blendMode: BlendMode,
+        vertex: Library.Resource = .framework("vertexColor"),
+        fragment: Library.Resource = .framework("fragmentColor")
+    ) -> MTLRenderPipelineState {
 
         let bufferIndex = Render.firstFreeVertexBufferIndex
         
@@ -36,8 +41,8 @@ extension Material {
             colorAttachment.set(blendMode: blendMode)
         }
 
-        let fragmentProgram = render.materialLibrary.load(.framework("fragmentColor"))
-        let vertexProgram = render.materialLibrary.load(.framework("vertexColor"))
+        let vertexProgram = render.materialLibrary.load(vertex)
+        let fragmentProgram = render.materialLibrary.load(fragment)
         
         descriptor.vertexFunction = vertexProgram
         descriptor.fragmentFunction = fragmentProgram

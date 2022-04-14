@@ -22,7 +22,7 @@ final class CubNode: Node {
             CGColor(red: 1, green: 1, blue: 0, alpha: 1),
             CGColor(red: 1, green: 1, blue: 0, alpha: 1)
         ])
-        let material = render.library.get(category: .color)
+        let material = render.materialLibrary.register(category: .color, blendMode: .opaque)
         
         super.init(mesh: mesh, material: material)
     }

@@ -10,11 +10,11 @@ import Metal
 public final class Material: Hashable {
     
     public let id: UInt
-    public var cullMode: MTLCullMode = .front
+    public var cullMode: MTLCullMode = .back
     public var isAffectDepthBuffer: Bool = true
     public var textures: [Texture] = []
     
-    let state: MTLRenderPipelineState
+    public let state: MTLRenderPipelineState
 
     init(id: UInt, state: MTLRenderPipelineState) {
         self.id = id

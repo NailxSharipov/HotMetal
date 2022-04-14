@@ -1,15 +1,16 @@
 //
-//  ImageNode.swift
-//  Image
+//  RootNode.swift
+//  VarShader
 //
-//  Created by Nail Sharipov on 13.04.2022.
+//  Created by Nail Sharipov on 14.04.2022.
 //
 
 import MetalKit
 import HotMetal
 
-final class ImageNode: Node {
+final class RootNode: Node {
 
+    public var color = Vector4(0, 0, 0, 0)
     private let image = CGImage.load(name: "TwoSea")
     
     init(render: Render) {
@@ -34,21 +35,29 @@ final class ImageNode: Node {
         let indexBuffer = render.device.makeBuffer(bytes: indices, length: indexSize, options: [.cpuCacheModeWriteCombined])!
 
         let mesh = Mesh(vertexBuffer: vertexBuffer, indexBuffer: indexBuffer, count: indices.count)
-        let material = render.materialLibrary.register(category: .texture, blendMode: .opaque)
+        
+        let piplineState = Material.texture(
+            render: render,
+            blendMode: .opaque,
+            vertex: .local("vertexVarColor"),
+            fragment: .local("fragmentVarColor")
+        )
+        let material = render.materialLibrary.register(state: piplineState)
+        material.cullMode = .back
         let texture = render.textureLibrary.loadTexture(image: image)
         material.textures.append(texture)
         
         super.init(mesh: mesh, material: material)
     }
     
+    override func draw(context: DrawContext, parentTransform: Matrix4) {
+        var clr = self.color
+        context.encoder.setVertexBytes(&clr, length: MemoryLayout<Vector4>.size, index: 3)
+        super.draw(context: context, parentTransform: parentTransform)
+    }
+    
     override func update(time: Time) {
         super.update(time: time)
-//        let angle = Math.toRadians(10.0) * Float(time.totalTime)
-//        self.scale = Vector3(repeating: 3)
-//        self.orientation = Quaternion(
-//            angle: angle,
-//            axis: [0, 0, 1]
-//        )
     }
     
 }

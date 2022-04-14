@@ -57,8 +57,13 @@ public enum Math {
             nearZ,
             farZ
         )
+        var matrix = GLKMatrix4.toFloat4x4(matrix: persp)
         
-        return GLKMatrix4.toFloat4x4(matrix: persp)
+        let zs = farZ / (nearZ - farZ)
+        matrix[2][2] = zs
+        matrix[3][2] = zs * nearZ
+        
+        return matrix
     }
     
     public static func makeOrtho(
@@ -67,8 +72,9 @@ public enum Math {
         nearZ: Float,
         farZ: Float
     ) -> Matrix4 {
-        let dx = aspectRatio * size
-        let ortho = GLKMatrix4MakeOrtho(-dx, dx, -size, size, nearZ, farZ)
+        let dy = 0.5 * size
+        let dx = aspectRatio * dy
+        let ortho = GLKMatrix4MakeOrtho(-dx, dx, -dy, dy, nearZ, farZ)
         
         return GLKMatrix4.toFloat4x4(matrix: ortho)
     }
