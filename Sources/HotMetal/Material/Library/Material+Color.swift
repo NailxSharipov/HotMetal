@@ -1,6 +1,6 @@
 //
 //  Material+Color.swift
-//  
+//  HotMetal
 //
 //  Created by Nail Sharipov on 13.04.2022.
 //
@@ -41,11 +41,9 @@ extension Material {
             colorAttachment.set(blendMode: blendMode)
         }
 
-        let vertexProgram = render.materialLibrary.load(vertex)
-        let fragmentProgram = render.materialLibrary.load(fragment)
-        
-        descriptor.vertexFunction = vertexProgram
-        descriptor.fragmentFunction = fragmentProgram
+        descriptor.vertexFunction = render.materialLibrary.load(vertex)
+        descriptor.fragmentFunction = render.materialLibrary.load(fragment)
+
         descriptor.vertexDescriptor = vertexDescriptor
         
         let state = (try? render.device.makeRenderPipelineState(descriptor: descriptor))!
@@ -54,4 +52,3 @@ extension Material {
     }
     
 }
-

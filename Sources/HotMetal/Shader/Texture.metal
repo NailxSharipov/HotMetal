@@ -39,10 +39,10 @@ struct ModelTransform {
 };
 
 vertex VertexOut vertexTexture(
-                             const VertexIn vIn [[ stage_in ]],
-                             const device Uniforms& uniforms [[ buffer(0) ]],
-                             const device ModelTransform& transform [[ buffer(1) ]])
-{
+                               const VertexIn vIn [[ stage_in ]],
+                               const device Uniforms& uniforms [[ buffer(0) ]],
+                               const device ModelTransform& transform [[ buffer(1) ]]
+                               ) {
     VertexOut vOut;
     vOut.position = uniforms.viewProjection * transform.modelMatrix * float4(vIn.position, 1.0);
     vOut.color = vIn.color;
@@ -52,10 +52,10 @@ vertex VertexOut vertexTexture(
 }
 
 fragment FragmentOut fragmentTexture(
-                                    VertexOut interpolated [[stage_in]],
-                                    texture2d<float, access::sample> diffuseTexture [[texture(0)]],
-                                    sampler diffuseSampler [[sampler(0)]])
-{
+                                     VertexOut interpolated [[stage_in]],
+                                     texture2d<float, access::sample> diffuseTexture [[texture(0)]],
+                                     sampler diffuseSampler [[sampler(0)]]
+                                     ) {
     FragmentOut out;
     float4 tex = diffuseTexture.sample(diffuseSampler, interpolated.tex).rgba;
     out.color0 = interpolated.color * tex;

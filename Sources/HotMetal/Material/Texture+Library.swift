@@ -31,7 +31,8 @@ public extension Texture.Library {
     func loadTexture(
         image: CGImage,
         samplerDescriptor: MTLSamplerDescriptor = .linear,
-        mipmaps: Bool = true
+        mipmaps: Bool = true,
+        gammaCorrection: Bool = false
     ) -> Texture {
         let loader = MTKTextureLoader(device: device)
         
@@ -39,7 +40,7 @@ public extension Texture.Library {
             cgImage: image,
             options: [
                 .generateMipmaps: mipmaps,
-                MTKTextureLoader.Option.SRGB: false
+                MTKTextureLoader.Option.SRGB: gammaCorrection
             ]
         )
         
@@ -74,6 +75,18 @@ public extension Texture.Library {
         nextId += 1
         
         return Texture(id: id, mltTexture: mltTexture, sampler: sampler)
+    }
+    
+    func register(texture: MTLTexture, samplerDescriptor: MTLSamplerDescriptor = .linear) -> Texture {
+        let id = nextId
+        nextId += 1
+
+        let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor)!
+        let material = Texture(id: id, mltTexture: texture, sampler: sampler)
+        
+        store[id] = material
+        
+        return material
     }
     
 }

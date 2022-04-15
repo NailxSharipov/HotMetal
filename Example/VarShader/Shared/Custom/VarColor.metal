@@ -67,5 +67,3 @@ fragment FragmentOut fragmentVarColor(
         
     return out;
 }
-
-

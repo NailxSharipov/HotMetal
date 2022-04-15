@@ -13,6 +13,20 @@
 		54B8C88528082C3C004D76F4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C87328082C3A004D76F4 /* ContentView.swift */; };
 		54B8C88628082C3C004D76F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54B8C87428082C3B004D76F4 /* Assets.xcassets */; };
 		54B8C88728082C3C004D76F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54B8C87428082C3B004D76F4 /* Assets.xcassets */; };
+		54B8C89328082EB8004D76F4 /* ContentView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C89228082EB8004D76F4 /* ContentView+ViewModel.swift */; };
+		54B8C89428082EB8004D76F4 /* ContentView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C89228082EB8004D76F4 /* ContentView+ViewModel.swift */; };
+		54B8C897280831D1004D76F4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C896280831D1004D76F4 /* MainScene.swift */; };
+		54B8C898280831D1004D76F4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C896280831D1004D76F4 /* MainScene.swift */; };
+		54B8C89A280831DC004D76F4 /* RootNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C899280831DC004D76F4 /* RootNode.swift */; };
+		54B8C89B280831DC004D76F4 /* RootNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C899280831DC004D76F4 /* RootNode.swift */; };
+		54B8C8A128083299004D76F4 /* DepthFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C8A028083299004D76F4 /* DepthFilter.metal */; };
+		54B8C8A228083299004D76F4 /* DepthFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C8A028083299004D76F4 /* DepthFilter.metal */; };
+		54B8C8A628083445004D76F4 /* HotMetal in Frameworks */ = {isa = PBXBuildFile; productRef = 54B8C8A528083445004D76F4 /* HotMetal */; };
+		54B8C8A82808344A004D76F4 /* HotMetal in Frameworks */ = {isa = PBXBuildFile; productRef = 54B8C8A72808344A004D76F4 /* HotMetal */; };
+		54B8C8AA28083550004D76F4 /* Tiger.heic in Resources */ = {isa = PBXBuildFile; fileRef = 54B8C8A928083550004D76F4 /* Tiger.heic */; };
+		54B8C8AB28083550004D76F4 /* Tiger.heic in Resources */ = {isa = PBXBuildFile; fileRef = 54B8C8A928083550004D76F4 /* Tiger.heic */; };
+		54B8C8AD2808363F004D76F4 /* HeicLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C8AC2808363F004D76F4 /* HeicLoader.swift */; };
+		54B8C8AE2808363F004D76F4 /* HeicLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C8AC2808363F004D76F4 /* HeicLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +37,13 @@
 		54B8C87F28082C3C004D76F4 /* TwoTextures.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwoTextures.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54B8C88128082C3C004D76F4 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		54B8C89128082C55004D76F4 /* HotMetal */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = HotMetal; path = ../..; sourceTree = "<group>"; };
+		54B8C89228082EB8004D76F4 /* ContentView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+ViewModel.swift"; sourceTree = "<group>"; };
+		54B8C896280831D1004D76F4 /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
+		54B8C899280831DC004D76F4 /* RootNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNode.swift; sourceTree = "<group>"; };
+		54B8C8A028083299004D76F4 /* DepthFilter.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = DepthFilter.metal; sourceTree = "<group>"; };
+		54B8C8A328083440004D76F4 /* TwoTextures--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TwoTextures--iOS--Info.plist"; sourceTree = "<group>"; };
+		54B8C8A928083550004D76F4 /* Tiger.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tiger.heic; sourceTree = "<group>"; };
+		54B8C8AC2808363F004D76F4 /* HeicLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeicLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54B8C8A628083445004D76F4 /* HotMetal in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54B8C8A82808344A004D76F4 /* HotMetal in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,18 +69,25 @@
 		54B8C86C28082C3A004D76F4 = {
 			isa = PBXGroup;
 			children = (
+				54B8C8A328083440004D76F4 /* TwoTextures--iOS--Info.plist */,
 				54B8C89028082C55004D76F4 /* Packages */,
 				54B8C87128082C3A004D76F4 /* Shared */,
 				54B8C88028082C3C004D76F4 /* macOS */,
 				54B8C87A28082C3B004D76F4 /* Products */,
+				54B8C8A428083445004D76F4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		54B8C87128082C3A004D76F4 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				54B8C89C280831F3004D76F4 /* Custom */,
+				54B8C89528082EDD004D76F4 /* Scene */,
 				54B8C87228082C3A004D76F4 /* TwoTexturesApp.swift */,
+				54B8C8AC2808363F004D76F4 /* HeicLoader.swift */,
 				54B8C87328082C3A004D76F4 /* ContentView.swift */,
+				54B8C89228082EB8004D76F4 /* ContentView+ViewModel.swift */,
+				54B8C8A928083550004D76F4 /* Tiger.heic */,
 				54B8C87428082C3B004D76F4 /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -88,6 +118,30 @@
 			name = Packages;
 			sourceTree = "<group>";
 		};
+		54B8C89528082EDD004D76F4 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				54B8C896280831D1004D76F4 /* MainScene.swift */,
+				54B8C899280831DC004D76F4 /* RootNode.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		54B8C89C280831F3004D76F4 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				54B8C8A028083299004D76F4 /* DepthFilter.metal */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		54B8C8A428083445004D76F4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -104,6 +158,9 @@
 			dependencies = (
 			);
 			name = "TwoTextures (iOS)";
+			packageProductDependencies = (
+				54B8C8A528083445004D76F4 /* HotMetal */,
+			);
 			productName = "TwoTextures (iOS)";
 			productReference = 54B8C87928082C3B004D76F4 /* TwoTextures.app */;
 			productType = "com.apple.product-type.application";
@@ -121,6 +178,9 @@
 			dependencies = (
 			);
 			name = "TwoTextures (macOS)";
+			packageProductDependencies = (
+				54B8C8A72808344A004D76F4 /* HotMetal */,
+			);
 			productName = "TwoTextures (macOS)";
 			productReference = 54B8C87F28082C3C004D76F4 /* TwoTextures.app */;
 			productType = "com.apple.product-type.application";
@@ -167,6 +227,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54B8C8AA28083550004D76F4 /* Tiger.heic in Resources */,
 				54B8C88628082C3C004D76F4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,6 +236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54B8C8AB28083550004D76F4 /* Tiger.heic in Resources */,
 				54B8C88728082C3C004D76F4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,7 +249,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				54B8C88428082C3C004D76F4 /* ContentView.swift in Sources */,
+				54B8C8A128083299004D76F4 /* DepthFilter.metal in Sources */,
+				54B8C8AD2808363F004D76F4 /* HeicLoader.swift in Sources */,
+				54B8C897280831D1004D76F4 /* MainScene.swift in Sources */,
+				54B8C89A280831DC004D76F4 /* RootNode.swift in Sources */,
 				54B8C88228082C3C004D76F4 /* TwoTexturesApp.swift in Sources */,
+				54B8C89328082EB8004D76F4 /* ContentView+ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,7 +263,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				54B8C88528082C3C004D76F4 /* ContentView.swift in Sources */,
+				54B8C8A228083299004D76F4 /* DepthFilter.metal in Sources */,
+				54B8C8AE2808363F004D76F4 /* HeicLoader.swift in Sources */,
+				54B8C898280831D1004D76F4 /* MainScene.swift in Sources */,
+				54B8C89B280831DC004D76F4 /* RootNode.swift in Sources */,
 				54B8C88328082C3C004D76F4 /* TwoTexturesApp.swift in Sources */,
+				54B8C89428082EB8004D76F4 /* ContentView+ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +394,7 @@
 				DEVELOPMENT_TEAM = HPV9E52JPX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TwoTextures--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -352,6 +425,7 @@
 				DEVELOPMENT_TEAM = HPV9E52JPX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TwoTextures--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -460,6 +534,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		54B8C8A528083445004D76F4 /* HotMetal */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HotMetal;
+		};
+		54B8C8A72808344A004D76F4 /* HotMetal */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HotMetal;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 54B8C86D28082C3A004D76F4 /* Project object */;
 }
