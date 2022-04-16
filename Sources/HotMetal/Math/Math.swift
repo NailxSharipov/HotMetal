@@ -18,29 +18,36 @@ public enum Math {
         radians * 180.0 / .pi
     }
 
-  /**
-   Returns a matrix that converts points from world space to eye space
-   */
+  
+    /// Returns a matrix that converts points from world space to eye space
+    /// - Parameters:
+    ///   - eye: camera position
+    ///   - look: look direction
+    ///   - up: second vector, most of the time it's (0, 1, 0)
+    /// - Returns: view matrix
+    @inlinable
     public static func makeLook(
         eye: Vector3,
         look: Vector3,
         up: Vector3
     ) -> Matrix4 {
         
-        let target = eye + look
-        let glLook = GLKMatrix4MakeLookAt(
-            eye.x,
-            eye.y,
-            eye.z,
-            target.x,
-            target.y,
-            target.z,
-            up.x,
-            up.y,
-            up.z
-        )
+        assert(simd_length_squared(up) == 1)
+        assert(simd_length_squared(look) == 1)
         
-        return GLKMatrix4.toFloat4x4(matrix: glLook)
+        let oy = up
+        let oz = look
+        let ox = simd_cross(oy, oz)
+        let ow = -eye
+        
+        let matrix = float4x4(
+            .init(v: ox, w: 0),
+            .init(v: oy, w: 0),
+            .init(v: oz, w: 0),
+            .init(v: ow, w: 1)
+        )
+
+        return matrix
     }
 
     /// Returns a perspective projection matrix, to convert world space to Metal clip space
@@ -65,20 +72,67 @@ public enum Math {
         
         return matrix
     }
+
     
+    /// Returns an ortho projection matrix, to convert world space to Metal clip space
+    /// - Parameters:
+    ///   - size: view height
+    ///   - aspectRatio: view width/height
+    ///   - nearZ: near clip plane
+    ///   - farZ:  far clip plane
+    /// - Returns: ortho projection matrix
+    @inlinable
     public static func makeOrtho(
         size: Float,
         aspectRatio: Float,
         nearZ: Float,
         farZ: Float
     ) -> Matrix4 {
-        let dy = 0.5 * size
-        let dx = aspectRatio * dy
-        let ortho = GLKMatrix4MakeOrtho(-dx, dx, -dy, dy, nearZ, farZ)
+
+        let h = size
+        let w = aspectRatio * size
+        let l = farZ - nearZ
         
-        return GLKMatrix4.toFloat4x4(matrix: ortho)
+        let x =  2 / w // -1 - 1
+        let y =  2 / h // 1 - -1
+        let z =  1 / l // 0 - 1
+        let zt = (farZ + nearZ) * z
+        
+        let matrix = float4x4(
+            .init( x,  0,  0,  0),
+            .init( 0,  y,  0,  0),
+            .init( 0,  0,  z, zt),
+            .init( 0,  0,  0,  1)
+        )
+
+        return matrix
     }
     
+    @inlinable
+    public static func makeOrtho(
+        size: Float,
+        aspectRatio: Float,
+        length: Float
+    ) -> Matrix4 {
+
+        let h = size
+        let w = aspectRatio * size
+        let l = length
+        
+        let x = -2 / w // -1 - 1
+        let y =  2 / h // 1 - -1
+        let z = -1 / l // 0 - 1
+        
+        let matrix = float4x4(
+            .init( x,  0,  0,  0),
+            .init( 0,  y,  0,  0),
+            .init( 0,  0,  z,  0),
+            .init( 0,  0,  0,  1)
+        )
+
+        return matrix
+    }
+
 }
 
 extension GLKMatrix4 {

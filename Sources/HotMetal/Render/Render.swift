@@ -16,6 +16,9 @@ public final class Render: NSObject {
     public let materialLibrary: Material.Library
     public let textureLibrary: Texture.Library
     public let commandQueue: MTLCommandQueue
+    public let pixelFormat: MTLPixelFormat
+    public let depthAttachmentPixelFormat: MTLPixelFormat
+
     public var scene: Scene?
     public private (set) weak var view: MTKView?
     
@@ -26,10 +29,16 @@ public final class Render: NSObject {
     private let creationTime: TimeInterval
     private let uniformBuffers: BufferManager
 
-    public let onReady: (Render) -> ()
+    public let onViewReady: ((Render) -> ())?
 
-    public init(onReady: @escaping (Render) -> ()) {
-        self.onReady = onReady
+    public init(
+        pixelFormat: MTLPixelFormat = .bgra8Unorm, //.bgra8Unorm_srgb
+        depthAttachmentPixelFormat: MTLPixelFormat = .depth32Float,
+        onViewReady: ((Render) -> ())? = nil
+    ) {
+        self.pixelFormat = pixelFormat
+        self.depthAttachmentPixelFormat = depthAttachmentPixelFormat
+        self.onViewReady = onViewReady
         
         self.device = MTLCreateSystemDefaultDevice()!
         self.materialLibrary = Material.Library(device: self.device)
@@ -46,7 +55,7 @@ public final class Render: NSObject {
 
         let disabledDepthDescriptor = MTLDepthStencilDescriptor()
         disabledDepthDescriptor.isDepthWriteEnabled = false
-        disabledDepthDescriptor.depthCompareFunction = .less
+        disabledDepthDescriptor.depthCompareFunction = .always
         disabledDepthStencilState = device.makeDepthStencilState(descriptor: disabledDepthDescriptor)!
         
         creationTime = Date.timeIntervalSinceReferenceDate
@@ -63,23 +72,20 @@ public final class Render: NSObject {
         view.device = device
         view.delegate = self
 
-        view.colorPixelFormat = .bgra8Unorm_srgb
-        view.depthStencilPixelFormat = .depth32Float
-//        view.preferredFramesPerSecond = 60
-//        view.framebufferOnly = false
+        view.colorPixelFormat = self.pixelFormat
+        view.depthStencilPixelFormat = self.depthAttachmentPixelFormat
+        view.framebufferOnly = true
 //        view.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
 //        view.enableSetNeedsDisplay = true
 //        view.isPaused = false
 
-        self.onReady(self)
+        self.onViewReady?(self)
     }
     
     public func defaultPipelineDescriptor() -> MTLRenderPipelineDescriptor {
         let descriptor = MTLRenderPipelineDescriptor()
-        if let view = view {
-            descriptor.colorAttachments[0].pixelFormat = view.colorPixelFormat
-            descriptor.depthAttachmentPixelFormat = view.depthStencilPixelFormat
-        }
+        descriptor.colorAttachments[0].pixelFormat = self.pixelFormat
+        descriptor.depthAttachmentPixelFormat = self.depthAttachmentPixelFormat
         return descriptor
     }
 
@@ -140,7 +146,7 @@ extension Render: MTKViewDelegate {
             uniformContent.pointee.inverseView = viewMatrix.inverse
             uniformContent.pointee.viewProjection = scene.camera.projectionMatrix * viewMatrix
 
-            encoder.setDepthStencilState(enabledDepthStencilState)
+//            encoder.setDepthStencilState(enabledDepthStencilState)
             encoder.setVertexBuffer(uniformBuffer, offset: 0, index: 0)
             encoder.setFragmentBuffer(uniformBuffer, offset: 0, index: 0)
             

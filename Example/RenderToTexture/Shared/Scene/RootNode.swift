@@ -1,8 +1,8 @@
 //
 //  RootNode.swift
-//  VarShader
+//  RenderToTexture
 //
-//  Created by Nail Sharipov on 14.04.2022.
+//  Created by Nail Sharipov on 15.04.2022.
 //
 
 import MetalKit
@@ -10,14 +10,15 @@ import HotMetal
 
 final class RootNode: Node {
 
-    public var color = Vector4(0, 0, 0, 0)
-    private let image = CGImage.load(name: "TwoSea")
+    public var data = Vector3(0, 0, 0)
+    private let imageLoader = HeicLoader()
     
     init(render: Render) {
-
+        let resource = imageLoader.load(render: render, fileName: "Tiger")
+        
         let color = Vector4(CGColor(gray: 1, alpha: 1))
-        let a = 0.5 * Float(image.width)
-        let b = 0.5 * Float(image.height)
+        let a = 0.5 * Float(resource.size.width)
+        let b = 0.5 * Float(resource.size.height)
         
         let vertices: [TextureVertex] = [
             TextureVertex(position: .init(x: -a, y: -b, z: 0), color: color, uv: Vector2(x: 1, y: 1)),
@@ -39,20 +40,21 @@ final class RootNode: Node {
         let piplineState = Material.texture(
             render: render,
             blendMode: .opaque,
-            vertex: .local("vertexVarColor"),
-            fragment: .local("fragmentVarColor")
+            vertex: .local("vertexDepthFilter"),
+            fragment: .local("fragmentDepthFilter")
         )
         let material = render.materialLibrary.register(state: piplineState)
 //        material.cullMode = .back
-        let texture = render.textureLibrary.loadTexture(image: image)
-        material.textures.append(texture)
+        material.isAffectDepthBuffer = false
+
+        material.textures.append(resource.textures[0])
+        material.textures.append(resource.textures[1])
         
         super.init(mesh: mesh, material: material)
     }
     
     override func draw(context: DrawContext, parentTransform: Matrix4) {
-        var clr = self.color
-        context.encoder.setVertexBytes(&clr, length: MemoryLayout<Vector4>.size, index: 3)
+        context.encoder.setFragmentBytes(&data, length: MemoryLayout<Vector3>.size, index: 3)
         super.draw(context: context, parentTransform: parentTransform)
     }
     
@@ -60,16 +62,4 @@ final class RootNode: Node {
         super.update(time: time)
     }
     
-}
-
-private extension CGImage {
-    
-    static func load(name: String) -> CGImage {
-#if os(iOS)
-        return UIImage(named: name)!.cgImage!
-#elseif os(macOS)
-        return NSImage(named: name)!.cgImage(forProposedRect: nil, context: nil, hints: nil)!
-#endif
-    }
-
 }

@@ -13,17 +13,8 @@ public typealias Vector4 = SIMD4<Float>
 
 extension Vector3 {
 
- 
     init(v: Vector4) {
         self.init(x: v.x, y: v.y, z: v.z)
-    }
-
-    public static func random() -> Vector3 {
-        [
-            Float.random(in: -1.0...1.0),
-            Float.random(in: -1.0...1.0),
-            Float.random(in: -1.0...1.0)
-        ]
     }
 }
 

@@ -44,7 +44,7 @@ final class RootNode: Node {
             fragment: .local("fragmentDepthFilter")
         )
         let material = render.materialLibrary.register(state: piplineState)
-        material.cullMode = .back
+//        material.cullMode = .back
 
         material.textures.append(resource.textures[0])
         material.textures.append(resource.textures[1])
@@ -53,8 +53,6 @@ final class RootNode: Node {
     }
     
     override func draw(context: DrawContext, parentTransform: Matrix4) {
-
-//        context.encoder.setVertexBytes(&clr, length: MemoryLayout<Vector4>.size, index: 3)
         context.encoder.setFragmentBytes(&data, length: MemoryLayout<Vector3>.size, index: 3)
         super.draw(context: context, parentTransform: parentTransform)
     }

@@ -19,10 +19,10 @@ final class ImageNode: Node {
         let b = 0.5 * Float(image.height)
         
         let vertices: [TextureVertex] = [
-            TextureVertex(position: .init(x: -a, y: -b, z: 0), color: color, uv: Vector2(x: 1, y: 1)),
-            TextureVertex(position: .init(x: -a, y:  b, z: 0), color: color, uv: Vector2(x: 1, y: 0)),
-            TextureVertex(position: .init(x:  a, y:  b, z: 0), color: color, uv: Vector2(x: 0, y: 0)),
-            TextureVertex(position: .init(x:  a, y: -b, z: 0), color: color, uv: Vector2(x: 0, y: 1))
+            TextureVertex(position: .init(x: -a, y: -b, z: 0), color: color, uv: Vector2(x: 0, y: 1)),
+            TextureVertex(position: .init(x: -a, y:  b, z: 0), color: color, uv: Vector2(x: 0, y: 0)),
+            TextureVertex(position: .init(x:  a, y:  b, z: 0), color: color, uv: Vector2(x: 1, y: 0)),
+            TextureVertex(position: .init(x:  a, y: -b, z: 0), color: color, uv: Vector2(x: 1, y: 1))
         ]
 
         let indices: [UInt16] = [0, 1, 2, 0, 2, 3]

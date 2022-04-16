@@ -40,7 +40,7 @@ vertex VertexOut vertexColor(
                              const VertexIn vIn [[ stage_in ]],
                              const device Uniforms& uniforms [[ buffer(0) ]],
                              const device ModelTransform& transform [[ buffer(1) ]]
-                             ) {
+) {
     VertexOut vOut;
     vOut.position = uniforms.viewProjection * transform.modelMatrix * float4(vIn.position, 1.0);
     vOut.color = vIn.color;
@@ -49,8 +49,8 @@ vertex VertexOut vertexColor(
 }
 
 fragment FragmentOut fragmentColor(
-                                   VertexOut interpolated [[ stage_in ]])
-{
+                                   VertexOut interpolated [[ stage_in ]]
+) {
     FragmentOut out;
 
     out.color0 = interpolated.color;

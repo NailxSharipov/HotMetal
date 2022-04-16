@@ -1,33 +1,37 @@
 //
-//  ImageScene.swift
-//  Image
+//  MainScene.swift
+//  RenderToTexture
 //
-//  Created by Nail Sharipov on 13.04.2022.
+//  Created by Nail Sharipov on 15.04.2022.
 //
 
 import MetalKit
 import HotMetal
 
-final class ImageScene: Scene {
+final class MainScene: Scene {
 
-    private let node: ImageNode
+    private let node: RootNode
     private var start: Vector3 = .zero
+
+    var front: Float = 0
+    var rear: Float = 0
+    var glow: Float = 0
     
     init(render: Render) {
-        self.node = ImageNode(render: render)
+        self.node = RootNode(render: render)
         super.init()
         self.nodes.append(node)
         self.clearColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
         
         let size = Float(render.view?.bounds.height ?? 0)
         camera = Camera(
-            origin: [0, 0, -5],
-            look: [0, 0, 1],
+            origin: [0, 0, 100],
+            look: [0, 0, -1],
             up: [0, 1, 0],
             projection: .ortographic(size),
             aspectRatio: 1.0,
-            zNear: -10,
-            zFar: 10
+            zNear: -1000,
+            zFar: 1000
         )
     }
 
@@ -47,6 +51,11 @@ final class ImageScene: Scene {
     override func drawableSizeWillChange(_ view: MTKView, render: Render, size: CGSize) {
         let size = Float(size.height)
         camera.projection = .ortographic(size)
+    }
+    
+    override func update(time: Time) {
+        node.data = Vector3(front, rear, glow)
+        super.update(time: time)
     }
     
 }

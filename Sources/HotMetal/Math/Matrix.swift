@@ -18,14 +18,17 @@ extension Matrix4 {
         self[3][3] = 1
     }
     
+    @inlinable
     public static func scale(_ scaleX: Float, _ scaleY: Float, _ scaleZ: Float) -> Matrix4 {
         Matrix4(diagonal: [scaleX, scaleY, scaleZ, 1])
     }
 
+    @inlinable
     public static func rotate(radians: Float, axis: Vector3) -> Matrix4 {
         Matrix4(Quaternion(angle: radians, axis: axis))
     }
 
+    @inlinable
     public static func translate(_ translation: Vector3) -> Matrix4 {
         Matrix4(columns:(
             Vector4(1, 0, 0, 0),

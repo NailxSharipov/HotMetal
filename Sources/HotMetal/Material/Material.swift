@@ -10,7 +10,7 @@ import Metal
 public final class Material: Hashable {
     
     public let id: UInt
-    public var cullMode: MTLCullMode = .back
+    public var cullMode: MTLCullMode = .none
     public var isAffectDepthBuffer: Bool = true
     public var textures: [Texture] = []
     
