@@ -84,14 +84,14 @@ public extension Matrix4 {
     ) -> Matrix4 {
         let y: Float = 1 / tan(0.5 * .toRadian * fovy)
         let x = y / aspectRatio
-        let length = nearZ - farZ
+        let length = farZ - nearZ
         let z = (farZ + nearZ) / length
-        let wz = farZ * nearZ / length
+        let wz = -farZ * nearZ / length
 
         let matrix = float4x4(
             .init( x,  0,  0,  0),
             .init( 0,  y,  0,  0),
-            .init( 0,  0,  z, -1),
+            .init( 0,  0,  z,  1),
             .init( 0,  0, wz,  0)
         )
 
