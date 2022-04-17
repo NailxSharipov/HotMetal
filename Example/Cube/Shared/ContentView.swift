@@ -15,11 +15,17 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            Color.yellow
             HotMetalView(render: viewModel.render)
                 .onAppear() {
                     viewModel.onAppear()
                 }
+            VStack {
+                Slider(
+                    value: $viewModel.z,
+                    in: -10...10
+                )
+                Spacer()
+            }
         }.gesture(DragGesture()
             .onChanged { data in
                 viewModel.onDrag(translation: data.translation)

@@ -29,7 +29,7 @@ final class CubNode: Node {
     
     override func update(time: Time) {
         super.update(time: time)
-        let angle = Math.toRadians(30.0) * Float(time.totalTime)
+        let angle = .toRadian * 30.0 * Float(time.totalTime)
         self.scale = Vector3(repeating: 3)
         self.orientation = Quaternion(
             angle: angle,

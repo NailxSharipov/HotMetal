@@ -9,12 +9,12 @@ public final class Camera {
 
     public static let defaultCamera: Camera = Camera(
         origin: [0, 0, 10],
-        look: [0, 0, -1],
+        look: [0, 0, 1],
         up: [0, 1, 0],
         projection: .perspective(90),
         aspectRatio: 1.0,
         zNear: 0.001,
-        zFar: 100.0
+        zFar: 1000.0
     )
 
     public enum Projection {
@@ -44,14 +44,14 @@ public final class Camera {
 
             switch projection {
             case .perspective(let fovYDegrees):
-                _projectionMatrix = Math.makePerspective(
+                _projectionMatrix = Matrix4.makePerspective(
                     fovyDegrees: fovYDegrees,
                     aspectRatio: aspectRatio,
                     nearZ: zNear,
                     farZ: zFar
                 )
             case .ortographic(let size):
-                _projectionMatrix = Math.makeOrtho(
+                _projectionMatrix = Matrix4.makeOrtho(
                     size: size,
                     aspectRatio: aspectRatio,
                     nearZ: zNear,
@@ -70,7 +70,7 @@ public final class Camera {
             }
             needsUpdateView = false
             
-            _viewMatrix = Math.makeLook(eye: origin, look: look, up: up)
+            _viewMatrix = Matrix4.makeLook(eye: origin, look: look, up: up)
 
             return _viewMatrix
         }

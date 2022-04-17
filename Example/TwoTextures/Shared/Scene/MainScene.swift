@@ -25,13 +25,13 @@ final class MainScene: Scene {
         
         let size = Float(render.view?.bounds.height ?? 0)
         camera = Camera(
-            origin: [0, 0, 100],
-            look: [0, 0, -1],
+            origin: [0, 0, -5],
+            look: [0, 0, 1],
             up: [0, 1, 0],
             projection: .ortographic(size),
             aspectRatio: 1.0,
-            zNear: -1000,
-            zFar: 1000
+            zNear: -10,
+            zFar: 10
         )
     }
 

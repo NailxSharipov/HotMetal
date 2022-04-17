@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Array+Float.swift
 //  
 //
 //  Created by Nail Sharipov on 15.04.2022.

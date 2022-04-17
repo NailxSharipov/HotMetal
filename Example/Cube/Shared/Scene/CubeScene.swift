@@ -10,6 +10,13 @@ import HotMetal
 
 final class CubeScene: Scene {
 
+    public var z: Float = 0 {
+        didSet {
+            node.position.z = z
+            debugPrint("Cube pos: \(node.position)")
+        }
+    }
+    
     private let node: CubNode
     private var start: Vector3 = .zero
     
@@ -28,7 +35,7 @@ final class CubeScene: Scene {
         let dx = 0.01 * Float(translation.width)
         let dy = 0.01 * Float(translation.height)
         
-        node.position = .init(x: start.x + dx, y: start.y + dy, z: start.z)
+        node.position = .init(x: start.x + dx, y: start.y + dy, z: z)
         
         debugPrint("Cube pos: \(node.position)")
     }
@@ -36,7 +43,7 @@ final class CubeScene: Scene {
     func onEndDrag(translation: CGSize) {
         let dx = 0.01 * Float(translation.width)
         let dy = 0.01 * Float(translation.height)
-        node.position = .init(x: start.x + dx, y: start.y + dy, z: start.z)
+        node.position = .init(x: start.x + dx, y: start.y + dy, z: z)
         
         debugPrint("Cube pos: \(node.position)")
     }

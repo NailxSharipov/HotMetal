@@ -26,8 +26,7 @@ final class ImageScene: Scene {
             up: [0, 1, 0],
             projection: .ortographic(size),
             aspectRatio: 1.0,
-            zNear: -10,
-            zFar: 10
+            length: 10
         )
     }
 

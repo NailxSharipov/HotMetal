@@ -12,15 +12,21 @@ extension ContentView {
     
     final class ViewModel: ObservableObject {
         
+        @Published var z: CGFloat = 0 {
+            didSet {
+                scene?.z = Float(z)
+            }
+        }
+        
         @Published var render: Render?
-        private var cubeScene: CubeScene?
+        private var scene: CubeScene?
         private var isDrag: Bool = false
         
         func onAppear() {
             self.render = Render() { [weak self] render in
                 guard let self = self else { return }
-                self.cubeScene = CubeScene(render: render)
-                render.scene = self.cubeScene
+                self.scene = CubeScene(render: render)
+                render.scene = self.scene
             }
         }
     }
@@ -31,13 +37,13 @@ extension ContentView.ViewModel {
     func onDrag(translation: CGSize) {
         if !isDrag {
             isDrag = true
-            cubeScene?.onStartDrag()
+            scene?.onStartDrag()
         }
-        cubeScene?.onContinueDrag(translation: translation.reverseY)
+        scene?.onContinueDrag(translation: translation.reverseY)
     }
  
     func onEnd(translation: CGSize) {
-        cubeScene?.onEndDrag(translation: translation.reverseY)
+        scene?.onEndDrag(translation: translation.reverseY)
         isDrag = false
     }
 }
