@@ -29,7 +29,7 @@ public final class Render: NSObject {
     private let creationTime: TimeInterval
     private let uniformBuffers: BufferManager
 
-    public let onViewReady: ((Render) -> ())?
+    public var onViewReady: ((Render) -> ())?
 
     public init(
         pixelFormat: MTLPixelFormat = .bgra8Unorm_srgb, //.bgra8Unorm, //.bgra8Unorm_srgb

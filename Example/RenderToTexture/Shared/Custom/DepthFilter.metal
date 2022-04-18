@@ -95,5 +95,3 @@ fragment FragmentOut fragmentDepthFilter(
     
     return out;
 }
-
-
