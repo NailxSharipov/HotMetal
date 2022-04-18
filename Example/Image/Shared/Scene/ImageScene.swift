@@ -26,7 +26,8 @@ final class ImageScene: Scene {
             up: [0, 1, 0],
             projection: .ortographic(size),
             aspectRatio: 1.0,
-            length: 10
+            nearZ: -10,
+            farZ: 10
         )
     }
 
@@ -45,7 +46,7 @@ final class ImageScene: Scene {
     
     override func drawableSizeWillChange(_ view: MTKView, render: Render, size: CGSize) {
         let size = Float(size.height)
-        camera.projection = .ortographic(size)
+        camera.update(projection: .ortographic(size))
     }
     
 }

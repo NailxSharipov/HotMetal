@@ -14,7 +14,7 @@ final class RootNode: Node {
     private let imageLoader = HeicLoader()
     
     init(render: Render) {
-        let resource = imageLoader.load(render: render, fileName: "Tiger")
+        let resource = imageLoader.load(render: render, fileName: "Tiger", gammaCorrection: true)
         
         let color = Vector4(CGColor(gray: 1, alpha: 1))
         let a = 0.5 * Float(resource.size.width)
@@ -44,7 +44,6 @@ final class RootNode: Node {
             fragment: .local("fragmentDepthFilter")
         )
         let material = render.materialLibrary.register(state: piplineState)
-//        material.cullMode = .back
         material.isAffectDepthBuffer = false
 
         material.textures.append(resource.textures[0])

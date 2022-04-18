@@ -54,8 +54,10 @@ extension ContentView {
 
         func save() {
             debugPrint("Save")
-            let render = Render(depthAttachmentPixelFormat: .invalid)
-            let scene = OffScreenScene(render: render, size: 4032) /// 3024 × 4032
+            let width = 3024
+            let height = 4032
+            let render = Render(pixelFormat: .bgra8Unorm_srgb, depthAttachmentPixelFormat: .invalid)
+            let scene = OffScreenScene(render: render, width: width, height: height)
             render.scene = scene
             
             scene.front = Float(front)
@@ -63,15 +65,15 @@ extension ContentView {
             scene.glow = Float(glow)
             
             
-            guard let texture = render.doShot(width: 3024, height: 4032) else {
+            guard let texture = render.doShot(width: width, height: height) else {
                 return
             }
             
-            guard let image = texture.toImage() else {
+            guard let image = texture.image() else {
                 return
             }
             
-            debugPrint(image)
+            image.save()
         }
         
     }

@@ -12,7 +12,7 @@ import CoreGraphics
 public extension MTLTexture {
     
     func image() -> CGImage? {
-        assert(self.pixelFormat == .bgra8Unorm)
+//        assert(self.pixelFormat == .bgra8Unorm)
 
         guard let ciImage = CIImage(
             mtlTexture: self,
@@ -39,7 +39,8 @@ public extension MTLTexture {
         
         return image
     }
-    
+
+    /*
     func toImage() -> CGImage? {
         let p = self.bytes()
       
@@ -76,4 +77,5 @@ public extension MTLTexture {
         
         return p!
     }
+     */
 }

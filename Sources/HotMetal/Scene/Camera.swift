@@ -13,86 +13,117 @@ public final class Camera {
         up: [0, 1, 0],
         projection: .perspective(90),
         aspectRatio: 1.0,
-        zNear: 0.001,
-        zFar: 1000.0
+        nearZ: 0.001,
+        farZ: 1000.0
     )
-
+    
     public enum Projection {
         case perspective(Float)
         case ortographic(Float)
     }
     
-    public var origin: Vector3 { didSet { needsUpdateView = true } }
-    public var look: Vector3 { didSet { needsUpdateView = true } }
-    public var up: Vector3 { didSet { needsUpdateView = true } }
-    public var aspectRatio: Float { didSet { buildProjection = true } }
-    public var zNear: Float { didSet { buildProjection = true } }
-    public var zFar: Float { didSet { buildProjection = true } }
-    public var projection: Projection { didSet { buildProjection = true } }
+    public private (set) var position: Vector3
+    public private (set) var look: Vector3
+    public private (set) var up: Vector3
+    public private (set) var aspectRatio: Float
+    public private (set) var nearZ: Float
+    public private (set) var farZ: Float
+    public private (set) var projection: Projection
 
-    private var buildProjection = true
-    private var needsUpdateView = true
-    private var _projectionMatrix = Matrix4.identity
-    private var _viewMatrix = Matrix4.identity
+    public var projectionMatrix: Matrix4
+    public var viewMatrix: Matrix4
 
-    public var projectionMatrix: Matrix4 {
-        get {
-            guard buildProjection else {
-                return _projectionMatrix
-            }
-            buildProjection = false
-
-            switch projection {
-            case .perspective(let fovYDegrees):
-                _projectionMatrix = Matrix4.makePerspective(
-                    fovyDegrees: fovYDegrees,
-                    aspectRatio: aspectRatio,
-                    nearZ: zNear,
-                    farZ: zFar
-                )
-            case .ortographic(let size):
-                _projectionMatrix = Matrix4.makeOrtho(
-                    size: size,
-                    aspectRatio: aspectRatio,
-                    nearZ: zNear,
-                    farZ: zFar
-                )
-            }
-            
-            return _projectionMatrix
-        }
+    public func update(position: Vector3, look: Vector3, up: Vector3) {
+        self.position = position
+        self.look = look
+        self.up = up
+        viewMatrix = Matrix4.makeLook(eye: position, look: look, up: up)
+    }
+    
+    public func update(position: Vector3, look: Vector3) {
+        self.position = position
+        self.look = look
+        viewMatrix = Matrix4.makeLook(eye: position, look: look, up: up)
+    }
+    
+    public func update(position: Vector3) {
+        self.position = position
+        viewMatrix = Matrix4.makeLook(eye: position, look: look, up: up)
+    }
+    
+    public func update(look: Vector3) {
+        self.look = look
+        viewMatrix = Matrix4.makeLook(eye: position, look: look, up: up)
+    }
+    
+    public func update(projection: Projection, aspectRatio: Float, nearZ: Float, farZ: Float) {
+        self.projection = projection
+        self.aspectRatio = aspectRatio
+        self.nearZ = nearZ
+        self.farZ = farZ
+        
+        projectionMatrix = Matrix4.makeProjection(projection: projection, aspectRatio: aspectRatio, nearZ: nearZ, farZ: farZ)
     }
 
-    public var viewMatrix: Matrix4 {
-        get {
-            guard needsUpdateView else {
-                return _viewMatrix
-            }
-            needsUpdateView = false
-            
-            _viewMatrix = Matrix4.makeLook(eye: origin, look: look, up: up)
+    public func update(aspectRatio: Float) {
+        self.aspectRatio = aspectRatio
 
-            return _viewMatrix
-        }
+        projectionMatrix = Matrix4.makeProjection(projection: projection, aspectRatio: aspectRatio, nearZ: nearZ, farZ: farZ)
     }
+    
+    public func update(projection: Projection) {
+        self.projection = projection
 
-
+        projectionMatrix = Matrix4.makeProjection(projection: projection, aspectRatio: aspectRatio, nearZ: nearZ, farZ: farZ)
+    }
+    
     public init(
         origin: Vector3,
         look: Vector3,
         up: Vector3,
         projection: Projection,
         aspectRatio: Float,
-        zNear: Float,
-        zFar: Float
+        nearZ: Float,
+        farZ: Float
     ) {
-        self.origin = origin
+        self.position = origin
         self.look = look
         self.up = up
         self.projection = projection
         self.aspectRatio = aspectRatio
-        self.zNear = zNear
-        self.zFar = zFar
+        self.nearZ = nearZ
+        self.farZ = farZ
+        
+        viewMatrix = Matrix4.makeLook(eye: position, look: look, up: up)
+        projectionMatrix = Matrix4.makeProjection(projection: projection, aspectRatio: aspectRatio, nearZ: nearZ, farZ: farZ)
     }
 
+}
+
+private extension Matrix4 {
+
+    @inline(__always)
+    static func makeProjection(
+        projection: Camera.Projection,
+        aspectRatio: Float,
+        nearZ: Float,
+        farZ: Float
+    ) -> Matrix4 {
+        switch projection {
+        case .perspective(let fovYDegrees):
+            return Matrix4.makePerspective(
+                fovyDegrees: fovYDegrees,
+                aspectRatio: aspectRatio,
+                nearZ: nearZ,
+                farZ: farZ
+            )
+        case .ortographic(let size):
+            return Matrix4.makeOrtho(
+                size: size,
+                aspectRatio: aspectRatio,
+                nearZ: nearZ,
+                farZ: farZ
+            )
+        }
+    }
 }

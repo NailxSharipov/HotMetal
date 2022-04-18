@@ -32,7 +32,7 @@ public extension Texture.Library {
         image: CGImage,
         samplerDescriptor: MTLSamplerDescriptor = .linear,
         mipmaps: Bool = true,
-        gammaCorrection: Bool = false
+        gammaCorrection: Bool = true
     ) -> Texture {
         let loader = MTKTextureLoader(device: device)
         

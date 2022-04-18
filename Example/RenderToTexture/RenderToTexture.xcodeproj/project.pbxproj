@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		548807BA280C809700F46362 /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548807B9280C809700F46362 /* CGImage.swift */; };
+		548807BB280C809700F46362 /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548807B9280C809700F46362 /* CGImage.swift */; };
 		54B8C8CC28097451004D76F4 /* RenderToTextureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C8BC2809744F004D76F4 /* RenderToTextureApp.swift */; };
 		54B8C8CD28097451004D76F4 /* RenderToTextureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C8BC2809744F004D76F4 /* RenderToTextureApp.swift */; };
 		54B8C8CE28097451004D76F4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8C8BD2809744F004D76F4 /* ContentView.swift */; };
@@ -32,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		548807B9280C809700F46362 /* CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
 		54B8C8BC2809744F004D76F4 /* RenderToTextureApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderToTextureApp.swift; sourceTree = "<group>"; };
 		54B8C8BD2809744F004D76F4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		54B8C8BE28097451004D76F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -90,6 +93,7 @@
 				54B8C8E1280974E0004D76F4 /* ContentView+ViewModel.swift */,
 				54B8C8E428097505004D76F4 /* HeicLoader.swift */,
 				54B8C8BE28097451004D76F4 /* Assets.xcassets */,
+				548807B9280C809700F46362 /* CGImage.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -253,6 +257,7 @@
 				54B8C8F9280990D9004D76F4 /* OffScreenScene.swift in Sources */,
 				54B8C8CE28097451004D76F4 /* ContentView.swift in Sources */,
 				54B8C8ED28097590004D76F4 /* RootNode.swift in Sources */,
+				548807BA280C809700F46362 /* CGImage.swift in Sources */,
 				54B8C8F3280975C2004D76F4 /* DepthFilter.metal in Sources */,
 				54B8C8CC28097451004D76F4 /* RenderToTextureApp.swift in Sources */,
 				54B8C8E2280974E0004D76F4 /* ContentView+ViewModel.swift in Sources */,
@@ -268,6 +273,7 @@
 				54B8C8FA280990D9004D76F4 /* OffScreenScene.swift in Sources */,
 				54B8C8CF28097451004D76F4 /* ContentView.swift in Sources */,
 				54B8C8EE28097590004D76F4 /* RootNode.swift in Sources */,
+				548807BB280C809700F46362 /* CGImage.swift in Sources */,
 				54B8C8F4280975C2004D76F4 /* DepthFilter.metal in Sources */,
 				54B8C8CD28097451004D76F4 /* RenderToTextureApp.swift in Sources */,
 				54B8C8E3280974E0004D76F4 /* ContentView+ViewModel.swift in Sources */,

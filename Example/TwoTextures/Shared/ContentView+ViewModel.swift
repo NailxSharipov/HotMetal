@@ -21,7 +21,7 @@ extension ContentView {
             }
         }
         
-        @Published var rear: CGFloat = 0 {
+        @Published var rear: CGFloat = 1 {
             didSet {
                 if rear < front {
                     front = rear
@@ -44,6 +44,9 @@ extension ContentView {
             self.render = Render() { [weak self] render in
                 guard let self = self else { return }
                 self.scene = MainScene(render: render)
+                self.scene?.front = Float(self.front)
+                self.scene?.rear = Float(self.rear)
+                self.scene?.glow = Float(self.glow)
                 render.scene = self.scene
             }
         }

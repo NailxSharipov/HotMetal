@@ -29,7 +29,7 @@ final class OffScreenScene: Scene {
         }
     }
     
-    init(render: Render, size: Float) {
+    init(render: Render, width: Int, height: Int) {
         self.node = RootNode(render: render)
         super.init()
         self.nodes.append(node)
@@ -39,10 +39,13 @@ final class OffScreenScene: Scene {
             origin: [0, 0, -5],
             look: [0, 0, 1],
             up: [0, 1, 0],
-            projection: .ortographic(size),
-            aspectRatio: 1.0,
-            zNear: -10,
-            zFar: 10
+            projection: .ortographic(Float(height)),
+            aspectRatio: Float(width) / Float(height),
+            nearZ: -10,
+            farZ: 10
         )
+
+        // invert to image coordinate system
+        camera.viewMatrix = camera.viewMatrix * Matrix4.scale(1, -1, 1)
     }
 }

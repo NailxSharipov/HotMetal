@@ -16,11 +16,11 @@ final class HeicLoader {
         let textures: [Texture]
     }
     
-    func load(render: Render, fileName: String) -> Resource {
+    func load(render: Render, fileName: String, gammaCorrection: Bool) -> Resource {
         let url = Bundle.main.url(forResource: fileName, withExtension: "heic")!
         let source = CGImageSource.read(url: url, device: render.device)
 
-        let texture0 = render.textureLibrary.loadTexture(image: source.image, gammaCorrection: false)
+        let texture0 = render.textureLibrary.loadTexture(image: source.image, gammaCorrection: gammaCorrection)
         let texture1 = render.textureLibrary.register(texture: source.depth)
         
         let width = CGFloat(source.image.width)

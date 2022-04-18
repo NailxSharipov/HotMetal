@@ -7,6 +7,6 @@
 
 public extension Float {
 
-    public static let toRadian: Float = .pi / 180.0
+    static let toRadian: Float = .pi / 180.0
 }
 

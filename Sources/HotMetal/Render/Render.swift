@@ -32,7 +32,7 @@ public final class Render: NSObject {
     public let onViewReady: ((Render) -> ())?
 
     public init(
-        pixelFormat: MTLPixelFormat = .bgra8Unorm, //.bgra8Unorm_srgb
+        pixelFormat: MTLPixelFormat = .bgra8Unorm_srgb, //.bgra8Unorm, //.bgra8Unorm_srgb
         depthAttachmentPixelFormat: MTLPixelFormat = .depth32Float,
         onViewReady: ((Render) -> ())? = nil
     ) {
@@ -95,7 +95,7 @@ extension Render: MTKViewDelegate {
 
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         if let scene = self.scene {
-            scene.camera.aspectRatio = Float(size.width / size.height)
+            scene.camera.update(aspectRatio: Float(size.width / size.height))
             scene.drawableSizeWillChange(view, render: self, size: size)
         }
     }
