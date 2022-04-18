@@ -1,2 +1,2 @@
 # HotMetal
-Light Metal engine
+Light Metal engine with simple examples
