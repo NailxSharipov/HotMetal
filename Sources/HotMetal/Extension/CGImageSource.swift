@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  CGImageSource.swift
+//  HotMetal
 //
 //  Created by Nail Sharipov on 15.04.2022.
 //
@@ -17,11 +17,18 @@ public extension CGImageSource {
     }
     
     static func read(url: URL, device: MTLDevice) -> Source {
-        let source = CGImageSourceCreateWithURL(url as CFURL, nil)!
+        let imgSource = CGImageSourceCreateWithURL(url as CFURL, nil)!
+        return imgSource.source(device: device)!
+    }
+    
+    func source(device: MTLDevice) -> Source? {
+        guard let image = CGImageSourceCreateImageAtIndex(self, 0, nil) else {
+            return nil
+        }
         
-        let image = CGImageSourceCreateImageAtIndex(source, 0, nil)!
-        
-        let buffer = CVPixelBuffer.open(source: source)!
+        guard let buffer = CVPixelBuffer.open(source: self) else {
+            return nil
+        }
         
         let texture = buffer.makeTexture(device: device) // .r16Float
 

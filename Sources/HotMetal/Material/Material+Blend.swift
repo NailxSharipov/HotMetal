@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  Material+Blend.swift
+//  HotMetal
 //
 //  Created by Nail Sharipov on 13.04.2022.
 //
@@ -9,6 +9,9 @@ import Metal
 
 public extension Material {
 
+    // https://docs.unity3d.com/Manual/SL-Blend.html
+    // https://metalbyexample.com/translucency-and-transparency/
+    
     enum BlendMode: Int {
         case opaque
         case traditional        // SrcAlpha OneMinusSrcAlpha
