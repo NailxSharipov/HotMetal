@@ -51,11 +51,12 @@ extension CVPixelBuffer {
         
         var i = 0
         var minValue: Float = .greatestFiniteMagnitude
-        var maxValue: Float = 0
+        var maxValue: Float = .leastNormalMagnitude
 
+        var firstNormal: Float = .leastNormalMagnitude
+        
         while i < length {
             let pixel = floatBuffer[i]
-            assert(pixel >= 0)
 
             if !pixel.isNaN {
                 if pixel < minValue {
@@ -65,6 +66,9 @@ extension CVPixelBuffer {
                 if pixel > maxValue {
                     maxValue = pixel
                 }
+                if firstNormal < 0 {
+                    firstNormal = pixel
+                }
             }
             i += 1
         }
@@ -72,17 +76,24 @@ extension CVPixelBuffer {
         let delta = maxValue - minValue
         
         i = 0
+        if delta > 0 {
+            let k = 1 / delta
+            var lastNormal = firstNormal
+            while i < length {
+                let pixel = floatBuffer[i]
+                if !pixel.isNaN {
+                    lastNormal = pixel
+                }
 
-        while i < length {
-            let pixel = floatBuffer[i]
-
-            if !pixel.isNaN && delta > 0 {
-                let normal = (pixel - minValue) / delta
-                buffer[i] = normal
-            } else {
-                buffer[i] = 0
+                buffer[i] = k * (lastNormal - minValue)
+                
+                i += 1
             }
-            i += 1
+        } else {
+            while i < length {
+                buffer[i] = 0
+                i += 1
+            }
         }
         
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(
