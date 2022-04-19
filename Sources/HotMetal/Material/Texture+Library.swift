@@ -33,18 +33,22 @@ public extension Texture.Library {
         samplerDescriptor: MTLSamplerDescriptor = .linear,
         mipmaps: Bool = true,
         gammaCorrection: Bool = true
-    ) -> Texture {
+    ) -> Texture? {
         let loader = MTKTextureLoader(device: device)
         
-        let mltTexture = try! loader.newTexture(
+        guard let mltTexture = try? loader.newTexture(
             cgImage: image,
             options: [
                 .generateMipmaps: mipmaps,
                 MTKTextureLoader.Option.SRGB: gammaCorrection
             ]
-        )
+        ) else {
+            return nil
+        }
         
-        let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor)!
+        guard let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor) else {
+            return nil
+        }
         
         let id = nextId
         nextId += 1
@@ -56,10 +60,10 @@ public extension Texture.Library {
         name: String,
         samplerDescriptor: MTLSamplerDescriptor = .linear,
         mipmaps: Bool = true
-    ) -> Texture {
+    ) -> Texture? {
         let loader = MTKTextureLoader(device: device)
         
-        let mltTexture = try! loader.newTexture(
+        guard let mltTexture = try? loader.newTexture(
             name: name,
             scaleFactor: 1.0,
             bundle: nil,
@@ -67,9 +71,13 @@ public extension Texture.Library {
                 .generateMipmaps: mipmaps,
                 MTKTextureLoader.Option.SRGB: false
             ]
-        )
+        ) else {
+            return nil
+        }
         
-        let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor)!
+        guard let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor) else {
+            return nil
+        }
         
         let id = nextId
         nextId += 1
@@ -77,11 +85,13 @@ public extension Texture.Library {
         return Texture(id: id, mltTexture: mltTexture, sampler: sampler)
     }
     
-    func register(texture: MTLTexture, samplerDescriptor: MTLSamplerDescriptor = .linear) -> Texture {
+    func register(texture: MTLTexture, samplerDescriptor: MTLSamplerDescriptor = .linear) -> Texture? {
         let id = nextId
         nextId += 1
 
-        let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor)!
+        guard let sampler = self.device.makeSamplerState(descriptor: samplerDescriptor) else {
+            return nil
+        }
         let material = Texture(id: id, mltTexture: texture, sampler: sampler)
         
         store[id] = material

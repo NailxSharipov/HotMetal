@@ -19,10 +19,10 @@ final class BufferManager {
         self.length = length
     }
     
-    func getNext() -> MTLBuffer {
+    func getNext() -> MTLBuffer? {
         assert(Thread.isMainThread)
         guard !buffers.isEmpty else {
-            let buffer = device.makeBuffer(length: length, options: [])!
+            let buffer = device.makeBuffer(length: length, options: [])
             return buffer
         }
 

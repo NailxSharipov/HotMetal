@@ -52,7 +52,9 @@ public extension Render {
         let context = DrawContext(render: self, encoder: encoder)
         
         // The uniform buffers store values that are constant across the entire frame
-        let uniformBuffer = uniformBuffers.getNext()
+        guard let uniformBuffer = uniformBuffers.getNext() else {
+            return nil
+        }
         let uniformContent = uniformBuffer.contents().bindMemory(to: Uniforms.self, capacity: 1)
 
         let viewMatrix = scene.camera.viewMatrix

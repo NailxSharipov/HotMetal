@@ -22,7 +22,7 @@ public extension Material {
             case texture
         }
 
-        unowned var render: Render!
+        weak var render: Render?
         
         private var nextId: UInt = 0
         private var store: [UInt: Material] = [:]
@@ -41,12 +41,12 @@ public extension Material {
 
 public extension Material.Library {
     
-    func load(_ resource: Resource) -> MTLFunction {
+    func load(_ resource: Resource) -> MTLFunction? {
         switch resource {
         case .framework(let name):
-            return framework.makeFunction(name: name)!
+            return framework.makeFunction(name: name)
         case .local(let name):
-            return local!.makeFunction(name: name)!
+            return local?.makeFunction(name: name)
         }
     }
     
@@ -54,20 +54,25 @@ public extension Material.Library {
         store[id]
     }
     
-    func register(category: Category, blendMode: Material.BlendMode) -> Material {
+    func register(category: Category, blendMode: Material.BlendMode) -> Material? {
+        guard let render = self.render else { return nil }
         let id = nextId
         nextId += 1
-        let state: MTLRenderPipelineState
+        let pipelineState: MTLRenderPipelineState?
         
         switch category {
         case .solid:
-            state = Material.solid(render: render, blendMode: blendMode)
+            pipelineState = Material.solid(render: render, blendMode: blendMode)
         case .color:
-            state = Material.color(render: render, blendMode: blendMode)
+            pipelineState = Material.color(render: render, blendMode: blendMode)
         case .texture:
-            state = Material.texture(render: render, blendMode: blendMode)
+            pipelineState = Material.texture(render: render, blendMode: blendMode)
         }
 
+        guard let state = pipelineState else {
+            return nil
+        }
+        
         let material = Material(id: id, state: state)
         
         store[id] = material

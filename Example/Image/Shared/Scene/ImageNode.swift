@@ -12,8 +12,9 @@ final class ImageNode: Node {
 
     private let image = CGImage.load(name: "TwoSea")
     
-    init(render: Render) {
-
+    init?(render: Render) {
+        guard let image = self.image else { return nil }
+        
         let color = Vector4(CGColor(gray: 1, alpha: 1))
         let a = 0.5 * Float(image.width)
         let b = 0.5 * Float(image.height)
@@ -28,14 +29,23 @@ final class ImageNode: Node {
         let indices: [UInt16] = [0, 1, 2, 0, 2, 3]
         
         let vertexSize = vertices.count * MemoryLayout.size(ofValue: vertices[0])
-        let vertexBuffer = render.device.makeBuffer(bytes: vertices, length: vertexSize, options: [.cpuCacheModeWriteCombined])!
+        guard let vertexBuffer = render.device.makeBuffer(bytes: vertices, length: vertexSize, options: [.cpuCacheModeWriteCombined]) else {
+            return nil
+        }
 
         let indexSize = indices.count * MemoryLayout.size(ofValue: indices[0])
-        let indexBuffer = render.device.makeBuffer(bytes: indices, length: indexSize, options: [.cpuCacheModeWriteCombined])!
+        guard let indexBuffer = render.device.makeBuffer(bytes: indices, length: indexSize, options: [.cpuCacheModeWriteCombined]) else {
+            return nil
+        }
 
         let mesh = Mesh(vertexBuffer: vertexBuffer, indexBuffer: indexBuffer, count: indices.count)
-        let material = render.materialLibrary.register(category: .texture, blendMode: .opaque)
-        let texture = render.textureLibrary.loadTexture(image: image)
+        guard
+            let material = render.materialLibrary.register(category: .texture, blendMode: .opaque),
+            let texture = render.textureLibrary.loadTexture(image: image)
+        else {
+            return nil
+        }
+        
         material.textures.append(texture)
         
         super.init(mesh: mesh, material: material)
@@ -55,11 +65,11 @@ final class ImageNode: Node {
 
 private extension CGImage {
     
-    static func load(name: String) -> CGImage {
+    static func load(name: String) -> CGImage? {
 #if os(iOS)
-        return UIImage(named: name)!.cgImage!
+        return UIImage(named: name)?.cgImage
 #elseif os(macOS)
-        return NSImage(named: name)!.cgImage(forProposedRect: nil, context: nil, hints: nil)!
+        return NSImage(named: name)?.cgImage(forProposedRect: nil, context: nil, hints: nil)
 #endif
     }
 

@@ -13,8 +13,10 @@ final class RootNode: Node {
     public var data = Vector3(0, 0, 0)
     private let imageLoader = HeicLoader()
     
-    init(render: Render) {
-        let resource = imageLoader.load(render: render, fileName: "Tiger")
+    init?(render: Render) {
+        guard let resource = imageLoader.load(render: render, fileName: "Tiger") else {
+            return nil
+        }
         
         let color = Vector4(CGColor(gray: 1, alpha: 1))
         let a = 0.5 * Float(resource.size.width)
@@ -30,19 +32,23 @@ final class RootNode: Node {
         let indices: [UInt16] = [0, 1, 2, 0, 2, 3]
         
         let vertexSize = vertices.count * MemoryLayout.size(ofValue: vertices[0])
-        let vertexBuffer = render.device.makeBuffer(bytes: vertices, length: vertexSize, options: [.cpuCacheModeWriteCombined])!
+        guard let vertexBuffer = render.device.makeBuffer(bytes: vertices, length: vertexSize, options: [.cpuCacheModeWriteCombined]) else {
+            return nil
+        }
 
         let indexSize = indices.count * MemoryLayout.size(ofValue: indices[0])
-        let indexBuffer = render.device.makeBuffer(bytes: indices, length: indexSize, options: [.cpuCacheModeWriteCombined])!
+        guard let indexBuffer = render.device.makeBuffer(bytes: indices, length: indexSize, options: [.cpuCacheModeWriteCombined]) else {
+            return nil
+        }
 
         let mesh = Mesh(vertexBuffer: vertexBuffer, indexBuffer: indexBuffer, count: indices.count)
         
-        let piplineState = Material.texture(
+        guard let piplineState = Material.texture(
             render: render,
             blendMode: .opaque,
             vertex: .local("vertexDepthFilter"),
             fragment: .local("fragmentDepthFilter")
-        )
+        ) else { return nil }
         let material = render.materialLibrary.register(state: piplineState)
 //        material.cullMode = .back
 

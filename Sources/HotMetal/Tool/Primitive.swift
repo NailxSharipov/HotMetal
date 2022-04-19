@@ -13,7 +13,7 @@ public final class Primitive {
         render: Render,
         size: Float,
         colors: [CGColor]
-    ) -> Mesh {
+    ) -> Mesh? {
 
         let a = 0.5 * size
 
@@ -39,16 +39,20 @@ public final class Primitive {
         ]
         
         let vertexSize = vertices.count * MemoryLayout.size(ofValue: vertices[0])
-        let vertexBuffer = render.device.makeBuffer(bytes: vertices, length: vertexSize, options: [.cpuCacheModeWriteCombined])!
+        guard let vertexBuffer = render.device.makeBuffer(bytes: vertices, length: vertexSize, options: [.cpuCacheModeWriteCombined]) else {
+            return nil
+        }
 
         let indexSize = indices.count * MemoryLayout.size(ofValue: indices[0])
-        let indexBuffer = render.device.makeBuffer(bytes: indices, length: indexSize, options: [.cpuCacheModeWriteCombined])!
+        guard let indexBuffer = render.device.makeBuffer(bytes: indices, length: indexSize, options: [.cpuCacheModeWriteCombined]) else {
+            return nil
+        }
 
         return Mesh(vertexBuffer: vertexBuffer, indexBuffer: indexBuffer, count: indices.count)
         
     }
     
-    public static func square(render: Render, size: Float) -> Mesh {
+    public static func square(render: Render, size: Float) -> Mesh? {
 
         let a = 0.5 * size
 
@@ -64,10 +68,14 @@ public final class Primitive {
         ]
         
         let vertexSize = vertices.count * MemoryLayout.size(ofValue: vertices[0])
-        let vertexBuffer = render.device.makeBuffer(bytes: vertices, length: vertexSize, options: [.cpuCacheModeWriteCombined])!
+        guard let vertexBuffer = render.device.makeBuffer(bytes: vertices, length: vertexSize, options: [.cpuCacheModeWriteCombined]) else {
+            return nil
+        }
 
         let indexSize = indices.count * MemoryLayout.size(ofValue: indices[0])
-        let indexBuffer = render.device.makeBuffer(bytes: indices, length: indexSize, options: [.cpuCacheModeWriteCombined])!
+        guard let indexBuffer = render.device.makeBuffer(bytes: indices, length: indexSize, options: [.cpuCacheModeWriteCombined]) else {
+            return nil
+        }
 
         return Mesh(vertexBuffer: vertexBuffer, indexBuffer: indexBuffer, count: indices.count)
         

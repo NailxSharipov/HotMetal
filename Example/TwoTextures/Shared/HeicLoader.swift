@@ -16,12 +16,15 @@ final class HeicLoader {
         let textures: [Texture]
     }
     
-    func load(render: Render, fileName: String) -> Resource {
-        let url = Bundle.main.url(forResource: fileName, withExtension: "heic")!
-        let source = CGImageSource.read(url: url, device: render.device)
-
-        let texture0 = render.textureLibrary.loadTexture(image: source.image, gammaCorrection: true)
-        let texture1 = render.textureLibrary.register(texture: source.depth)
+    func load(render: Render, fileName: String) -> Resource? {
+        guard
+            let url = Bundle.main.url(forResource: fileName, withExtension: "heic"),
+            let source = CGImageSource.read(url: url, device: render.device),
+            let texture0 = render.textureLibrary.loadTexture(image: source.image, gammaCorrection: true),
+            let texture1 = render.textureLibrary.register(texture: source.depth)
+        else {
+            return nil
+        }
         
         let width = CGFloat(source.image.width)
         let height = CGFloat(source.image.height)

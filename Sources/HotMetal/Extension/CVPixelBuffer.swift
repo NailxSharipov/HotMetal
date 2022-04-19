@@ -39,7 +39,7 @@ extension CVPixelBuffer {
         return depthData.applyingExifOrientation(orientation).depthDataMap
     }
     
-    func makeTexture(device: MTLDevice) -> MTLTexture {
+    func makeTexture(device: MTLDevice) -> MTLTexture? {
         
         let width = CVPixelBufferGetWidth(self)
         let height = CVPixelBufferGetHeight(self)
@@ -103,8 +103,12 @@ extension CVPixelBuffer {
             mipmapped: false
         )
 
-        let texture = device.makeTexture(descriptor: descriptor)!
-        let data = buffer.float16(count: length)
+        guard
+            let texture = device.makeTexture(descriptor: descriptor),
+            let data = buffer.float16(count: length)
+        else {
+            return nil
+        }
         
         texture.replace(
             region: MTLRegionMake2D(0, 0, width, height),

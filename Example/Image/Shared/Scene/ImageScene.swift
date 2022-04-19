@@ -13,8 +13,9 @@ final class ImageScene: Scene {
     private let node: ImageNode
     private var start: Vector3 = .zero
     
-    init(render: Render) {
-        self.node = ImageNode(render: render)
+    init?(render: Render) {
+        guard let node = ImageNode(render: render) else { return nil }
+        self.node = node
         super.init()
         self.nodes.append(node)
         self.clearColor = .init(red: 0, green: 0, blue: 0, alpha: 0)

@@ -17,8 +17,9 @@ final class MainScene: Scene {
     var green: Float = 0
     var blue: Float = 0
     
-    init(render: Render) {
-        self.node = RootNode(render: render)
+    init?(render: Render) {
+        guard let node = RootNode(render: render) else { return nil }
+        self.node = node
         super.init()
         self.nodes.append(node)
         self.clearColor = .init(red: 0, green: 0, blue: 0, alpha: 0)

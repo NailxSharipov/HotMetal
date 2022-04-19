@@ -14,7 +14,7 @@ public extension Material {
         blendMode: BlendMode,
         vertex: Library.Resource = .framework("vertexTexture"),
         fragment: Library.Resource = .framework("fragmentTexture")
-    ) -> MTLRenderPipelineState {
+    ) -> MTLRenderPipelineState? {
         
         let bufferIndex = Render.firstFreeVertexBufferIndex
       
@@ -51,7 +51,7 @@ public extension Material {
 
         descriptor.vertexDescriptor = vertexDescriptor
 
-        let state = (try? render.device.makeRenderPipelineState(descriptor: descriptor))!
+        let state = try? render.device.makeRenderPipelineState(descriptor: descriptor)
 
         return state
     }

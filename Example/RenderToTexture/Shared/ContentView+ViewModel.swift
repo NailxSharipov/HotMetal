@@ -42,8 +42,11 @@ extension ContentView {
         
         func onAppear() {
             self.render = Render() { [weak self] render in
-                guard let self = self else { return }
-                let scene = MainScene(render: render)
+                guard
+                    let self = self,
+                    let scene = MainScene(render: render)
+                else { return }
+                
                 self.scene = scene
                 render.scene = scene
                 scene.front = Float(self.front)
@@ -56,8 +59,13 @@ extension ContentView {
             debugPrint("Save")
             let width = 3024
             let height = 4032
-            let render = Render(pixelFormat: .bgra8Unorm_srgb, depthAttachmentPixelFormat: .invalid)
-            let scene = OffScreenScene(render: render, width: width, height: height)
+            guard
+                let render = Render(pixelFormat: .bgra8Unorm_srgb, depthAttachmentPixelFormat: .invalid),
+                let scene = OffScreenScene(render: render, width: width, height: height)
+            else {
+                return
+            }
+
             render.scene = scene
             
             scene.front = Float(front)

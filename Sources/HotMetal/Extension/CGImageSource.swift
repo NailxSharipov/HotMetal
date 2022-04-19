@@ -16,9 +16,12 @@ public extension CGImageSource {
         public let depth: MTLTexture
     }
     
-    static func read(url: URL, device: MTLDevice) -> Source {
-        let imgSource = CGImageSourceCreateWithURL(url as CFURL, nil)!
-        return imgSource.source(device: device)!
+    static func read(url: URL, device: MTLDevice) -> Source? {
+        guard let imgSource = CGImageSourceCreateWithURL(url as CFURL, nil) else {
+            return nil
+        }
+
+        return imgSource.source(device: device)
     }
     
     func source(device: MTLDevice) -> Source? {
@@ -30,7 +33,10 @@ public extension CGImageSource {
             return nil
         }
         
-        let texture = buffer.makeTexture(device: device) // .r16Float
+        // .r16Float
+        guard let texture = buffer.makeTexture(device: device) else {
+            return nil
+        }
 
         return Source(image: image, depth: texture)
     }

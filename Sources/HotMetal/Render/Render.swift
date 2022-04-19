@@ -31,7 +31,7 @@ public final class Render: NSObject {
 
     public var onViewReady: ((Render) -> ())?
 
-    public init(
+    public init?(
         pixelFormat: MTLPixelFormat = .bgra8Unorm_srgb, //.bgra8Unorm, //.bgra8Unorm_srgb
         depthAttachmentPixelFormat: MTLPixelFormat = .depth32Float,
         onViewReady: ((Render) -> ())? = nil
@@ -40,23 +40,39 @@ public final class Render: NSObject {
         self.depthAttachmentPixelFormat = depthAttachmentPixelFormat
         self.onViewReady = onViewReady
         
-        self.device = MTLCreateSystemDefaultDevice()!
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            return nil
+        }
+        
+        self.device = device
         self.materialLibrary = Material.Library(device: self.device)
         self.textureLibrary = Texture.Library(device: self.device)
 
-        self.commandQueue = device.makeCommandQueue()!
+        guard let commandQueue = device.makeCommandQueue() else {
+            return nil
+        }
+        
+        self.commandQueue = commandQueue
 
         self.uniformBuffers = BufferManager(device: device, length: MemoryLayout<Uniforms>.size)
 
         let enabledDepthDescriptor = MTLDepthStencilDescriptor()
         enabledDepthDescriptor.isDepthWriteEnabled = true
         enabledDepthDescriptor.depthCompareFunction = .less
-        enabledDepthStencilState = device.makeDepthStencilState(descriptor: enabledDepthDescriptor)!
+        
+        guard let enabledDepthState = device.makeDepthStencilState(descriptor: enabledDepthDescriptor) else {
+            return nil
+        }
+        enabledDepthStencilState = enabledDepthState
 
         let disabledDepthDescriptor = MTLDepthStencilDescriptor()
         disabledDepthDescriptor.isDepthWriteEnabled = false
         disabledDepthDescriptor.depthCompareFunction = .always
-        disabledDepthStencilState = device.makeDepthStencilState(descriptor: disabledDepthDescriptor)!
+        
+        guard let disabledDepthState = device.makeDepthStencilState(descriptor: disabledDepthDescriptor) else {
+            return nil
+        }
+        disabledDepthStencilState = disabledDepthState
         
         creationTime = Date.timeIntervalSinceReferenceDate
         lastTime = creationTime
@@ -136,7 +152,9 @@ extension Render: MTKViewDelegate {
             let context = DrawContext(render: self, encoder: encoder)
             
             // The uniform buffers store values that are constant across the entire frame
-            let uniformBuffer = uniformBuffers.getNext()
+            guard let uniformBuffer = uniformBuffers.getNext() else {
+                return
+            }
             let uniformContent = uniformBuffer.contents().bindMemory(to: Uniforms.self, capacity: 1)
 
             let viewMatrix = scene.camera.viewMatrix
@@ -146,7 +164,6 @@ extension Render: MTKViewDelegate {
             uniformContent.pointee.inverseView = viewMatrix.inverse
             uniformContent.pointee.viewProjection = scene.camera.projectionMatrix * viewMatrix
 
-//            encoder.setDepthStencilState(enabledDepthStencilState)
             encoder.setVertexBuffer(uniformBuffer, offset: 0, index: 0)
             encoder.setFragmentBuffer(uniformBuffer, offset: 0, index: 0)
             

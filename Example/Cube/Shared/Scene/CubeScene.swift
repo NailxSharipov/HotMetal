@@ -20,8 +20,9 @@ final class CubeScene: Scene {
     private let node: CubNode
     private var start: Vector3 = .zero
     
-    init(render: Render) {
-        self.node = CubNode(render: render)
+    init?(render: Render) {
+        guard let node = CubNode(render: render) else { return nil }
+        self.node = node
         super.init()
         self.nodes.append(node)
         self.clearColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
