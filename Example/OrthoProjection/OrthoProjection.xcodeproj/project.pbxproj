@@ -1,0 +1,532 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		540091E02814575D00C4DEA0 /* OrthoProjectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540091D02814575C00C4DEA0 /* OrthoProjectionApp.swift */; };
+		540091E12814575D00C4DEA0 /* OrthoProjectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540091D02814575C00C4DEA0 /* OrthoProjectionApp.swift */; };
+		540091E22814575D00C4DEA0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540091D12814575C00C4DEA0 /* ContentView.swift */; };
+		540091E32814575D00C4DEA0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540091D12814575C00C4DEA0 /* ContentView.swift */; };
+		540091E42814575D00C4DEA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 540091D22814575D00C4DEA0 /* Assets.xcassets */; };
+		540091E52814575D00C4DEA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 540091D22814575D00C4DEA0 /* Assets.xcassets */; };
+		540091F22814585700C4DEA0 /* ContentView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540091F12814585700C4DEA0 /* ContentView+ViewModel.swift */; };
+		540091F32814585700C4DEA0 /* ContentView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540091F12814585700C4DEA0 /* ContentView+ViewModel.swift */; };
+		540091F82814620D00C4DEA0 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540091F72814620D00C4DEA0 /* MainScene.swift */; };
+		540091F92814620D00C4DEA0 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540091F72814620D00C4DEA0 /* MainScene.swift */; };
+		540091FD2814629400C4DEA0 /* HotMetal in Frameworks */ = {isa = PBXBuildFile; productRef = 540091FC2814629400C4DEA0 /* HotMetal */; };
+		540091FF281462F300C4DEA0 /* HotMetal in Frameworks */ = {isa = PBXBuildFile; productRef = 540091FE281462F300C4DEA0 /* HotMetal */; };
+		540092012814654200C4DEA0 /* CameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540092002814654200C4DEA0 /* CameraButton.swift */; };
+		540092022814654200C4DEA0 /* CameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540092002814654200C4DEA0 /* CameraButton.swift */; };
+		54DCDDA52815720800EF4D96 /* SpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DCDDA42815720800EF4D96 /* SpriteNode.swift */; };
+		54DCDDA62815720800EF4D96 /* SpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DCDDA42815720800EF4D96 /* SpriteNode.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		540091D02814575C00C4DEA0 /* OrthoProjectionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrthoProjectionApp.swift; sourceTree = "<group>"; };
+		540091D12814575C00C4DEA0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		540091D22814575D00C4DEA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		540091D72814575D00C4DEA0 /* OrthoProjection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrthoProjection.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		540091DD2814575D00C4DEA0 /* OrthoProjection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrthoProjection.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		540091DF2814575D00C4DEA0 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		540091EF2814582E00C4DEA0 /* HotMetal */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = HotMetal; path = ../..; sourceTree = "<group>"; };
+		540091F12814585700C4DEA0 /* ContentView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+ViewModel.swift"; sourceTree = "<group>"; };
+		540091F72814620D00C4DEA0 /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
+		540091FA2814628E00C4DEA0 /* OrthoProjection--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "OrthoProjection--iOS--Info.plist"; sourceTree = "<group>"; };
+		540092002814654200C4DEA0 /* CameraButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraButton.swift; sourceTree = "<group>"; };
+		54DCDDA42815720800EF4D96 /* SpriteNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteNode.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		540091D42814575D00C4DEA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				540091FD2814629400C4DEA0 /* HotMetal in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		540091DA2814575D00C4DEA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				540091FF281462F300C4DEA0 /* HotMetal in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		540091CA2814575C00C4DEA0 = {
+			isa = PBXGroup;
+			children = (
+				540091FA2814628E00C4DEA0 /* OrthoProjection--iOS--Info.plist */,
+				540091EE2814582E00C4DEA0 /* Packages */,
+				540091CF2814575C00C4DEA0 /* Shared */,
+				540091DE2814575D00C4DEA0 /* macOS */,
+				540091D82814575D00C4DEA0 /* Products */,
+				540091FB2814629400C4DEA0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		540091CF2814575C00C4DEA0 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				540091F02814583900C4DEA0 /* Scene */,
+				540091D02814575C00C4DEA0 /* OrthoProjectionApp.swift */,
+				540091D12814575C00C4DEA0 /* ContentView.swift */,
+				540091F12814585700C4DEA0 /* ContentView+ViewModel.swift */,
+				540091D22814575D00C4DEA0 /* Assets.xcassets */,
+				540092002814654200C4DEA0 /* CameraButton.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		540091D82814575D00C4DEA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				540091D72814575D00C4DEA0 /* OrthoProjection.app */,
+				540091DD2814575D00C4DEA0 /* OrthoProjection.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		540091DE2814575D00C4DEA0 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				540091DF2814575D00C4DEA0 /* macOS.entitlements */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		540091EE2814582E00C4DEA0 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				540091EF2814582E00C4DEA0 /* HotMetal */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		540091F02814583900C4DEA0 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				54DCDDA42815720800EF4D96 /* SpriteNode.swift */,
+				540091F72814620D00C4DEA0 /* MainScene.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		540091FB2814629400C4DEA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		540091D62814575D00C4DEA0 /* OrthoProjection (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 540091E82814575D00C4DEA0 /* Build configuration list for PBXNativeTarget "OrthoProjection (iOS)" */;
+			buildPhases = (
+				540091D32814575D00C4DEA0 /* Sources */,
+				540091D42814575D00C4DEA0 /* Frameworks */,
+				540091D52814575D00C4DEA0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OrthoProjection (iOS)";
+			packageProductDependencies = (
+				540091FC2814629400C4DEA0 /* HotMetal */,
+			);
+			productName = "OrthoProjection (iOS)";
+			productReference = 540091D72814575D00C4DEA0 /* OrthoProjection.app */;
+			productType = "com.apple.product-type.application";
+		};
+		540091DC2814575D00C4DEA0 /* OrthoProjection (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 540091EB2814575D00C4DEA0 /* Build configuration list for PBXNativeTarget "OrthoProjection (macOS)" */;
+			buildPhases = (
+				540091D92814575D00C4DEA0 /* Sources */,
+				540091DA2814575D00C4DEA0 /* Frameworks */,
+				540091DB2814575D00C4DEA0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OrthoProjection (macOS)";
+			packageProductDependencies = (
+				540091FE281462F300C4DEA0 /* HotMetal */,
+			);
+			productName = "OrthoProjection (macOS)";
+			productReference = 540091DD2814575D00C4DEA0 /* OrthoProjection.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		540091CB2814575C00C4DEA0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
+				LastUpgradeCheck = 1330;
+				TargetAttributes = {
+					540091D62814575D00C4DEA0 = {
+						CreatedOnToolsVersion = 13.3;
+					};
+					540091DC2814575D00C4DEA0 = {
+						CreatedOnToolsVersion = 13.3;
+					};
+				};
+			};
+			buildConfigurationList = 540091CE2814575C00C4DEA0 /* Build configuration list for PBXProject "OrthoProjection" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 540091CA2814575C00C4DEA0;
+			productRefGroup = 540091D82814575D00C4DEA0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				540091D62814575D00C4DEA0 /* OrthoProjection (iOS) */,
+				540091DC2814575D00C4DEA0 /* OrthoProjection (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		540091D52814575D00C4DEA0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				540091E42814575D00C4DEA0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		540091DB2814575D00C4DEA0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				540091E52814575D00C4DEA0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		540091D32814575D00C4DEA0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				540091E22814575D00C4DEA0 /* ContentView.swift in Sources */,
+				540091E02814575D00C4DEA0 /* OrthoProjectionApp.swift in Sources */,
+				540091F22814585700C4DEA0 /* ContentView+ViewModel.swift in Sources */,
+				540091F82814620D00C4DEA0 /* MainScene.swift in Sources */,
+				54DCDDA52815720800EF4D96 /* SpriteNode.swift in Sources */,
+				540092012814654200C4DEA0 /* CameraButton.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		540091D92814575D00C4DEA0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				540091E32814575D00C4DEA0 /* ContentView.swift in Sources */,
+				540091E12814575D00C4DEA0 /* OrthoProjectionApp.swift in Sources */,
+				540091F32814585700C4DEA0 /* ContentView+ViewModel.swift in Sources */,
+				540091F92814620D00C4DEA0 /* MainScene.swift in Sources */,
+				54DCDDA62815720800EF4D96 /* SpriteNode.swift in Sources */,
+				540092022814654200C4DEA0 /* CameraButton.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		540091E62814575D00C4DEA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		540091E72814575D00C4DEA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		540091E92814575D00C4DEA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HPV9E52JPX;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "OrthoProjection--iOS--Info.plist";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.OrthoProjection;
+				PRODUCT_NAME = OrthoProjection;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		540091EA2814575D00C4DEA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HPV9E52JPX;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "OrthoProjection--iOS--Info.plist";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.OrthoProjection;
+				PRODUCT_NAME = OrthoProjection;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		540091EC2814575D00C4DEA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = HPV9E52JPX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.OrthoProjection;
+				PRODUCT_NAME = OrthoProjection;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		540091ED2814575D00C4DEA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = HPV9E52JPX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weakteam.OrthoProjection;
+				PRODUCT_NAME = OrthoProjection;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		540091CE2814575C00C4DEA0 /* Build configuration list for PBXProject "OrthoProjection" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				540091E62814575D00C4DEA0 /* Debug */,
+				540091E72814575D00C4DEA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		540091E82814575D00C4DEA0 /* Build configuration list for PBXNativeTarget "OrthoProjection (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				540091E92814575D00C4DEA0 /* Debug */,
+				540091EA2814575D00C4DEA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		540091EB2814575D00C4DEA0 /* Build configuration list for PBXNativeTarget "OrthoProjection (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				540091EC2814575D00C4DEA0 /* Debug */,
+				540091ED2814575D00C4DEA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		540091FC2814629400C4DEA0 /* HotMetal */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HotMetal;
+		};
+		540091FE281462F300C4DEA0 /* HotMetal */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HotMetal;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 540091CB2814575C00C4DEA0 /* Project object */;
+}

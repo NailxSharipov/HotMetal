@@ -16,9 +16,6 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             HotMetalView(render: viewModel.render)
-                .onAppear() {
-                    viewModel.onAppear()
-                }
             VStack {
                 Slider(
                     value: $viewModel.z,

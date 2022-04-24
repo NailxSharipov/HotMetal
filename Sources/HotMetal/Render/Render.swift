@@ -17,28 +17,44 @@ public final class Render: NSObject {
     public let textureLibrary: Texture.Library
     public let commandQueue: MTLCommandQueue
     public let pixelFormat: MTLPixelFormat
+    public let clearColor: MTLClearColor
     public let depthAttachmentPixelFormat: MTLPixelFormat
 
-    public var scene: Scene?
+    public private (set) var scene: Scene?
     public private (set) weak var view: MTKView?
+    
+    public var scale: CGFloat {
+        view?.scale ?? 1
+    }
+    
+    public var screenSize: CGSize {
+        guard let size = view?.bounds.size else { return .zero }
+        let s = self.scale
+        return CGSize(width: s * size.width, height: s * size.height)
+    }
     
     var enabledDepthStencilState: MTLDepthStencilState
     var disabledDepthStencilState: MTLDepthStencilState
 
-    private var lastTime: TimeInterval
-    private let creationTime: TimeInterval
-    private let uniformBuffers: BufferManager
+    var lastTime: TimeInterval
+    let creationTime: TimeInterval
+    let uniformBuffers: BufferManager
 
     public var onViewReady: ((Render) -> ())?
+    public var onSizeWillChange: ((CGSize) -> ())?
 
     public init?(
         pixelFormat: MTLPixelFormat = .bgra8Unorm_srgb, //.bgra8Unorm, //.bgra8Unorm_srgb
+        clearColor: MTLClearColor = .init(red: 0, green: 0, blue: 0, alpha: 0),
         depthAttachmentPixelFormat: MTLPixelFormat = .depth32Float,
-        onViewReady: ((Render) -> ())? = nil
+        onViewReady: ((Render) -> ())? = nil,
+        onSizeWillChange: ((CGSize) -> ())? = nil
     ) {
         self.pixelFormat = pixelFormat
+        self.clearColor = clearColor
         self.depthAttachmentPixelFormat = depthAttachmentPixelFormat
         self.onViewReady = onViewReady
+        self.onSizeWillChange = onSizeWillChange
         
         guard let device = MTLCreateSystemDefaultDevice() else {
             return nil
@@ -76,7 +92,7 @@ public final class Render: NSObject {
         
         creationTime = Date.timeIntervalSinceReferenceDate
         lastTime = creationTime
-        
+
         super.init()
         
         self.materialLibrary.render = self
@@ -91,11 +107,23 @@ public final class Render: NSObject {
         view.colorPixelFormat = self.pixelFormat
         view.depthStencilPixelFormat = self.depthAttachmentPixelFormat
         view.framebufferOnly = true
-//        view.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
+        view.clearColor = clearColor
 //        view.enableSetNeedsDisplay = true
 //        view.isPaused = false
 
         self.onViewReady?(self)
+    }
+    
+    public func attach(scene: Scene) {
+        self.scene = scene
+        guard let view = self.view else { return }
+        let scale = view.scale
+        let size = CGSize(
+            width: scale * view.bounds.size.width,
+            height: scale * view.bounds.size.height
+        )
+
+        scene.drawableSizeWillChange(render: self, size: size, scale: scale)
     }
     
     public func defaultPipelineDescriptor() -> MTLRenderPipelineDescriptor {
@@ -105,80 +133,4 @@ public final class Render: NSObject {
         return descriptor
     }
 
-}
-
-extension Render: MTKViewDelegate {
-
-    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        if let scene = self.scene {
-            scene.camera.update(aspectRatio: Float(size.width / size.height))
-            scene.drawableSizeWillChange(view, render: self, size: size)
-        }
-    }
-
-    public func draw(in view: MTKView) {
-        guard let descriptor = view.currentRenderPassDescriptor else {
-            return
-        }
-
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
-            return
-        }
-
-        guard let drawable = view.currentDrawable else {
-            return
-        }
-
-        let now = Date.timeIntervalSinceReferenceDate
-
-        let time = Time(
-          totalTime: Date.timeIntervalSinceReferenceDate - creationTime,
-          updateTime: now - lastTime
-        )
-        lastTime = now
-        
-        if let scene = self.scene {
-
-            scene.update(time: time)
-            
-            guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
-                return
-            }
-            
-            let attachment = descriptor.colorAttachments[0]
-            attachment?.loadAction = .clear
-            attachment?.clearColor = scene.clearColor
-
-            let context = DrawContext(render: self, encoder: encoder)
-            
-            // The uniform buffers store values that are constant across the entire frame
-            guard let uniformBuffer = uniformBuffers.getNext() else {
-                return
-            }
-            let uniformContent = uniformBuffer.contents().bindMemory(to: Uniforms.self, capacity: 1)
-
-            let viewMatrix = scene.camera.viewMatrix
-
-            uniformContent.pointee.time = Float(time.totalTime)
-            uniformContent.pointee.view = viewMatrix
-            uniformContent.pointee.inverseView = viewMatrix.inverse
-            uniformContent.pointee.viewProjection = scene.camera.projectionMatrix * viewMatrix
-
-            encoder.setVertexBuffer(uniformBuffer, offset: 0, index: 0)
-            encoder.setFragmentBuffer(uniformBuffer, offset: 0, index: 0)
-            
-            scene.draw(context: context)
-
-            encoder.endEncoding()
-            
-            commandBuffer.addCompletedHandler { [weak self] _ in
-                guard let self = self else { return }
-                self.uniformBuffers.release(buffer: uniformBuffer)
-            }
-        }
-
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
-  }
-    
 }

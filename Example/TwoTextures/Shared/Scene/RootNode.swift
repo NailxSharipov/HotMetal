@@ -50,7 +50,6 @@ final class RootNode: Node {
             fragment: .local("fragmentDepthFilter")
         ) else { return nil }
         let material = render.materialLibrary.register(state: piplineState)
-//        material.cullMode = .back
 
         material.textures.append(resource.textures[0])
         material.textures.append(resource.textures[1])

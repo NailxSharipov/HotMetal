@@ -16,9 +16,6 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             HotMetalView(render: viewModel.render)
-                .onAppear() {
-                    viewModel.onAppear()
-                }
             VStack {
                 HStack {
                     Slider(
@@ -36,13 +33,7 @@ struct ContentView: View {
                 }
                 Spacer()
             }
-        }.gesture(DragGesture()
-            .onChanged { data in
-                viewModel.onDrag(translation: data.translation)
-            }
-            .onEnded { data in
-                viewModel.onEnd(translation: data.translation)
-            })
+        }
     }
 }
 

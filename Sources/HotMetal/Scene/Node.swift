@@ -12,18 +12,12 @@ open class Node {
     public var position = Vector3(0, 0, 0)
     public var orientation = Quaternion.identity
     public var scale = Vector3(1, 1, 1)
-
-    /// If provided the transform property will return this value vs. combining the pos / scale / orientation values
-    public var overrideTransform: Matrix4?
     
     /**
      Returns a matrix that is the combination of the position, orientation and scale properties.
      These are applied in scale -> rotate -> translate order.
      */
     public var transform: Matrix4 {
-        if let overrideTransform = overrideTransform {
-            return overrideTransform
-        }
         let translate = Matrix4.translate(position)
         let s = Matrix4.scale(scale.x, scale.y, scale.z)
         return translate * Matrix4(quaternion: orientation) * s

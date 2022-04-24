@@ -40,15 +40,16 @@ extension ContentView {
         private var scene: MainScene?
         private var isDrag: Bool = false
         
-        func onAppear() {
-            self.render = Render() { [weak self] render in
+        init() {
+            self.render = Render()
+            self.render?.onViewReady = { [weak self] render in
                 guard
                     let self = self,
                     let scene = MainScene(render: render)
                 else { return }
                 
                 self.scene = scene
-                render.scene = scene
+                render.attach(scene: scene)
                 scene.front = Float(self.front)
                 scene.rear = Float(self.rear)
                 scene.glow = Float(self.glow)
@@ -66,7 +67,7 @@ extension ContentView {
                 return
             }
 
-            render.scene = scene
+            render.attach(scene: scene)
             
             scene.front = Float(front)
             scene.rear = Float(rear)
@@ -85,30 +86,4 @@ extension ContentView {
         }
         
     }
-}
-
-extension ContentView.ViewModel {
-
-    func onDrag(translation: CGSize) {
-        if !isDrag {
-            isDrag = true
-            scene?.onStartDrag()
-        }
-        scene?.onDrag(translation: translation.reverseY)
-    }
- 
-    func onEnd(translation: CGSize) {
-        scene?.onDrag(translation: translation.reverseY)
-        isDrag = false
-    }
-}
-
-extension CGSize {
-    
-    var reverseY: CGSize {
-        var size = self
-        size.height = -size.height
-        return size
-    }
-    
 }

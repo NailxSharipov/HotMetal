@@ -70,3 +70,15 @@ public final class Coordinator {
         self.parent = parent
     }
 }
+
+extension MTKView {
+    var scale: CGFloat {
+#if os(iOS)
+        self.window?.screen.scale ?? 1
+#elseif os(macOS)
+        self.window?.screen?.backingScaleFactor ?? 1
+#else
+        return 1
+#endif
+    }
+}

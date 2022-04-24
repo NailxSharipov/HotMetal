@@ -12,15 +12,20 @@ extension ContentView {
     
     final class ViewModel: ObservableObject {
         
-        @Published var render: Render?
+        let render: Render?
         private var scene: ImageScene?
         private var isDrag: Bool = false
         
-        func onAppear() {
-            self.render = Render() { [weak self] render in
-                guard let self = self else { return }
-                self.scene = ImageScene(render: render)
-                render.scene = self.scene
+        init() {
+            self.render = Render()
+            self.render?.onViewReady = { [weak self] render in
+                guard
+                    let self = self,
+                    let scene = ImageScene(render: render)
+                else { return }
+                
+                self.scene = scene
+                render.attach(scene: scene)
             }
         }
     }
@@ -29,25 +34,36 @@ extension ContentView {
 extension ContentView.ViewModel {
 
     func onDrag(translation: CGSize) {
+        guard
+            let render = render,
+            let scene = scene
+        else { return }
+
         if !isDrag {
             isDrag = true
-            scene?.onStartDrag()
+            scene.onStartDrag()
         }
-        scene?.onDrag(translation: translation.reverseY)
+        scene.onDrag(translation: translation.normolize(render: render))
     }
  
     func onEnd(translation: CGSize) {
-        scene?.onDrag(translation: translation.reverseY)
+        guard
+            let render = render,
+            let scene = scene
+        else { return }
+        
+        scene.onDrag(translation: translation.normolize(render: render))
         isDrag = false
     }
 }
 
-extension CGSize {
+private extension CGSize {
     
-    var reverseY: CGSize {
-        var size = self
-        size.height = -size.height
-        return size
+    func normolize(render: Render) -> CGSize {
+        let s = render.scale
+        return CGSize(
+            width: s * width,
+            height: -s * height
+        )
     }
-    
 }

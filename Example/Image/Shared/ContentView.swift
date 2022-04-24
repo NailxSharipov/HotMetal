@@ -14,13 +14,8 @@ struct ContentView: View {
     private var viewModel = ViewModel()
     
     var body: some View {
-        ZStack {
-            Color.yellow
-            HotMetalView(render: viewModel.render)
-                .onAppear() {
-                    viewModel.onAppear()
-                }
-        }.gesture(DragGesture()
+        HotMetalView(render: viewModel.render)
+            .gesture(DragGesture()
             .onChanged { data in
                 viewModel.onDrag(translation: data.translation)
             }

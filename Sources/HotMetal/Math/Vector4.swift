@@ -1,5 +1,5 @@
 //
-//  Vector.swift
+//  Vector4.swift
 //  HotMetal
 //
 //  Created by Nail Sharipov on 12.04.2022.
@@ -7,19 +7,10 @@
 
 import CoreGraphics
 
-public typealias Vector2 = SIMD2<Float>
-public typealias Vector3 = SIMD3<Float>
 public typealias Vector4 = SIMD4<Float>
 
-extension Vector3 {
-
-    init(v: Vector4) {
-        self.init(x: v.x, y: v.y, z: v.z)
-    }
-}
-
 public extension Vector4 {
-
+    
     init(v: Vector3, w: Float) {
         self.init(x: v.x, y: v.y, z: v.z, w: w)
     }

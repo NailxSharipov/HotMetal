@@ -8,30 +8,18 @@
 import MetalKit
 import HotMetal
 
-final class ImageScene: Scene {
+final class ImageScene: Scene2d {
 
     private let node: ImageNode
     private var start: Vector3 = .zero
     
-    init?(render: Render) {
+    override init?(render: Render) {
         guard let node = ImageNode(render: render) else { return nil }
         self.node = node
-        super.init()
+        super.init(render: render)
         self.nodes.append(node)
-        self.clearColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
-        
-        let size = Float(render.view?.bounds.height ?? 0)
-        camera = Camera(
-            origin: [0, 0, -5],
-            look: [0, 0, 1],
-            up: [0, 1, 0],
-            projection: .ortographic(size),
-            aspectRatio: 1.0,
-            nearZ: -10,
-            farZ: 10
-        )
     }
-
+    
     func onStartDrag() {
         start = node.position
     }
@@ -44,10 +32,5 @@ final class ImageScene: Scene {
         
         debugPrint("Image pos: \(node.position)")
     }
-    
-    override func drawableSizeWillChange(_ view: MTKView, render: Render, size: CGSize) {
-        let size = Float(size.height)
-        camera.update(projection: .ortographic(size))
-    }
-    
+
 }

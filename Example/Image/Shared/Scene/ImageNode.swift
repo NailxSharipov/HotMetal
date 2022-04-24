@@ -10,7 +10,7 @@ import HotMetal
 
 final class ImageNode: Node {
 
-    private let image = CGImage.load(name: "TwoSea")
+    let image = CGImage.load(name: "TwoSea")
     
     init?(render: Render) {
         guard let image = self.image else { return nil }
@@ -18,6 +18,7 @@ final class ImageNode: Node {
         let color = Vector4(CGColor(gray: 1, alpha: 1))
         let a = 0.5 * Float(image.width)
         let b = 0.5 * Float(image.height)
+        
         
         let vertices: [TextureVertex] = [
             TextureVertex(position: .init(x: -a, y: -b, z: 0), color: color, uv: Vector2(x: 0, y: 1)),
@@ -49,16 +50,6 @@ final class ImageNode: Node {
         material.textures.append(texture)
         
         super.init(mesh: mesh, material: material)
-    }
-    
-    override func update(time: Time) {
-        super.update(time: time)
-//        let angle = Math.toRadians(10.0) * Float(time.totalTime)
-//        self.scale = Vector3(repeating: 3)
-//        self.orientation = Quaternion(
-//            angle: angle,
-//            axis: [0, 0, 1]
-//        )
     }
     
 }

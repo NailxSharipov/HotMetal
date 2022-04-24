@@ -1,5 +1,5 @@
 //
-//  Matrix.swift
+//  Matrix4.swift
 //  HotMetal
 //
 //  Created by Nail Sharipov on 12.04.2022.
@@ -71,7 +71,7 @@ public extension Matrix4 {
 
     /// Returns a perspective projection matrix, to convert world space to Metal clip space
     /// - Parameters:
-    ///   - fovy: fovy
+    ///   - fovy: fovy in radians
     ///   - aspectRatio: view width/height
     ///   - nearZ: near clip plane
     ///   - farZ: far clip plane
@@ -82,7 +82,7 @@ public extension Matrix4 {
         nearZ: Float,
         farZ: Float
     ) -> Matrix4 {
-        let y: Float = 1 / tan(0.5 * .toRadian * fovy)
+        let y: Float = 1 / tan(0.5 * fovy)
         let x = y / aspectRatio
         let length = farZ - nearZ
         let z = (farZ + nearZ) / length
@@ -109,24 +109,24 @@ public extension Matrix4 {
     static func makeOrtho(
         size: Float,
         aspectRatio: Float,
-        nearZ: Float,
-        farZ: Float
+        nearZ z1: Float,
+        farZ z2: Float
     ) -> Matrix4 {
 
-        let h = size
-        let w = aspectRatio * size
-        let l = farZ - nearZ
+        let dy = size
+        let dx = aspectRatio * size
+        let dz = z2 - z1
         
-        let x =  2 / w // 1 - (-1)
-        let y =  2 / h // 1 - (-1)
-        let z =  1 / l // 0 - (-1)
-        let zt = (farZ + nearZ) * z
+        let sx = 2 / dx
+        let sy = 2 / dy
+        let sz = 1 / dz
+        let tz = -z1 / dz
         
         let matrix = float4x4(
-            .init( x,  0,  0,  0),
-            .init( 0,  y,  0,  0),
-            .init( 0,  0,  z, zt),
-            .init( 0,  0,  0,  1)
+            .init(sx,  0,  0,  0),
+            .init( 0, sy,  0,  0),
+            .init( 0,  0, sz,  0),
+            .init( 0,  0, tz,  1)
         )
 
         return matrix
@@ -134,33 +134,46 @@ public extension Matrix4 {
     
     /// Returns an ortho projection matrix, to convert world space to Metal clip space
     /// - Parameters:
-    ///   - size: view height
-    ///   - aspectRatio: view width/height
-    ///   - length: where nearZ = -0.5*length, farZ = 0.5*length
+    ///   - left: screen left
+    ///   - right: screen right
+    ///   - top: screen top
+    ///   - bottom: screen bottom
+    ///   - nearZ: near clip plane
+    ///   - farZ:  far clip plane
     /// - Returns: ortho projection matrix
     @inlinable
     static func makeOrtho(
-        size: Float,
-        aspectRatio: Float,
-        length: Float
+        left x1: Float,
+        right x2: Float,
+        top y2: Float,
+        bottom y1: Float,
+        nearZ z1: Float,
+        farZ z2: Float
     ) -> Matrix4 {
 
-        let h = size
-        let w = aspectRatio * size
-        let l = length
+        let dx = x2 - x1
+        let dy = y2 - y1
+        let dz = z2 - z1
+
+        let ix = 1 / dx
+        let iy = 1 / dy
+        let iz = 1 / dz
         
-        let x =  2 / w // 1 - (-1)
-        let y =  2 / h // 1 - (-1)
-        let z =  1 / l // 0 - (-1)
+        let sx = 2 * ix
+        let sy = 2 * iy
+        let sz = iz
+        
+        let xt = -(x1 + x2) * ix
+        let yt = -(y1 + y2) * iy
+        let zt = -z1 * iz
         
         let matrix = float4x4(
-            .init( x,  0,  0,  0),
-            .init( 0,  y,  0,  0),
-            .init( 0,  0,  z,  0),
-            .init( 0,  0,  0,  1)
+            .init(sx,  0,  0,  0),
+            .init( 0, sy,  0,  0),
+            .init( 0,  0, sz,  0),
+            .init(xt, yt, zt,  1)
         )
 
         return matrix
     }
-
 }

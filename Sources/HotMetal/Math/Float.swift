@@ -9,4 +9,3 @@ public extension Float {
 
     static let toRadian: Float = .pi / 180.0
 }
-

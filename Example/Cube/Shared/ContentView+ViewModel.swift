@@ -22,11 +22,15 @@ extension ContentView {
         private var scene: CubeScene?
         private var isDrag: Bool = false
         
-        func onAppear() {
-            self.render = Render() { [weak self] render in
-                guard let self = self else { return }
-                self.scene = CubeScene(render: render)
-                render.scene = self.scene
+        init() {
+            self.render = Render()
+            self.render?.onViewReady = { [weak self] render in
+                guard
+                    let self = self,
+                    let scene = CubeScene(render: render)
+                else { return }
+                self.scene = scene
+                render.attach(scene: scene)
             }
         }
     }
