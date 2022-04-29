@@ -176,4 +176,43 @@ public extension Matrix4 {
 
         return matrix
     }
+    
+//    @inlinable
+//    static func makeSquareOrtho(
+//        left x1: Float,
+//        right x2: Float,
+//        top y2: Float,
+//        bottom y1: Float,
+//        nearZ z1: Float,
+//        farZ z2: Float
+//    ) -> Matrix4 {
+//
+//        let dx = x2 - x1
+//        let dy = y2 - y1
+//        
+//        let ds = min(dx, dy)
+//        
+//        let dz = z2 - z1
+//
+//        let ix = 1 / ds
+//        let iy = 1 / ds
+//        let iz = 1 / dz
+//        
+//        let sx = 2 * ix
+//        let sy = 2 * iy
+//        let sz = iz
+//        
+//        let xt = -(x1 + x2) * ix
+//        let yt = -(y1 + y2) * iy
+//        let zt = -z1 * iz
+//        
+//        let matrix = float4x4(
+//            .init(sx,  0,  0,  0),
+//            .init( 0, sy,  0,  0),
+//            .init( 0,  0, sz,  0),
+//            .init(xt, yt, zt,  1)
+//        )
+//
+//        return matrix
+//    }
 }

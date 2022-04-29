@@ -11,7 +11,7 @@ final class DragGestureState: ObservableObject {
     
     enum State {
         case blank
-        case start
+        case start(DragGesture.Value)
         case changed(DragGesture.Value)
         case end(DragGesture.Value)
     }
@@ -21,7 +21,7 @@ final class DragGestureState: ObservableObject {
     func onChanged(data: DragGesture.Value) {
         switch state {
         case .blank:
-            state = .start
+            state = .start(data)
             self.objectWillChange.send()
         default:
             state = .changed(data)

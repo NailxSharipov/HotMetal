@@ -13,6 +13,12 @@ struct CropView: View {
         let areas: [CGRect]
         let color: Color
     }
+
+    struct Shape {
+        let points: [CGPoint]
+        let color: Color
+        let lineWidth: CGFloat
+    }
     
     struct Net {
         struct Line {
@@ -45,17 +51,9 @@ struct CropView: View {
     private var viewModel = ViewModel()
     
     private let viewPortState: ViewPortState
-    private let viewSizeState: ViewSizeState
-    private let dragGestureState: DragGestureState
 
-    init(
-        viewPortState: ViewPortState,
-        viewSizeState: ViewSizeState,
-        dragGestureState: DragGestureState
-    ) {
+    init(viewPortState: ViewPortState) {
         self.viewPortState = viewPortState
-        self.viewSizeState = viewSizeState
-        self.dragGestureState = dragGestureState
     }
     
     var body: some View {
@@ -99,8 +97,24 @@ struct CropView: View {
                 .stroke(lineWidth: viewCorners.lineWidth)
                 .foregroundColor(viewCorners.color)
             }
+            if let world = viewModel.world {
+                Path { path in
+                    path.addLines(world.points)
+                    path.closeSubpath()
+                }
+                .stroke(lineWidth: world.lineWidth)
+                .foregroundColor(world.color)
+            }
+            if let camera = viewModel.camera {
+                Path { path in
+                    path.addLines(camera.points)
+                    path.closeSubpath()
+                }
+                .stroke(lineWidth: camera.lineWidth)
+                .foregroundColor(camera.color)
+            }
         }.onAppear() {
-            viewModel.onAppear(viewPortState: viewPortState, viewSizeState: viewSizeState, dragGestureState: dragGestureState)
+            viewModel.onAppear(viewPortState: viewPortState)
         }
     }
     

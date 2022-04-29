@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  Render+MTKViewDelegate.swift
+//  HotMetal
 //
 //  Created by Nail Sharipov on 24.04.2022.
 //
@@ -9,8 +9,14 @@ import MetalKit
 extension Render: MTKViewDelegate {
 
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        self.onSizeWillChange?(size)
-        self.scene?.drawableSizeWillChange(render: self, size: size, scale: view.scale)
+        guard view.window != nil else { return }
+        if let onViewReady = self.onViewReady {
+            onViewReady(self, size)
+            self.onViewReady = nil
+        } else {
+            self.onSizeWillChange?(size)
+            self.scene?.drawableSizeWillChange(render: self, size: size, scale: view.scale)
+        }
     }
 
     public func draw(in view: MTKView) {
@@ -76,6 +82,6 @@ extension Render: MTKViewDelegate {
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
-  }
+    }
     
 }

@@ -35,3 +35,8 @@ public extension Vector4 {
     }
 
 }
+
+@inlinable
+public func +(left: Vector4, right: Vector4) -> Vector4 {
+    Vector4(left.x + right.x, left.y + right.y, left.z + right.z, left.w + right.w)
+}

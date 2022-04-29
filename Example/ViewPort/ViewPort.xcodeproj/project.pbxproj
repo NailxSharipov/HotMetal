@@ -37,6 +37,18 @@
 		549BA26B2811319B00622F37 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BA2692811319B00622F37 /* CropView.swift */; };
 		549BA26D281131A700622F37 /* CropView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BA26C281131A700622F37 /* CropView+ViewModel.swift */; };
 		549BA26E281131A700622F37 /* CropView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BA26C281131A700622F37 /* CropView+ViewModel.swift */; };
+		549C680728168288006775A2 /* ViewPort+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680628168288006775A2 /* ViewPort+Data.swift */; };
+		549C680828168288006775A2 /* ViewPort+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680628168288006775A2 /* ViewPort+Data.swift */; };
+		549C680A28168B40006775A2 /* CGRect+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680928168B40006775A2 /* CGRect+Math.swift */; };
+		549C680B28168B40006775A2 /* CGRect+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680928168B40006775A2 /* CGRect+Math.swift */; };
+		549C680D2816935E006775A2 /* CGSize+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680C2816935E006775A2 /* CGSize+Math.swift */; };
+		549C680E2816935E006775A2 /* CGSize+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680C2816935E006775A2 /* CGSize+Math.swift */; };
+		549C68102816A9B1006775A2 /* ViewPort+Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680F2816A9B1006775A2 /* ViewPort+Camera.swift */; };
+		549C68112816A9B1006775A2 /* ViewPort+Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680F2816A9B1006775A2 /* ViewPort+Camera.swift */; };
+		549C68162816E520006775A2 /* ViewPort+Drag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C68152816E520006775A2 /* ViewPort+Drag.swift */; };
+		549C68172816E520006775A2 /* ViewPort+Drag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C68152816E520006775A2 /* ViewPort+Drag.swift */; };
+		54BFC26F2818066D009444F4 /* ViewPort+Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BFC26E2818066D009444F4 /* ViewPort+Matrix.swift */; };
+		54BFC2702818066D009444F4 /* ViewPort+Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BFC26E2818066D009444F4 /* ViewPort+Matrix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +71,12 @@
 		549BA26528112DF500622F37 /* ViewPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPort.swift; sourceTree = "<group>"; };
 		549BA2692811319B00622F37 /* CropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
 		549BA26C281131A700622F37 /* CropView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CropView+ViewModel.swift"; sourceTree = "<group>"; };
+		549C680628168288006775A2 /* ViewPort+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Data.swift"; sourceTree = "<group>"; };
+		549C680928168B40006775A2 /* CGRect+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Math.swift"; sourceTree = "<group>"; };
+		549C680C2816935E006775A2 /* CGSize+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Math.swift"; sourceTree = "<group>"; };
+		549C680F2816A9B1006775A2 /* ViewPort+Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Camera.swift"; sourceTree = "<group>"; };
+		549C68152816E520006775A2 /* ViewPort+Drag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Drag.swift"; sourceTree = "<group>"; };
+		54BFC26E2818066D009444F4 /* ViewPort+Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Matrix.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,11 +170,11 @@
 		549BA25428112B0F00622F37 /* State */ = {
 			isa = PBXGroup;
 			children = (
+				549C68052816826A006775A2 /* ViewPort */,
 				549BA25928112C2400622F37 /* Receiver.swift */,
 				549BA25C28112D2300622F37 /* DragGestureState.swift */,
 				549BA25F28112D9E00622F37 /* ViewPortState.swift */,
 				549BA26228112DD700622F37 /* ViewSizeState.swift */,
-				549BA26528112DF500622F37 /* ViewPort.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -176,6 +194,20 @@
 				549BA26C281131A700622F37 /* CropView+ViewModel.swift */,
 			);
 			path = CropView;
+			sourceTree = "<group>";
+		};
+		549C68052816826A006775A2 /* ViewPort */ = {
+			isa = PBXGroup;
+			children = (
+				549BA26528112DF500622F37 /* ViewPort.swift */,
+				549C680628168288006775A2 /* ViewPort+Data.swift */,
+				549C680F2816A9B1006775A2 /* ViewPort+Camera.swift */,
+				549C68152816E520006775A2 /* ViewPort+Drag.swift */,
+				549C680928168B40006775A2 /* CGRect+Math.swift */,
+				549C680C2816935E006775A2 /* CGSize+Math.swift */,
+				54BFC26E2818066D009444F4 /* ViewPort+Matrix.swift */,
+			);
+			path = ViewPort;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				549C680A28168B40006775A2 /* CGRect+Math.swift in Sources */,
 				549BA2522811290500622F37 /* ContentView+ViewModel.swift in Sources */,
 				549BA26328112DD700622F37 /* ViewSizeState.swift in Sources */,
 				549BA25A28112C2400622F37 /* Receiver.swift in Sources */,
@@ -291,10 +324,15 @@
 				549BA25728112B6600622F37 /* CGPoint.swift in Sources */,
 				549BA26628112DF500622F37 /* ViewPort.swift in Sources */,
 				549BA26D281131A700622F37 /* CropView+ViewModel.swift in Sources */,
+				549C680D2816935E006775A2 /* CGSize+Math.swift in Sources */,
 				549BA26A2811319B00622F37 /* CropView.swift in Sources */,
 				549BA26028112D9E00622F37 /* ViewPortState.swift in Sources */,
+				549C680728168288006775A2 /* ViewPort+Data.swift in Sources */,
+				549C68162816E520006775A2 /* ViewPort+Drag.swift in Sources */,
+				549C68102816A9B1006775A2 /* ViewPort+Camera.swift in Sources */,
 				549BA234281127E400622F37 /* ViewPortApp.swift in Sources */,
 				549BA25D28112D2300622F37 /* DragGestureState.swift in Sources */,
+				54BFC26F2818066D009444F4 /* ViewPort+Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				549C680B28168B40006775A2 /* CGRect+Math.swift in Sources */,
 				549BA2532811290500622F37 /* ContentView+ViewModel.swift in Sources */,
 				549BA26428112DD700622F37 /* ViewSizeState.swift in Sources */,
 				549BA25B28112C2400622F37 /* Receiver.swift in Sources */,
@@ -311,10 +350,15 @@
 				549BA25828112B6600622F37 /* CGPoint.swift in Sources */,
 				549BA26728112DF500622F37 /* ViewPort.swift in Sources */,
 				549BA26E281131A700622F37 /* CropView+ViewModel.swift in Sources */,
+				549C680E2816935E006775A2 /* CGSize+Math.swift in Sources */,
 				549BA26B2811319B00622F37 /* CropView.swift in Sources */,
 				549BA26128112D9E00622F37 /* ViewPortState.swift in Sources */,
+				549C680828168288006775A2 /* ViewPort+Data.swift in Sources */,
+				549C68172816E520006775A2 /* ViewPort+Drag.swift in Sources */,
+				549C68112816A9B1006775A2 /* ViewPort+Camera.swift in Sources */,
 				549BA235281127E400622F37 /* ViewPortApp.swift in Sources */,
 				549BA25E28112D2300622F37 /* DragGestureState.swift in Sources */,
+				54BFC2702818066D009444F4 /* ViewPort+Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

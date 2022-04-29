@@ -42,7 +42,7 @@ public extension Matrix3 {
             Vector3( 0,   0,  1)
         ))
     }
-    
+
 }
 
 func *(left: Matrix3, right: Vector3) -> Vector3 {

@@ -12,41 +12,32 @@ extension CropView {
 
     final class ViewModel: ObservableObject {
         
+        private (set) var world: Shape?
+        private (set) var camera: Shape?
         private (set) var viewCorners: ViewCorners?
         private (set) var border: Border?
         private (set) var net: Net?
         private (set) var background: Background?
 
         private var receiverViewPort = Receiver<ViewPortState>()
-        private var receiverViewSize = Receiver<ViewSizeState>()
-        private var receiverDragGesture = Receiver<DragGestureState>()
-
     }
     
 }
 
 extension CropView.ViewModel {
     
-    func onAppear(viewPortState: ViewPortState, viewSizeState: ViewSizeState, dragGestureState: DragGestureState) {
+    func onAppear(viewPortState: ViewPortState) {
         receiverViewPort = .init(viewPortState) { [weak self] state in
             guard let self = self else { return }
             self.onUpdateViewPort(state: state)
         }
-
-        receiverDragGesture = .init(dragGestureState) { [weak self] state in
-            guard let self = self else { return }
-            self.onUpdateDragGesture(state: state)
-        }
     }
     
     private func onUpdateViewPort(state: ViewPortState) {
-        self.updateCropView(rect: state.viewPort.localRect)
+        self.updateCropView(rect: state.viewPort.cropView)
+        self.updateDebug(world: state.viewPort.debugWorldView, camera: state.viewPort.debugCameraView)
+        self.objectWillChange.send()
     }
-
-    private func onUpdateDragGesture(state: DragGestureState) {
-        debugPrint("dragGestureState: \(state.state)")
-    }
-    
     
     private func updateCropView(rect: CGRect) {
         let p0 = CGPoint(x: rect.minX, y: rect.maxY)    // leftBottom
@@ -88,8 +79,20 @@ extension CropView.ViewModel {
             color: .white,
             lineWidth: 1
         )
-
-        self.objectWillChange.send()
+    }
+    
+    private func updateDebug(world: [CGPoint], camera: [CGPoint]) {
+        self.world = CropView.Shape(
+            points: world,
+            color: .green,
+            lineWidth: 4
+        )
+        
+        self.camera = CropView.Shape(
+            points: camera,
+            color: .red,
+            lineWidth: 2
+        )
     }
     
 }

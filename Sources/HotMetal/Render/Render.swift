@@ -40,14 +40,14 @@ public final class Render: NSObject {
     let creationTime: TimeInterval
     let uniformBuffers: BufferManager
 
-    public var onViewReady: ((Render) -> ())?
+    public var onViewReady: ((Render, CGSize) -> ())?
     public var onSizeWillChange: ((CGSize) -> ())?
 
     public init?(
         pixelFormat: MTLPixelFormat = .bgra8Unorm_srgb, //.bgra8Unorm, //.bgra8Unorm_srgb
         clearColor: MTLClearColor = .init(red: 0, green: 0, blue: 0, alpha: 0),
         depthAttachmentPixelFormat: MTLPixelFormat = .depth32Float,
-        onViewReady: ((Render) -> ())? = nil,
+        onViewReady: ((Render, CGSize) -> ())? = nil,
         onSizeWillChange: ((CGSize) -> ())? = nil
     ) {
         self.pixelFormat = pixelFormat
@@ -110,13 +110,11 @@ public final class Render: NSObject {
         view.clearColor = clearColor
 //        view.enableSetNeedsDisplay = true
 //        view.isPaused = false
-
-        self.onViewReady?(self)
     }
     
     public func attach(scene: Scene) {
         self.scene = scene
-        guard let view = self.view else { return }
+        guard let view = self.view, view.window != nil else { return }
         let scale = view.scale
         let size = CGSize(
             width: scale * view.bounds.size.width,

@@ -19,11 +19,23 @@ extension ContentView {
         let render: Render?
         private var scene: MainScene?
         private var receiverViewPort = Receiver<ViewPortState>()
+        var posX: CGFloat = 0 {
+            didSet {
+                onUpdate()
+            }
+            
+        }
+        var posY: CGFloat = 0 {
+            didSet {
+                onUpdate()
+            }
+            
+        }
 
         init() {
-            viewPortState = ViewPortState(viewSizeState: viewSizeState)
+            viewPortState = ViewPortState(viewSizeState: viewSizeState, dragGestureState: dragGestureState)
             render = Render()
-            render?.onViewReady = { [weak self] render in
+            render?.onViewReady = { [weak self] render, viewSize in
                 guard
                     let self = self,
                     let scene = MainScene(render: render)
@@ -34,13 +46,20 @@ extension ContentView {
                 let width = scene.node.image?.width ?? 0
                 let height = scene.node.image?.height ?? 0
                 
-                self.viewPortState.setImage(width: width, height: height)
+                self.viewPortState.set(
+                    imageSize: CGSize(width: width, height: height),
+                    viewSize: viewSize,
+                    viewScale: render.scale
+                )
             }
-
             receiverViewPort = .init(viewPortState) { [weak self] state in
                 guard let self = self else { return }
                 self.onUpdate(viewPort: state.viewPort)
             }
+        }
+        
+        func animate() {
+            viewPortState.animate()
         }
     }
 }
@@ -48,19 +67,16 @@ extension ContentView {
 extension ContentView.ViewModel {
 
     private func onUpdate(viewPort: ViewPort) {
-        guard let render = render, let scene = scene else { return }
+        guard let scene = scene else { return }
 
-        let cameraData = viewPort.camera()
-        
-        scene.camera.update(
-            projection: .ortographic(cameraData.size),
-            aspectRatio: cameraData.ratio
-        )
-        scene.camera.update(position: cameraData.pos)
+        scene.vpCamera.update(viewPort: viewPort)
+    }
+    
+    private func onUpdate() {
+        guard let scene = scene else { return }
+        let viewPort = viewPortState.viewPort
 
-        let buffer = viewPort.getVertices()
-        scene.node.set(render: render, buffer: buffer)
-        debugPrint(buffer)
+        scene.vpCamera.update(viewPort: viewPort, posX: posX, posY: posY)
     }
 
 }

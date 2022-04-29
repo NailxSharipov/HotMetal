@@ -64,7 +64,6 @@ public struct XYCamera {
     
     public mutating func update(width: Float, height: Float) {
         camera.projectionMatrix = Matrix4.makeOrtho(width: width, height: height, anchor: anchor)
-        camera.viewMatrix = Matrix4.makeLook(position: position, rotate: rotate, anchor: anchor)
     }
     
     public mutating func update(width: Float, height: Float, anchor: Anchor) {

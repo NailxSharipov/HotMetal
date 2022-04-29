@@ -16,7 +16,8 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { proxy in
             content(size: proxy.size)
-        }.gesture(DragGesture()
+        }
+        .gesture(DragGesture()
             .onChanged { data in
                 viewModel.dragGestureState.onChanged(data: data)
                 
@@ -31,11 +32,27 @@ struct ContentView: View {
         viewModel.viewSizeState.onWillChange(size: size)
         return ZStack {
             HotMetalView(render: viewModel.render)
-            CropView(
-                viewPortState: viewModel.viewPortState,
-                viewSizeState: viewModel.viewSizeState,
-                dragGestureState: viewModel.dragGestureState
-            )
+            CropView(viewPortState: viewModel.viewPortState)
+            VStack {
+                HStack {
+                    Spacer()
+                    VStack {
+                        Button("Animate") {
+                            viewModel.animate()
+                        }
+                        Slider(
+                            value: $viewModel.posX,
+                            in: -1 * size.width...1 * size.width
+                        ).frame(width: size.width * 0.5)
+                        Slider(
+                            value: $viewModel.posY,
+                            in: -1 * size.width...1 * size.width
+                        ).frame(width: size.width * 0.5)
+                    }
+                    Spacer()
+                }
+                Spacer()
+            }
         }
     }
     
