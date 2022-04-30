@@ -41,12 +41,8 @@ struct ContentView: View {
                             viewModel.animate()
                         }
                         Slider(
-                            value: $viewModel.posX,
-                            in: -1 * size.width...1 * size.width
-                        ).frame(width: size.width * 0.5)
-                        Slider(
-                            value: $viewModel.posY,
-                            in: -1 * size.width...1 * size.width
+                            value: $viewModel.angle,
+                            in: -Float.pi...Float.pi
                         ).frame(width: size.width * 0.5)
                     }
                     Spacer()

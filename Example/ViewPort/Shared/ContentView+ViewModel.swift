@@ -19,17 +19,10 @@ extension ContentView {
         let render: Render?
         private var scene: MainScene?
         private var receiverViewPort = Receiver<ViewPortState>()
-        var posX: CGFloat = 0 {
+        var angle: Float = 0 {
             didSet {
                 onUpdate()
             }
-            
-        }
-        var posY: CGFloat = 0 {
-            didSet {
-                onUpdate()
-            }
-            
         }
 
         init() {
@@ -73,10 +66,7 @@ extension ContentView.ViewModel {
     }
     
     private func onUpdate() {
-        guard let scene = scene else { return }
-        let viewPort = viewPortState.viewPort
-
-        scene.vpCamera.update(viewPort: viewPort, posX: posX, posY: posY)
+        viewPortState.set(angle: angle)
     }
 
 }

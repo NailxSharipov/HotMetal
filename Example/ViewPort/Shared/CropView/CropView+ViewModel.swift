@@ -13,6 +13,7 @@ extension CropView {
     final class ViewModel: ObservableObject {
         
         private (set) var world: Shape?
+        private (set) var view: Shape?
         private (set) var camera: Shape?
         private (set) var viewCorners: ViewCorners?
         private (set) var border: Border?
@@ -34,8 +35,12 @@ extension CropView.ViewModel {
     }
     
     private func onUpdateViewPort(state: ViewPortState) {
-        self.updateCropView(rect: state.viewPort.cropView)
-        self.updateDebug(world: state.viewPort.debugWorldView, camera: state.viewPort.debugCameraView)
+        self.updateCropView(rect: state.viewPort.cropRect)
+        self.updateDebug(
+            world: state.viewPort.debugWorld,
+            camera: state.viewPort.debugCamera,
+            view: state.viewPort.debugView
+        )
         self.objectWillChange.send()
     }
     
@@ -81,7 +86,7 @@ extension CropView.ViewModel {
         )
     }
     
-    private func updateDebug(world: [CGPoint], camera: [CGPoint]) {
+    private func updateDebug(world: [CGPoint], camera: [CGPoint], view: [CGPoint]) {
         self.world = CropView.Shape(
             points: world,
             color: .green,
@@ -91,6 +96,12 @@ extension CropView.ViewModel {
         self.camera = CropView.Shape(
             points: camera,
             color: .red,
+            lineWidth: 2
+        )
+        
+        self.view = CropView.Shape(
+            points: view,
+            color: .blue,
             lineWidth: 2
         )
     }

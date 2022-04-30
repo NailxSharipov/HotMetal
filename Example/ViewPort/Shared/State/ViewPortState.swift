@@ -96,5 +96,10 @@ extension ViewPortState {
         self.viewPort.animate()
         self.objectWillChange.send()
     }
+ 
+    func set(angle: Float) {
+        viewPort.set(angle: angle)
+        self.objectWillChange.send()
+    }
     
 }

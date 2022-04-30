@@ -105,6 +105,14 @@ struct CropView: View {
                 .stroke(lineWidth: world.lineWidth)
                 .foregroundColor(world.color)
             }
+            if let view = viewModel.view {
+                Path { path in
+                    path.addLines(view.points)
+                    path.closeSubpath()
+                }
+                .stroke(lineWidth: view.lineWidth)
+                .foregroundColor(view.color)
+            }
             if let camera = viewModel.camera {
                 Path { path in
                     path.addLines(camera.points)
