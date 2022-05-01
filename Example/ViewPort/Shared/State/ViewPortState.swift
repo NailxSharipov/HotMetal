@@ -33,7 +33,7 @@ final class ViewPortState: ObservableObject {
     private var sizeStateReceiver = Receiver<ViewSizeState>()
     private var dragStateReceiver = Receiver<DragGestureState>()
     private let sqrRadius: CGFloat = 25.magnitudeSquared
-    private var activeCorner: ViewPort.Corner?
+    private var activeCorner: Rect.Corner.Layout?
     private var activeBody: Bool = false
 
     init(viewSizeState: ViewSizeState, dragGestureState: DragGestureState) {

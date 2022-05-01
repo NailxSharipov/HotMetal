@@ -15,20 +15,15 @@ extension ViewPort {
     
     private struct Distance {
         let sqrDist: Float
-        let corner: Corner
+        let corner: Rect.Corner.Layout
     }
     
-    func isCorner(point: CGPoint, sqrRadius: CGFloat) -> Corner? {
+    // move Corner
+    
+    func isCorner(point: CGPoint, sqrRadius: CGFloat) -> Rect.Corner.Layout? {
         let p = transform.screenToLocal(point: point)
         
-        let points = cropLocal.points
-        
-        let distanceList = [
-            Distance(sqrDist: p.sqrDistance(points[0]), corner: .bottomLeft),
-            Distance(sqrDist: p.sqrDistance(points[1]), corner: .topLeft),
-            Distance(sqrDist: p.sqrDistance(points[2]), corner: .topRight),
-            Distance(sqrDist: p.sqrDistance(points[3]), corner: .bottomRight)
-        ]
+        let distanceList = cropLocal.corners.map({ Distance(sqrDist: $0.point.sqrDistance(p), corner: $0.layout) })
         
         guard let nearest = distanceList.sorted(by: { $0.sqrDist < $1.sqrDist }).first else { return nil }
 
@@ -38,35 +33,37 @@ extension ViewPort {
         
         return nil
     }
+
+    mutating func move(corner: Rect.Corner.Layout, translation: CGSize) {
+        let trans = transform.screenToLocal(size: translation)
+        self.cropView = nextLocal.modify(corner: corner, translation: trans)
+    }
+    
+    mutating func endMove(corner: Rect.Corner.Layout, translation: CGSize) {
+        let trans = transform.screenToLocal(size: translation)
+        let newRect = nextLocal.modify(corner: corner, translation: trans)
+        
+        self.update(newLocal: newRect)
+        
+        self.animate()
+    }
+    
+    // move Body
     
     func isInside(point: CGPoint) -> Bool {
         let local = transform.screenToLocal(point: point)
         return cropLocal.isContain(point: local)
     }
-    
+
     mutating func move(translation: CGSize) {
         let trans = transform.screenToLocal(size: translation)
         self.cropView = nextLocal.translate(size: trans)
-    }
-    
-    mutating func move(corner: Corner, translation: CGSize) {
-        let trans = transform.screenToLocal(size: translation)
-        self.cropView = nextLocal.morph(corner: corner, translation: trans)
     }
     
     mutating func endMove(translation: CGSize) {
         let trans = transform.screenToLocal(size: translation)
         let newRect = nextLocal.translate(size: trans)
 
-        self.translate(newLocal: newRect)
-        
-        self.animate()
-    }
-
-    mutating func endMove(corner: Corner, translation: CGSize) {
-        let trans = transform.screenToLocal(size: translation)
-        let newRect = nextLocal.morph(corner: corner, translation: trans)
-        
         self.update(newLocal: newRect)
         
         self.animate()
@@ -80,54 +77,38 @@ extension ViewPort {
         self.nextLocal = cropLocal
         self.cropWorld = nextWorld
         
-        worldView = Self.calcWorldView(viewSize: viewSize, localRect: cropLocal, worldRect: nextWorld)
-        
-        // DEBUG --------------------
-        let matrix = self.debugMatrix(viewSize: viewSize)
-        debugView = worldView.transform(matrix: matrix)
+        transform = .init(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
     }
     
     private mutating func update(newLocal: Rect) {
-        nextWorld = Rect.newWorld(
-            oldLocal: cropLocal,
-            newLocal: newLocal,
-            oldWorld: cropWorld
+        let dx = newLocal.center.x - cropLocal.center.x
+        let dy = newLocal.center.y - cropLocal.center.y
+        
+        let dSize = transform.localToWorld(size: Size(width: dx, height: dy))
+
+        let x = cropWorld.center.x + dSize.width
+        let y = cropWorld.center.y + dSize.height
+        
+        let w = transform.scaleLocalToWorld(newLocal.width)
+        let h = transform.scaleLocalToWorld(newLocal.height)
+        
+        nextWorld = Rect(
+            x: x,
+            y: y,
+            width: w,
+            height: h
         )
 
         cropView = newLocal
         nextLocal = newLocal
-        
-        // DEBUG --------------------
-        
-        let matrix = self.debugMatrix(viewSize: viewSize)
-        debugCamera = nextWorld.transform(matrix: matrix)
     }
 
-    private mutating func translate(newLocal: Rect) {
-        let dx = newLocal.center.x - cropLocal.center.x
-        let dy = newLocal.center.y - cropLocal.center.y
-        let trans = transform.localToWorld(size: Size(width: dx, height: dy))
-        
-        let x = nextWorld.center.x + trans.width
-        let y = nextWorld.center.y + trans.height
-        
-        nextWorld.center = .init(x: x, y: y)
-
-        cropView = newLocal
-        nextLocal = newLocal
-        
-        // DEBUG --------------------
-        
-        let matrix = self.debugMatrix(viewSize: viewSize)
-        debugCamera = nextWorld.transform(matrix: matrix)
-    }
-    
 }
 
 
 private extension Rect {
     
-    func morph(corner: ViewPort.Corner, translation: Size) -> Rect {
+    func modify(corner: Corner.Layout, translation: Size) -> Rect {
 
         let x: Float
         let y: Float
@@ -175,6 +156,5 @@ private extension Rect {
         
         return Rect(x: x, y: y, width: w, height: h)
     }
-
     
 }

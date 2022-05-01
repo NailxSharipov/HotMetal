@@ -1,5 +1,5 @@
 //
-//  ViewPort+Data.swift
+//  ViewPort+Orientation.swift
 //  ViewPort
 //
 //  Created by Nail Sharipov on 25.04.2022.
@@ -29,12 +29,4 @@ extension ViewPort {
             }
         }
     }
-    
-    enum Corner {
-        case topLeft
-        case topRight
-        case bottomLeft
-        case bottomRight
-    }
-
 }
