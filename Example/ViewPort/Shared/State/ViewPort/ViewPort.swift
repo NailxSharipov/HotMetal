@@ -27,7 +27,7 @@ struct ViewPort {
     var debugWorld: [CGPoint] = []
 
     private (set) var inset: Float
-    private (set) var transform = LocalScreenTransform(viewSize: .zero)
+    private (set) var transform = LocalScreenTransform(viewSize: .zero, angle: 0)
 
     var orient: Orientation = .square
     
@@ -51,7 +51,7 @@ struct ViewPort {
     
     mutating func set(viewSize vSize: CGSize) {
         viewSize = Size(size: vSize)
-        transform = LocalScreenTransform(viewSize: viewSize)
+        transform = LocalScreenTransform(viewSize: viewSize, angle: nextWorld.angle)
 
         orient = Orientation(outerRect: viewSize, innerRect: nextLocal.size)
         
@@ -69,6 +69,18 @@ struct ViewPort {
         self.debugWorld = self.debugWorld(matrix: matrix)
         self.debugCamera = nextWorld.transform(matrix: matrix)
         self.debugView = worldView.transform(matrix: matrix)
+    }
+    
+    mutating func set(angle: Float) {
+        nextWorld.angle = angle
+        cropWorld = nextWorld
+
+        transform = LocalScreenTransform(viewSize: viewSize, angle: angle)
+        
+        // DEBUG --------------------
+        
+        let matrix = self.debugMatrix(viewSize: viewSize)
+        debugCamera = nextWorld.transform(matrix: matrix)
     }
     
     static func calcMaxLocalCrop(viewSize: Size, worldSize: Size, inset: Float) -> Rect {

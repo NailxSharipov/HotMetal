@@ -35,16 +35,16 @@ extension CropView.ViewModel {
     }
     
     private func onUpdateViewPort(state: ViewPortState) {
-        self.updateCropView(rect: state.viewPort.cropRect)
-        self.updateDebug(
-            world: state.viewPort.debugWorld,
-            camera: state.viewPort.debugCamera,
-            view: state.viewPort.debugView
-        )
+        self.updateCropView(rect: state.viewPort.cropRect, size: CGSize(size: state.viewPort.viewSize))
+//        self.updateDebug(
+//            world: state.viewPort.debugWorld,
+//            camera: state.viewPort.debugCamera,
+//            view: state.viewPort.debugView
+//        )
         self.objectWillChange.send()
     }
     
-    private func updateCropView(rect: CGRect) {
+    private func updateCropView(rect: CGRect, size: CGSize) {
         let p0 = CGPoint(x: rect.minX, y: rect.maxY)    // leftBottom
         let p1 = CGPoint(x: rect.minX, y: rect.minY)    // leftTop
         let p2 = CGPoint(x: rect.maxX, y: rect.minY)    // rightTop
@@ -84,6 +84,19 @@ extension CropView.ViewModel {
             color: .white,
             lineWidth: 1
         )
+        
+        let topArea = CGRect(x: 0, y: 0, width: size.width, height: rect.minY)
+        let bottomArea = CGRect(x: 0, y: rect.maxY, width: size.width, height: size.height - rect.maxY)
+        let leftArea = CGRect(x: 0, y: rect.minY, width: rect.minX, height: rect.height)
+        let rightArea = CGRect(x: rect.maxX, y: rect.minY, width: size.width - rect.maxX, height: rect.height)
+        
+        background = .init(areas: [
+            topArea,
+            bottomArea,
+            leftArea,
+            rightArea
+        ], color: Color(white: 0, opacity: 0.7))
+        
     }
     
     private func updateDebug(world: [CGPoint], camera: [CGPoint], view: [CGPoint]) {
