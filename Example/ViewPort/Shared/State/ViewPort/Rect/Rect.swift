@@ -20,7 +20,7 @@ struct Rect: Equatable {
     let width: Float
     let height: Float
     var angle: Float
-    let center: Vector2
+    var center: Vector2
 
     init(center: Vector2, width: Float, height: Float, angle: Float = 0) {
         self.center = center

@@ -27,9 +27,9 @@ struct ViewPort {
     var debugWorld: [CGPoint] = []
 
     private (set) var inset: Float
-    private (set) var transform = LocalScreenTransform(viewSize: .zero, angle: 0)
+    private (set) var transform = CoordSystemTransformer()
 
-    var orient: Orientation = .square
+//    var orient: Orientation = .square
     
     init(imageSize imgSize: CGSize, viewSize vSize: CGSize, ist: Float = 64) {
         imageSize = Size(size: imgSize)
@@ -50,16 +50,19 @@ struct ViewPort {
     }
     
     mutating func set(viewSize vSize: CGSize) {
+        guard imageSize.height > 0 else { return }
+        
         viewSize = Size(size: vSize)
-        transform = LocalScreenTransform(viewSize: viewSize, angle: nextWorld.angle)
 
-        orient = Orientation(outerRect: viewSize, innerRect: nextLocal.size)
+//        orient = Orientation(outerRect: viewSize, innerRect: nextLocal.size)
         
         let maxCropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: nextWorld.size, inset: inset)
 
         cropLocal = maxCropLocal
         cropView = cropLocal
         nextLocal = cropLocal
+
+        transform = CoordSystemTransformer(viewSize: viewSize, local: cropLocal, world: cropWorld)
         
         worldView = Self.calcWorldView(viewSize: viewSize, localRect: cropLocal, worldRect: cropWorld)
         
@@ -75,7 +78,7 @@ struct ViewPort {
         nextWorld.angle = angle
         cropWorld = nextWorld
 
-        transform = LocalScreenTransform(viewSize: viewSize, angle: angle)
+        transform = CoordSystemTransformer(viewSize: viewSize, local: cropLocal, world: cropWorld)
         
         // DEBUG --------------------
         

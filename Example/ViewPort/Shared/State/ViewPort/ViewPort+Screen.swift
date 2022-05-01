@@ -12,7 +12,9 @@ import simd
 extension ViewPort {
 
     var cropRect: CGRect {
-        let center = transform.toScreenRel(point: cropView.center)
+        guard !transform.isEmpty else { return .zero}
+        
+        let center = transform.localToScreen(point: cropView.center)
 
         let x = center.x - 0.5 * cropView.width
         let y = center.y - 0.5 * cropView.height

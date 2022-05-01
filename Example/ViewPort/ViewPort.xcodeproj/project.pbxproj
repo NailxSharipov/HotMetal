@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5400BA43281E706B00980108 /* ViewPort+CoordSystemTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5400BA42281E706B00980108 /* ViewPort+CoordSystemTransformer.swift */; };
+		5400BA44281E706B00980108 /* ViewPort+CoordSystemTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5400BA42281E706B00980108 /* ViewPort+CoordSystemTransformer.swift */; };
 		54122804281D686800C7EC83 /* ViewPort+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54122803281D686700C7EC83 /* ViewPort+Equatable.swift */; };
 		54122805281D686800C7EC83 /* ViewPort+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54122803281D686700C7EC83 /* ViewPort+Equatable.swift */; };
 		5464608A281A70AD00B042D1 /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54646089281A70AD00B042D1 /* Rect.swift */; };
@@ -51,11 +53,12 @@
 		549C680828168288006775A2 /* ViewPort+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680628168288006775A2 /* ViewPort+Data.swift */; };
 		549C68102816A9B1006775A2 /* ViewPort+Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680F2816A9B1006775A2 /* ViewPort+Camera.swift */; };
 		549C68112816A9B1006775A2 /* ViewPort+Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C680F2816A9B1006775A2 /* ViewPort+Camera.swift */; };
-		549C68162816E520006775A2 /* ViewPort+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C68152816E520006775A2 /* ViewPort+Transform.swift */; };
-		549C68172816E520006775A2 /* ViewPort+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C68152816E520006775A2 /* ViewPort+Transform.swift */; };
+		549C68162816E520006775A2 /* ViewPort+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C68152816E520006775A2 /* ViewPort+Modify.swift */; };
+		549C68172816E520006775A2 /* ViewPort+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C68152816E520006775A2 /* ViewPort+Modify.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5400BA42281E706B00980108 /* ViewPort+CoordSystemTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+CoordSystemTransformer.swift"; sourceTree = "<group>"; };
 		54122803281D686700C7EC83 /* ViewPort+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Equatable.swift"; sourceTree = "<group>"; };
 		54646089281A70AD00B042D1 /* Rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rect.swift; sourceTree = "<group>"; };
 		5464608C281A70E800B042D1 /* Rect+Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rect+Matrix.swift"; sourceTree = "<group>"; };
@@ -82,7 +85,7 @@
 		549BA26C281131A700622F37 /* CropView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CropView+ViewModel.swift"; sourceTree = "<group>"; };
 		549C680628168288006775A2 /* ViewPort+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Data.swift"; sourceTree = "<group>"; };
 		549C680F2816A9B1006775A2 /* ViewPort+Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Camera.swift"; sourceTree = "<group>"; };
-		549C68152816E520006775A2 /* ViewPort+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Transform.swift"; sourceTree = "<group>"; };
+		549C68152816E520006775A2 /* ViewPort+Modify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Modify.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,9 +222,10 @@
 				549BA26528112DF500622F37 /* ViewPort.swift */,
 				549C680628168288006775A2 /* ViewPort+Data.swift */,
 				549C680F2816A9B1006775A2 /* ViewPort+Camera.swift */,
-				549C68152816E520006775A2 /* ViewPort+Transform.swift */,
+				549C68152816E520006775A2 /* ViewPort+Modify.swift */,
 				54646092281A9A4F00B042D1 /* ViewPort+Screen.swift */,
 				54122803281D686700C7EC83 /* ViewPort+Equatable.swift */,
+				5400BA42281E706B00980108 /* ViewPort+CoordSystemTransformer.swift */,
 			);
 			path = ViewPort;
 			sourceTree = "<group>";
@@ -344,10 +348,11 @@
 				54122804281D686800C7EC83 /* ViewPort+Equatable.swift in Sources */,
 				549BA26D281131A700622F37 /* CropView+ViewModel.swift in Sources */,
 				549BA26A2811319B00622F37 /* CropView.swift in Sources */,
+				5400BA43281E706B00980108 /* ViewPort+CoordSystemTransformer.swift in Sources */,
 				549BA26028112D9E00622F37 /* ViewPortState.swift in Sources */,
 				54646093281A9A4F00B042D1 /* ViewPort+Screen.swift in Sources */,
 				549C680728168288006775A2 /* ViewPort+Data.swift in Sources */,
-				549C68162816E520006775A2 /* ViewPort+Transform.swift in Sources */,
+				549C68162816E520006775A2 /* ViewPort+Modify.swift in Sources */,
 				549C68102816A9B1006775A2 /* ViewPort+Camera.swift in Sources */,
 				549BA234281127E400622F37 /* ViewPortApp.swift in Sources */,
 				549BA25D28112D2300622F37 /* DragGestureState.swift in Sources */,
@@ -372,10 +377,11 @@
 				54122805281D686800C7EC83 /* ViewPort+Equatable.swift in Sources */,
 				549BA26E281131A700622F37 /* CropView+ViewModel.swift in Sources */,
 				549BA26B2811319B00622F37 /* CropView.swift in Sources */,
+				5400BA44281E706B00980108 /* ViewPort+CoordSystemTransformer.swift in Sources */,
 				549BA26128112D9E00622F37 /* ViewPortState.swift in Sources */,
 				54646094281A9A4F00B042D1 /* ViewPort+Screen.swift in Sources */,
 				549C680828168288006775A2 /* ViewPort+Data.swift in Sources */,
-				549C68172816E520006775A2 /* ViewPort+Transform.swift in Sources */,
+				549C68172816E520006775A2 /* ViewPort+Modify.swift in Sources */,
 				549C68112816A9B1006775A2 /* ViewPort+Camera.swift in Sources */,
 				549BA235281127E400622F37 /* ViewPortApp.swift in Sources */,
 				549BA25E28112D2300622F37 /* DragGestureState.swift in Sources */,
