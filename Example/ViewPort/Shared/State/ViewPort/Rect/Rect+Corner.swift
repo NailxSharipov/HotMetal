@@ -33,4 +33,24 @@ extension Rect {
             Corner(layout: .bottomRight, point: center + .init(x: dx, y: -dy))
         ]
     }
+    
+    func corner(layout: Corner.Layout) -> Vector2 {
+        let dx = 0.5 * width
+        let dy = 0.5 * height
+
+        let corner: Vector2
+        switch layout {
+        case .topLeft:
+            corner = .init(x: -dx, y: dy)
+        case .topRight:
+            corner = .init(x: dx, y: dy)
+        case .bottomLeft:
+            corner = .init(x: -dx, y: -dy)
+        case .bottomRight:
+            corner = .init(x: dx, y: -dy)
+        }
+
+        return center + corner
+    }
+    
 }

@@ -29,6 +29,14 @@ extension Size {
     init(vector: Vector2) {
         self.init(width: vector.x, height: vector.y)
     }
+    
+    static func +(left: Size, right: Size) -> Size {
+        Size(width: left.width + right.width, height: left.height + right.height)
+    }
+    
+    static func -(left: Size, right: Size) -> Size {
+        Size(width: left.width - right.width, height: left.height - right.height)
+    }
 }
 
 extension CGSize {

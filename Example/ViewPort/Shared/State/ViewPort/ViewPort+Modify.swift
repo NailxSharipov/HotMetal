@@ -36,13 +36,11 @@ extension ViewPort {
     }
 
     mutating func move(corner: Rect.Corner.Layout, translation: CGSize) {
-        let trans = transform.screenToLocal(size: translation)
-        self.cropView = nextLocal.modify(corner: corner, translation: trans)
+        self.cropView = self.translate(corner: corner, screen: translation)
     }
     
     mutating func endMove(corner: Rect.Corner.Layout, translation: CGSize) {
-        let trans = transform.screenToLocal(size: translation)
-        let newRect = nextLocal.modify(corner: corner, translation: trans)
+        let newRect = self.translate(corner: corner, screen: translation)
         
         self.update(newLocal: newRect)
         
@@ -135,6 +133,22 @@ extension ViewPort {
         let height = trans.height + dSize.height.stretch
         
         return rect.translate(size: Size(width: width, height: height))
+    }
+
+    private func translate(corner: Rect.Corner.Layout, screen translation: CGSize) -> Rect {
+        let trans = transform.screenToLocal(size: translation)
+        let newCorner = nextLocal.corner(layout: corner) + trans
+        let worldCorner = transform.localToWorld(point: newCorner)
+        let clip = self.clip(point: worldCorner)
+        guard clip.isOverlap else {
+            return nextLocal.modify(corner: corner, translation: trans)
+        }
+        
+        let dSize = transform.worldToLocal(size: clip.delta)
+        
+        let clipTrans = trans - dSize
+        
+        return nextLocal.modify(corner: corner, translation: clipTrans)
     }
     
 //    private func animate(rect: Rect, translate: Size) {

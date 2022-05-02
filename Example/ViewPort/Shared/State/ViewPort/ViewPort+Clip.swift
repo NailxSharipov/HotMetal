@@ -11,14 +11,14 @@ import simd
 
 extension ViewPort {
 
-    struct Clip {
+    struct RectClip {
         let vector: Vector2
         let delta: Size
         
         let isOverlap: Bool
     }
     
-    func isClip(world: Rect) -> Clip {
+    func isClip(world: Rect) -> RectClip {
         
         var x: Float = 0
         var y: Float = 0
@@ -63,8 +63,47 @@ extension ViewPort {
             isOverlap = true
         }
         
-        return Clip(vector: Vector2(x: x, y: y), delta: Size(width: w, height: h), isOverlap: isOverlap)
+        return RectClip(vector: Vector2(x: x, y: y), delta: Size(width: w, height: h), isOverlap: isOverlap)
     }
+    
+    struct CornerClip {
+        let point: Vector2
+        let delta: Size
+        
+        let isOverlap: Bool
+    }
+    
+    func clip(point: Vector2) -> CornerClip {
+        let dx = 0.5 * imageSize.width
+        let dy = 0.5 * imageSize.height
+        
+        var p = point
+        
+        var isOverlap = false
+        
+        if p.x > dx {
+            p.x = dx
+            isOverlap = true
+        }
+        
+        if p.x < -dx {
+            p.x = -dx
+            isOverlap = true
+        }
+
+        if p.y > dy {
+            p.y = dy
+            isOverlap = true
+        }
+        
+        if p.y < -dy {
+            p.y = -dy
+            isOverlap = true
+        }
+        
+        return .init(point: p, delta: Size(vector: point - p), isOverlap: isOverlap)
+    }
+    
     
 }
 
