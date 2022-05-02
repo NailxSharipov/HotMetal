@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import HotMetal
 
 struct Size: Equatable {
 
@@ -24,6 +25,10 @@ extension Size {
             height: Float(size.height)
         )
     }
+    
+    init(vector: Vector2) {
+        self.init(width: vector.x, height: vector.y)
+    }
 }
 
 extension CGSize {
@@ -33,5 +38,20 @@ extension CGSize {
             width: CGFloat(size.width),
             height: CGFloat(size.height)
         )
+    }
+}
+
+extension Vector2 {
+
+    init(size: Size) {
+        self.init(x: size.width, y: size.height)
+    }
+    
+    static func +(left: Vector2, right: Size) -> Vector2 {
+        left + Vector2(size: right)
+    }
+
+    static func +(left: Size, right: Vector2) -> Vector2 {
+        right + Vector2(size: left)
     }
 }

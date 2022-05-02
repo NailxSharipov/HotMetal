@@ -16,8 +16,8 @@ extension ViewPort {
         
         private let mScreenToLocal: float3x3
         private let mLocalToScreen: float3x3
-        
         private let mLocalToWorld: float3x3
+        private let mWorldToLocal: float3x3
         
         let isEmpty: Bool
     }
@@ -33,6 +33,7 @@ extension ViewPort.CoordSystemTransformer {
         mLocalToScreen = .identity
         
         mLocalToWorld = .identity
+        mWorldToLocal = .identity
         
         isEmpty = true
     }
@@ -44,6 +45,7 @@ extension ViewPort.CoordSystemTransformer {
         mLocalToScreen = Self.localToScreen(viewSize: viewSize)
 
         mLocalToWorld = Self.localToWorld(scale: localToWorldScale, angle: angle)
+        mWorldToLocal = mLocalToWorld.inverse
         
         isEmpty = false
     }
@@ -149,4 +151,10 @@ extension ViewPort.CoordSystemTransformer {
         return Vector2(x: v1.x, y: v1.y)
     }
 
+    // World to ...
+    func worldToLocal(size s: Size) -> Size {
+        let v0 = Vector3(x: s.width, y: s.height, z: 0)
+        let v1 = simd_mul(mWorldToLocal, v0)
+        return Size(width: v1.x, height: v1.y)
+    }
 }

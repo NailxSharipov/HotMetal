@@ -5,6 +5,7 @@
 //  Created by Nail Sharipov on 25.04.2022.
 //
 
+import SwiftUI
 import HotMetal
 import CoreGraphics
 import simd
@@ -52,21 +53,36 @@ extension ViewPort {
     
     func isInside(point: CGPoint) -> Bool {
         let local = transform.screenToLocal(point: point)
-        return cropLocal.isContain(point: local)
+        return nextLocal.isContain(point: local)
     }
 
     mutating func move(translation: CGSize) {
-        let trans = transform.screenToLocal(size: translation)
-        self.cropView = nextLocal.translate(size: trans)
+        self.cropView = self.translate(local: nextLocal, screen: translation)
     }
     
     mutating func endMove(translation: CGSize) {
-        let trans = transform.screenToLocal(size: translation)
-        let newRect = nextLocal.translate(size: trans)
+        var newRect = self.translate(local: nextLocal, screen: translation)
 
+        let world = world(newLocal: newRect)
+        let clip = self.isClip(world: world)
+        guard clip.isOverlap else {
+            self.update(newLocal: newRect)
+            animate()
+            return
+        }
+
+        let dSize = transform.worldToLocal(size: Size(vector: clip.vector))
+
+        newRect.center = newRect.center + dSize
         self.update(newLocal: newRect)
-        
-        self.animate()
+        animate()
+    }
+    
+    // rotate
+    
+    mutating func set(angle: Float) {
+        self.angle = angle
+        transform = CoordSystemTransformer(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
     }
     
     mutating func animate() {
@@ -81,28 +97,52 @@ extension ViewPort {
     }
     
     private mutating func update(newLocal: Rect) {
-        let dx = newLocal.center.x - cropLocal.center.x
-        let dy = newLocal.center.y - cropLocal.center.y
-        
-        let dSize = transform.localToWorld(size: Size(width: dx, height: dy))
-
-        let x = cropWorld.center.x + dSize.width
-        let y = cropWorld.center.y + dSize.height
-        
-        let w = transform.scaleLocalToWorld(newLocal.width)
-        let h = transform.scaleLocalToWorld(newLocal.height)
-        
-        nextWorld = Rect(
-            x: x,
-            y: y,
-            width: w,
-            height: h
-        )
-
+        nextWorld = self.world(newLocal: newLocal)
         cropView = newLocal
         nextLocal = newLocal
     }
 
+    private func world(newLocal: Rect) -> Rect {
+        let dCenter = newLocal.center - cropLocal.center
+        
+        let dSize = transform.localToWorld(size: Size(vector: dCenter))
+
+        let center = cropWorld.center + dSize
+        
+        let w = transform.scaleLocalToWorld(newLocal.width)
+        let h = transform.scaleLocalToWorld(newLocal.height)
+        
+        return Rect(
+            x: center.x,
+            y: center.y,
+            width: w,
+            height: h
+        )
+    }
+    
+    private func translate(local rect: Rect, screen translation: CGSize) -> Rect {
+        let trans = transform.screenToLocal(size: translation)
+        let newLocal = rect.translate(size: trans)
+        let newWorld = world(newLocal: newLocal)
+        let clip = self.isClip(world: newWorld)
+        guard clip.isOverlap else {
+            return newLocal
+        }
+        
+        let dSize = transform.worldToLocal(size: Size(vector: clip.vector))
+        
+        let width = trans.width + dSize.width.stretch
+        let height = trans.height + dSize.height.stretch
+        
+        return rect.translate(size: Size(width: width, height: height))
+    }
+    
+//    private func animate(rect: Rect, translate: Size) {
+//        withAnimation(.linear(duration: 1)) {
+//
+//        }
+//    }
+//
 }
 
 
@@ -157,4 +197,14 @@ private extension Rect {
         return Rect(x: x, y: y, width: w, height: h)
     }
     
+}
+
+private extension Float {
+    
+    var stretch: Float {
+        let x = self
+        let a = abs(x)
+        return x * (1 - 0.5 / (0.005 * a + 1))
+    }
+
 }

@@ -47,48 +47,10 @@ extension Rect {
 }
 
 extension Rect {
-    
-    var corners: [Corner] {
-        let dx = 0.5 * width
-        let dy = 0.5 * height
-        
-        return [
-            Corner(layout: .bottomLeft, point: center + .init(x: -dx, y: -dy)),
-            Corner(layout: .topLeft, point: center + .init(x: -dx, y: dy)),
-            Corner(layout: .topRight, point: center + .init(x: dx, y: dy)),
-            Corner(layout: .bottomRight, point: center + .init(x: dx, y: -dy))
-        ]
-    }
 
-//
-//    func rotate(angle: Float) -> Points {
-//        let dx = 0.5 * width
-//        let dy = 0.5 * height
-//
-//        let bottomLeft = Vector2(x: -dx, y: -dy)
-//        let topLeft = Vector2(x: -dx, y:  dy)
-//        let topRight = Vector2(x:  dx, y:  dy)
-//        let bottomRight = Vector2(x:  dx, y: -dy)
-//
-//        let cs = cos(angle)
-//        let sn = sin(angle)
-//
-//        let m = float2x2(
-//            .init(cs, sn),
-//            .init(-sn, cs)
-//        )
-//
-//        return Points(
-//            bottomLeft: simd_mul(m, bottomLeft) + center,
-//            topLeft: simd_mul(m, topLeft) + center,
-//            topRight: simd_mul(m, topRight) + center,
-//            bottomRight: simd_mul(m, bottomRight) + center
-//        )
-//    }
-//
     @inline(__always)
     func translate(size: Size) -> Rect {
-        return Rect(
+        Rect(
             center: .init(x: center.x + size.width, y: center.y + size.height),
             width: width,
             height: height

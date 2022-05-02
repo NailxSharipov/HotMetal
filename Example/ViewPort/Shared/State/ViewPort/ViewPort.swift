@@ -60,11 +60,6 @@ struct ViewPort {
         transform = CoordSystemTransformer(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
     }
     
-    mutating func set(angle: Float) {
-        self.angle = angle
-        transform = CoordSystemTransformer(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
-    }
-    
     static func calcMaxLocalCrop(viewSize: Size, worldSize: Size, inset: Float) -> Rect {
         let insetViewSize = Size(width: viewSize.width - 2 * inset, height: viewSize.height - 2 * inset)
         

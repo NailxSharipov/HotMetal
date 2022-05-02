@@ -21,5 +21,16 @@ extension Rect {
         let layout: Layout
         let point: Vector2
     }
-    
+
+    var corners: [Corner] {
+        let dx = 0.5 * width
+        let dy = 0.5 * height
+        
+        return [
+            Corner(layout: .bottomLeft, point: center + .init(x: -dx, y: -dy)),
+            Corner(layout: .topLeft, point: center + .init(x: -dx, y: dy)),
+            Corner(layout: .topRight, point: center + .init(x: dx, y: dy)),
+            Corner(layout: .bottomRight, point: center + .init(x: dx, y: -dy))
+        ]
+    }
 }
