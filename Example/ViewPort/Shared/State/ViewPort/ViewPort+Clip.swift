@@ -66,6 +66,62 @@ extension ViewPort {
         return RectClip(vector: Vector2(x: x, y: y), delta: Size(width: w, height: h), isOverlap: isOverlap)
     }
     
+    enum ScaleClip {
+        case noClipping
+        case overlap(Rect)
+    }
+    
+    func scaleClip(world: Rect) -> ScaleClip {
+        let points = world.rotate(angle: angle)
+        
+        let dx = 0.5 * imageSize.width
+        let dy = 0.5 * imageSize.height
+        
+        var ms: Float = 1   // min scale
+        let c = world.center
+        
+        // right
+        if let p = points.max(by: { $0.x < $1.x }), p.x > dx {
+            let d0 = p.x - c.x  // big
+            let d1 = dx - c.x   // small
+            let s = d1 / d0     // < 1
+            ms = min(ms, s)
+        }
+
+        // left
+        if let p = points.min(by: { $0.x < $1.x }), p.x < -dx {
+            let d0 = c.x - p.x  // big
+            let d1 = c.x + dx   // small
+            let s = d1 / d0     // < 1
+            ms = min(ms, s)
+        }
+
+        // top
+        if let p = points.max(by: { $0.y < $1.y }), p.y > dy {
+            let d0 = p.y - c.y  // big
+            let d1 = dy - c.y   // small
+            let s = d1 / d0     // < 1
+            ms = min(ms, s)
+        }
+
+        // bottom
+        if let p = points.min(by: { $0.y < $1.y }), p.y < -dy {
+            let d0 = c.y - p.y   // big
+            let d1 = c.y + dy    // small
+            let s = d1 / d0      // < 1
+            ms = min(ms, s)
+        }
+        
+        guard ms < 1 else {
+            return .noClipping
+        }
+        
+        let width = ms * world.width
+        let height = ms * world.height
+
+        return .overlap(Rect(center: world.center, size: Size(width: width, height: height)))
+    }
+    
     struct CornerClip {
         let point: Vector2
         let delta: Size

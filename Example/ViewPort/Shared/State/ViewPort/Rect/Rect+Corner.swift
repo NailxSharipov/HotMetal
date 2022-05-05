@@ -7,6 +7,8 @@
 
 import HotMetal
 
+private let cornerList: [Rect.Corner.Layout] = [.bottomLeft, .topLeft, .topRight, .bottomRight]
+
 extension Rect {
     
     struct Corner {
@@ -23,15 +25,19 @@ extension Rect {
     }
 
     var corners: [Corner] {
-        let dx = 0.5 * width
-        let dy = 0.5 * height
-        
-        return [
-            Corner(layout: .bottomLeft, point: center + .init(x: -dx, y: -dy)),
-            Corner(layout: .topLeft, point: center + .init(x: -dx, y: dy)),
-            Corner(layout: .topRight, point: center + .init(x: dx, y: dy)),
-            Corner(layout: .bottomRight, point: center + .init(x: dx, y: -dy))
-        ]
+        cornerList.map { Corner(layout: $0, point: self.corner(layout: $0)) }
+    }
+    
+    func clockWise(corner: Corner.Layout) -> Corner.Layout {
+        let n = cornerList.count
+        let index = cornerList.firstIndex(where: { $0 == corner }) ?? 0
+        return cornerList[(index + 1) % n]
+    }
+    
+    func counterClockWise(corner: Corner.Layout) -> Corner.Layout {
+        let n = cornerList.count
+        let index = cornerList.firstIndex(where: { $0 == corner }) ?? 0
+        return cornerList[(index - 1) % n]
     }
     
     func corner(layout: Corner.Layout) -> Vector2 {
@@ -40,12 +46,12 @@ extension Rect {
 
         let corner: Vector2
         switch layout {
+        case .bottomLeft:
+            corner = .init(x: -dx, y: -dy)
         case .topLeft:
             corner = .init(x: -dx, y: dy)
         case .topRight:
             corner = .init(x: dx, y: dy)
-        case .bottomLeft:
-            corner = .init(x: -dx, y: -dy)
         case .bottomRight:
             corner = .init(x: dx, y: -dy)
         }

@@ -21,6 +21,12 @@ struct Rect: Equatable {
     let height: Float
     var center: Vector2
 
+    init(center: Vector2, size: Size) {
+        self.center = center
+        self.width = size.width
+        self.height = size.height
+    }
+    
     init(center: Vector2, width: Float, height: Float) {
         self.center = center
         self.width = width
