@@ -170,13 +170,7 @@ extension ViewPort {
         
         return nextLocal.modify(corner: corner, translation: clipTrans)
     }
-    
-//    private func animate(rect: Rect, translate: Size) {
-//        withAnimation(.linear(duration: 1)) {
-//
-//        }
-//    }
-//
+
 }
 
 
