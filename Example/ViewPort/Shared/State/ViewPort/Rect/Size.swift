@@ -37,6 +37,10 @@ extension Size {
     static func -(left: Size, right: Size) -> Size {
         Size(width: left.width - right.width, height: left.height - right.height)
     }
+    
+    static func *(left: Float, right: Size) -> Size {
+        Size(width: left * right.width, height: left * right.height)
+    }
 }
 
 extension CGSize {

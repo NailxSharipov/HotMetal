@@ -43,6 +43,7 @@ extension ViewPort {
         let newLocal = self.translate(corner: corner, screen: translation)
         
         nextWorld = self.world(newLocal: newLocal)
+        cropWorld = nextWorld
         cropView = newLocal
         nextLocal = newLocal
         
@@ -57,33 +58,13 @@ extension ViewPort {
     }
 
     mutating func move(translation: CGSize) {
-        self.cropView = self.translate(local: nextLocal, screen: translation)
+        nextWorld = self.clipTranslate(screen: translation).stretch
     }
     
     mutating func endMove(translation: CGSize) {
-        var newLocal = self.translate(local: nextLocal, screen: translation)
-
-        let world = world(newLocal: newLocal)
-        let clip = self.isClip(world: world)
-        guard clip.isOverlap else {
-
-            nextWorld = self.world(newLocal: newLocal)
-            cropView = newLocal
-            nextLocal = newLocal
-            
-            animate()
-            return
-        }
-
-        let dSize = transform.worldToLocal(size: Size(vector: clip.vector))
-
-        newLocal.center = newLocal.center + dSize
-        
-        nextWorld = self.world(newLocal: newLocal)
-        cropView = newLocal
-        nextLocal = newLocal
-        
-        animate()
+        nextWorld = self.clipTranslate(screen: translation).fixed
+        cropWorld = nextWorld
+        transform = CoordSystemTransformer(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
     }
     
     // rotate
@@ -94,13 +75,13 @@ extension ViewPort {
         let newWorld = world(newLocal: cropLocal)
         let clip = self.scaleClip(world: newWorld)
         if case let .overlap(rect) = clip {
-            cropWorld = rect
+            nextWorld = rect
         } else {
-            cropWorld = newWorld
+            nextWorld = newWorld
         }
-        nextWorld = cropWorld
+        cropWorld = nextWorld
         
-        let maxCropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: nextWorld.size, inset: inset)
+        let maxCropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: cropWorld.size, inset: inset)
         
         cropLocal = maxCropLocal
         cropView = cropLocal
@@ -110,12 +91,11 @@ extension ViewPort {
     }
     
     mutating func animate() {
-        let maxCropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: nextWorld.size, inset: inset)
+        let maxCropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: cropWorld.size, inset: inset)
         
         self.cropLocal = maxCropLocal
         self.cropView = cropLocal
         self.nextLocal = cropLocal
-        self.cropWorld = nextWorld
         
         transform = .init(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
     }
@@ -127,6 +107,7 @@ extension ViewPort {
 
         let center = cropWorld.center + dSize
         
+        // TODO
         let w = transform.scaleLocalToWorld(newLocal.width)
         let h = transform.scaleLocalToWorld(newLocal.height)
         
@@ -138,21 +119,28 @@ extension ViewPort {
         )
     }
     
-    private func translate(local rect: Rect, screen translation: CGSize) -> Rect {
-        let trans = transform.screenToLocal(size: translation)
-        let newLocal = rect.translate(size: trans)
-        let newWorld = world(newLocal: newLocal)
+    private struct ClipTranslation {
+        let stretch: Rect
+        let fixed: Rect
+    }
+    
+    private func clipTranslate(screen translation: CGSize) -> ClipTranslation {
+        let localTrans = -1 * transform.screenToLocal(size: translation)
+        let worldTrans = transform.localToWorld(size: localTrans)
+        let newWorld = cropWorld.translate(size: worldTrans)
         let clip = self.isClip(world: newWorld)
         guard clip.isOverlap else {
-            return newLocal
+            return ClipTranslation(stretch: newWorld, fixed: newWorld)
         }
         
-        let dSize = transform.worldToLocal(size: Size(vector: clip.vector))
+        let localSize = transform.worldToLocal(size: Size(vector: clip.vector))
+        let worldStretch = worldTrans + transform.localToWorld(size: localSize.stretch)
+        let worldFixed = worldTrans + transform.localToWorld(size: localSize)
         
-        let width = trans.width + dSize.width.stretch
-        let height = trans.height + dSize.height.stretch
+        let stretch = cropWorld.translate(size: worldStretch)
+        let fixed = cropWorld.translate(size: worldFixed)
         
-        return rect.translate(size: Size(width: width, height: height))
+        return ClipTranslation(stretch: stretch, fixed: fixed)
     }
 
     private func translate(corner: Rect.Corner.Layout, screen translation: CGSize) -> Rect {
@@ -233,6 +221,13 @@ private extension Float {
         let x = self
         let a = abs(x)
         return x * (1 - 0.5 / (0.005 * a + 1))
+    }
+}
+
+private extension Size {
+    
+    var stretch: Size {
+        Size(width: width.stretch, height: height.stretch)
     }
 
 }

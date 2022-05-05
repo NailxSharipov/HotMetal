@@ -57,7 +57,7 @@ extension Rect {
     @inline(__always)
     func translate(size: Size) -> Rect {
         Rect(
-            center: .init(x: center.x + size.width, y: center.y + size.height),
+            center: center + size,
             width: width,
             height: height
         )

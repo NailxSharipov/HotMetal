@@ -10,8 +10,8 @@ import HotMetal
 import CoreGraphics
 
 struct ViewPortCamera {
-    
-    var camera = Camera.empty
+
+    private (set) var camera = Camera.empty
 
     private var worldView: Rect = .zero
     private var angle: Float = 0
