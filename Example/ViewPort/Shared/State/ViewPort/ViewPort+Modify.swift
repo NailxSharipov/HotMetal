@@ -10,7 +10,8 @@ import HotMetal
 import CoreGraphics
 import simd
 
-let minSize = Size(width: 64, height: 64)
+let minLocalSize = Size(width: 64, height: 64)
+let minWorldSize = Size(width: 128, height: 128)
 
 extension ViewPort {
     
@@ -128,7 +129,7 @@ extension ViewPort {
         let localTrans = -1 * transform.screenToLocal(size: translation)
         let worldTrans = transform.localToWorld(size: localTrans)
         let newWorld = cropWorld.translate(size: worldTrans)
-        let clip = self.isClip(world: newWorld)
+        let clip = self.rectClip(world: newWorld)
         guard clip.isOverlap else {
             return ClipTranslation(stretch: newWorld, fixed: newWorld)
         }
@@ -144,19 +145,57 @@ extension ViewPort {
     }
 
     private func translate(corner: Rect.Corner.Layout, screen translation: CGSize) -> Rect {
+        var rect = nextLocal
+        
+        let fixed = rect.corner(layout: rect.opossite(layout: corner))
+        let fixedWorld = transform.localToWorld(point: fixed.point) + cropWorld.center
+        
         let trans = transform.screenToLocal(size: translation)
-        let newCorner = nextLocal.corner(layout: corner) + trans
-        let worldCorner = transform.localToWorld(point: newCorner) + cropWorld.center
-        let clip = self.clip(point: worldCorner)
-        guard clip.isOverlap else {
-            return nextLocal.modify(corner: corner, translation: trans)
+        var float = rect.cornerPoint(layout: corner) + trans
+        let floatWorld = transform.localToWorld(point: float) + cropWorld.center
+
+        // clip float corner
+        
+        let clip = self.clip(point: floatWorld)
+        if clip.isOverlap {
+            float = transform.worldToLocal(point: clip.point - cropWorld.center)
         }
         
-        let dSize = transform.worldToLocal(size: clip.delta)
+        rect = Rect(fixed: fixed.point, float: float)
         
-        let clipTrans = trans - dSize
+        let cw = rect.corner(layout: rect.clockWise(layout: corner))
+        let cwWorld = transform.localToWorld(point: cw.point) + cropWorld.center
         
-        return nextLocal.modify(corner: corner, translation: clipTrans)
+        var ccw = rect.corner(layout: rect.counterClockWise(layout: corner))
+        
+        let cwClip = self.clip(fixed: fixedWorld, float: cwWorld)
+        
+        if cwClip.isOverlap {
+            let local = transform.worldToLocal(point: cwClip.point - cropWorld.center)
+            rect = Rect(fixed: fixed, float: .init(layout: cw.layout, point: local), other: ccw)
+            ccw = rect.corner(layout: rect.counterClockWise(layout: corner))
+        }
+        
+        let ccwWorld = transform.localToWorld(point: ccw.point) + cropWorld.center
+        let ccwClip = self.clip(fixed: fixedWorld, float: ccwWorld)
+
+        if ccwClip.isOverlap {
+            let local = transform.worldToLocal(point: ccwClip.point - cropWorld.center)
+            rect = Rect(fixed: fixed, float: .init(layout: ccw.layout, point: local), other: cw)
+        }
+
+        // clip size
+        let worldSize = transform.localToWorld(size: rect.size)
+        if worldSize.width < minWorldSize.width || worldSize.height < minWorldSize.height {
+            let width = max(worldSize.width, minWorldSize.width)
+            let height = max(worldSize.height, minWorldSize.height)
+
+            let localSize = transform.worldToLocal(size: Size(width: width, height: height))
+
+            rect = Rect(corner: rect.corner(layout: fixed.layout), size: localSize)
+        }
+
+        return rect
     }
 
 }
@@ -173,8 +212,8 @@ private extension Rect {
 
         switch corner {
         case .topLeft:
-            w = max(width - translation.width, minSize.width)
-            h = max(height + translation.height, minSize.height)
+            w = max(width - translation.width, minLocalSize.width)
+            h = max(height + translation.height, minLocalSize.height)
 
             let x0 = center.x + 0.5 * width
             let y0 = center.y - 0.5 * height
@@ -182,8 +221,8 @@ private extension Rect {
             x = x0 - 0.5 * w
             y = y0 + 0.5 * h
         case .topRight:
-            w = max(width + translation.width, minSize.width)
-            h = max(height + translation.height, minSize.height)
+            w = max(width + translation.width, minLocalSize.width)
+            h = max(height + translation.height, minLocalSize.height)
             
             let x0 = center.x - 0.5 * width
             let y0 = center.y - 0.5 * height
@@ -191,8 +230,8 @@ private extension Rect {
             x = x0 + 0.5 * w
             y = y0 + 0.5 * h
         case .bottomLeft:
-            w = max(width - translation.width, minSize.width)
-            h = max(height - translation.height, minSize.height)
+            w = max(width - translation.width, minLocalSize.width)
+            h = max(height - translation.height, minLocalSize.height)
 
             let x0 = center.x + 0.5 * width
             let y0 = center.y + 0.5 * height
@@ -200,8 +239,8 @@ private extension Rect {
             x = x0 - 0.5 * w
             y = y0 - 0.5 * h
         case .bottomRight:
-            w = max(width + translation.width, minSize.width)
-            h = max(height - translation.height, minSize.height)
+            w = max(width + translation.width, minLocalSize.width)
+            h = max(height - translation.height, minLocalSize.height)
 
             let x0 = center.x - 0.5 * width
             let y0 = center.y + 0.5 * height
@@ -212,6 +251,60 @@ private extension Rect {
         
         return Rect(x: x, y: y, width: w, height: h)
     }
+    
+    init(fixed: Vector2, float: Vector2) {
+        let delta = fixed - float
+        let size = Size(width: abs(delta.x), height: abs(delta.y))
+        let center = 0.5 * (fixed + float)
+        
+        self.init(center: center, size: size)
+    }
+    
+    init(corner: Corner, size: Size) {
+        let x: Float
+        let y: Float
+        let dx = 0.5 * size.width
+        let dy = 0.5 * size.height
+        
+        
+        switch corner.layout {
+        case .topLeft:
+            x = corner.point.x + dx
+            y = corner.point.y - dy
+        case .topRight:
+            x = corner.point.x - dx
+            y = corner.point.y - dy
+        case .bottomLeft:
+            x = corner.point.x + dx
+            y = corner.point.y + dy
+        case .bottomRight:
+            x = corner.point.x - dx
+            y = corner.point.y + dy
+        }
+        
+        self.init(x: x, y: y, width: size.width, height: size.height)
+    }
+    
+    init(fixed a: Corner, float b: Corner, other c: Corner) {
+        let side = [a.layout, b.layout]
+        
+        let width: Float
+        let height: Float
+        
+        if side.contains(.bottomLeft) && side.contains(.bottomRight) ||
+            side.contains(.topLeft) && side.contains(.topRight) {
+            width = abs(a.point.x - b.point.x)
+            height = abs(a.point.y - c.point.y)
+        } else {
+            width = abs(a.point.x - c.point.x)
+            height = abs(a.point.y - b.point.y)
+        }
+        
+        let center = 0.5 * (b.point + c.point)
+        
+        self.init(center: center, width: width, height: height)
+    }
+    
     
 }
 

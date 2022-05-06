@@ -25,22 +25,28 @@ extension Rect {
     }
 
     var corners: [Corner] {
-        cornerList.map { Corner(layout: $0, point: self.corner(layout: $0)) }
+        cornerList.map { Corner(layout: $0, point: self.cornerPoint(layout: $0)) }
+    }
+
+    func opossite(layout: Corner.Layout) -> Corner.Layout {
+        let n = cornerList.count
+        let index = cornerList.firstIndex(where: { $0 == layout }) ?? 0
+        return cornerList[(index + 2) % n]
     }
     
-    func clockWise(corner: Corner.Layout) -> Corner.Layout {
+    func clockWise(layout: Corner.Layout) -> Corner.Layout {
         let n = cornerList.count
-        let index = cornerList.firstIndex(where: { $0 == corner }) ?? 0
+        let index = cornerList.firstIndex(where: { $0 == layout }) ?? 0
         return cornerList[(index + 1) % n]
     }
-    
-    func counterClockWise(corner: Corner.Layout) -> Corner.Layout {
+
+    func counterClockWise(layout: Corner.Layout) -> Corner.Layout {
         let n = cornerList.count
-        let index = cornerList.firstIndex(where: { $0 == corner }) ?? 0
-        return cornerList[(index - 1) % n]
+        let index = cornerList.firstIndex(where: { $0 == layout }) ?? 0
+        return cornerList[(index + 3) % n]
     }
     
-    func corner(layout: Corner.Layout) -> Vector2 {
+    func cornerPoint(layout: Corner.Layout) -> Vector2 {
         let dx = 0.5 * width
         let dy = 0.5 * height
 
@@ -57,6 +63,10 @@ extension Rect {
         }
 
         return center + corner
+    }
+    
+    func corner(layout: Corner.Layout) -> Corner {
+        Corner(layout: layout, point: self.cornerPoint(layout: layout))
     }
     
 }

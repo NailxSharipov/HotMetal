@@ -25,7 +25,6 @@ struct ContentView: View {
                 HotMetalView(render: viewModel.render)
                     .gesture(DragGesture()
                     .onChanged { data in
-                        print(data.translation.width)
                         viewModel.onDrag(translation: data.translation)
                     }
                     .onEnded { data in

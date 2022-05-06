@@ -19,12 +19,24 @@ public extension Vector2 {
         self.init(x: Float(p.x), y: Float(p.y))
     }
 
+    @inlinable
+    var sqrMagnitude: Float {
+        x * x + y * y
+    }
+
+    @inlinable
+    var normalized: Vector2 {
+        let k = 1 / sqrMagnitude.squareRoot()
+        return Vector2(x: k * x, y: k * y)
+    }
+    
+    @inlinable
     func sqrDistance(_ v: Vector2) -> Float {
         let dx = x - v.x
         let dy = y - v.y
         return dx * dx + dy * dy
     }
-    
+
 }
 
 @inlinable

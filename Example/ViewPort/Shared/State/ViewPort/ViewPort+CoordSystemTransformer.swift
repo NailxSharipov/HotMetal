@@ -157,4 +157,10 @@ extension ViewPort.CoordSystemTransformer {
         let v1 = simd_mul(mWorldToLocal, v0)
         return Size(width: v1.x, height: v1.y)
     }
+    
+    func worldToLocal(point p: Vector2) -> Vector2 {
+        let v0 = Vector3(x: p.x, y: p.y, z: 1)
+        let v1 = simd_mul(mWorldToLocal, v0)
+        return Vector2(x: v1.x, y: v1.y)
+    }
 }

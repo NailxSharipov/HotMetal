@@ -14,7 +14,6 @@ extension ContentView {
         
         @Published var anchor: XYCamera.Anchor = .center {
             didSet {
-                print(anchor)
                 scene?.update(anchor: anchor)
             }
         }
