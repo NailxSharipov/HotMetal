@@ -38,7 +38,7 @@ struct ViewPort {
             return
         }
 
-        cropWorld = Rect(center: .zero, size: 0.9 * imageSize)
+        cropWorld = Rect(center: .zero, size: imageSize)
         nextWorld = cropWorld
 
         cropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: nextWorld.size, inset: inset)

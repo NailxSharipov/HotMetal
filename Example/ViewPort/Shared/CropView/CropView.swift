@@ -121,7 +121,7 @@ struct CropView: View {
                 .stroke(lineWidth: camera.lineWidth)
                 .foregroundColor(camera.color)
             }
-        }.onAppear() {
+        }.onAppear {
             viewModel.onAppear(viewPortState: viewPortState)
         }
     }

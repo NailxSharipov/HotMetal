@@ -27,7 +27,7 @@ public extension Matrix3 {
     
     @inlinable
     static func translate(x: Float, y: Float) -> Matrix3 {
-        return Matrix3(columns:(
+        Matrix3(columns:(
             Vector3( 1,  0,  x),
             Vector3( 0,  1,  y),
             Vector3( 0,  0,  1)
@@ -36,7 +36,7 @@ public extension Matrix3 {
     
     @inlinable
     static func scale(sx: Float, sy: Float) -> Matrix3 {
-        return Matrix3(columns:(
+        Matrix3(columns:(
             Vector3(sx,  0,   0),
             Vector3( 0,  sy,  0),
             Vector3( 0,   0,  1)

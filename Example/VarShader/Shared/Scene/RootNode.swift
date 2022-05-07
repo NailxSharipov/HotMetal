@@ -41,7 +41,7 @@ final class RootNode: Node {
         let mesh = Mesh(vertexBuffer: vertexBuffer, indexBuffer: indexBuffer, count: indices.count)
         
         guard
-            let piplineState = Material.texture(
+            let pipelineState = Material.texture(
                 render: render,
                 blendMode: .opaque,
                 vertex: .local("vertexVarColor"),
@@ -49,7 +49,7 @@ final class RootNode: Node {
             ),
             let texture = render.textureLibrary.loadTexture(image: image)
         else { return nil }
-        let material = render.materialLibrary.register(state: piplineState)
+        let material = render.materialLibrary.register(state: pipelineState)
 //        material.cullMode = .back
         
         material.textures.append(texture)

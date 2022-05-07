@@ -59,7 +59,7 @@ extension ContentView.ViewModel {
 
 private extension CGSize {
     
-    func normolize(render: Render) -> CGSize {
+    func normalize(render: Render) -> CGSize {
         let s = render.scale
         return CGSize(
             width: s * width,

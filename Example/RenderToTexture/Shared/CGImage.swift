@@ -42,6 +42,6 @@ extension CGImage {
         }
         
         FileManager.default.createFile(atPath: filePath, contents: data, attributes: nil)
-        debugPrint("cerate png: \(filePath)")
+        debugPrint("create png: \(filePath)")
     }
 }

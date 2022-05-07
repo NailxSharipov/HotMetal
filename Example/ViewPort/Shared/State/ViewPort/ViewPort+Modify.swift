@@ -165,23 +165,17 @@ extension ViewPort {
         
         let cw = rect.corner(layout: rect.clockWise(layout: corner))
         let cwWorld = transform.localToWorld(point: cw.point) + cropWorld.center
-        
-        var ccw = rect.corner(layout: rect.counterClockWise(layout: corner))
+
+        let ccw = rect.corner(layout: rect.counterClockWise(layout: corner))
+        let ccwWorld = transform.localToWorld(point: ccw.point) + cropWorld.center
         
         let cwClip = self.clip(fixed: fixedWorld, float: cwWorld)
-        
-        if cwClip.isOverlap {
-            let local = transform.worldToLocal(point: cwClip.point - cropWorld.center)
-            rect = Rect(fixed: fixed, float: .init(layout: cw.layout, point: local), other: ccw)
-            ccw = rect.corner(layout: rect.counterClockWise(layout: corner))
-        }
-        
-        let ccwWorld = transform.localToWorld(point: ccw.point) + cropWorld.center
         let ccwClip = self.clip(fixed: fixedWorld, float: ccwWorld)
-
-        if ccwClip.isOverlap {
-            let local = transform.worldToLocal(point: ccwClip.point - cropWorld.center)
-            rect = Rect(fixed: fixed, float: .init(layout: ccw.layout, point: local), other: cw)
+        
+        if cwClip.isOverlap || ccwClip.isOverlap {
+            let a = transform.worldToLocal(point: cwClip.point - cropWorld.center)
+            let b = transform.worldToLocal(point: ccwClip.point - cropWorld.center)
+            rect = Rect(fixed: fixed.point, a: a, b: b)
         }
 
         // clip size
@@ -195,7 +189,7 @@ extension ViewPort {
             rect = Rect(corner: rect.corner(layout: fixed.layout), size: localSize)
         }
 
-        return rect
+        return rect.rounded
     }
 
 }
@@ -285,27 +279,31 @@ private extension Rect {
         self.init(x: x, y: y, width: size.width, height: size.height)
     }
     
-    init(fixed a: Corner, float b: Corner, other c: Corner) {
-        let side = [a.layout, b.layout]
-        
+    init(fixed c: Vector2, a: Vector2, b: Vector2) {
         let width: Float
         let height: Float
         
-        if side.contains(.bottomLeft) && side.contains(.bottomRight) ||
-            side.contains(.topLeft) && side.contains(.topRight) {
-            width = abs(a.point.x - b.point.x)
-            height = abs(a.point.y - c.point.y)
+        if abs(c.x - a.x) > abs(c.y - a.y) {
+            width = abs(c.x - a.x)
+            height = abs(c.y - b.y)
         } else {
-            width = abs(a.point.x - c.point.x)
-            height = abs(a.point.y - b.point.y)
+            width = abs(c.x - b.x)
+            height = abs(c.y - a.y)
         }
         
-        let center = 0.5 * (b.point + c.point)
+        let center = 0.5 * (a + b)
         
         self.init(center: center, width: width, height: height)
     }
     
-    
+    var rounded: Rect {
+        let x = center.x.rounded
+        let y = center.y.rounded
+        let width = width.rounded
+        let height = height.rounded
+        
+        return Rect(x: x, y: y, width: width, height: height)
+    }
 }
 
 private extension Float {
@@ -314,6 +312,10 @@ private extension Float {
         let x = self
         let a = abs(x)
         return x * (1 - 0.5 / (0.005 * a + 1))
+    }
+    
+    var rounded: Float {
+        0.5 * (self * 2).rounded(.toNearestOrAwayFromZero)
     }
 }
 

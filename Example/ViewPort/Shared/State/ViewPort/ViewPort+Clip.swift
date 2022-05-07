@@ -149,12 +149,15 @@ extension ViewPort {
         let xMax = 0.5 * imageSize.width
         let yMax = 0.5 * imageSize.height
         
+        let xMaxE = xMax + 0.01
+        let yMaxE = yMax + 0.01
+        
         let vec = float - fixed
 
         var maxOffset: Float = 0
         var point: Vector2?
         
-        if vec.x > 0 && float.x > xMax {
+        if vec.x > 0 && float.x > xMaxE {
             let n = vec.normalized
             
             let dx = xMax - fixed.x
@@ -163,7 +166,7 @@ extension ViewPort {
             maxOffset = float.x - xMax
             
             point = fixed + Vector2(x: dx, y: dy)
-        } else if vec.x < 0 && float.x < -xMax {
+        } else if vec.x < 0 && float.x < -xMaxE {
             let n = vec.normalized
             
             let dx = -xMax - fixed.x
@@ -174,7 +177,7 @@ extension ViewPort {
             point = fixed + Vector2(x: dx, y: dy)
         }
 
-        if vec.y > 0 && float.y > yMax {
+        if vec.y > 0 && float.y > yMaxE {
             let n = vec.normalized
             
             let dy = yMax - fixed.y
@@ -185,7 +188,7 @@ extension ViewPort {
             if maxOffset < offset {
                 point = fixed + Vector2(x: dx, y: dy)
             }
-        } else if vec.y < 0 && float.y < -yMax {
+        } else if vec.y < 0 && float.y < -yMaxE {
             let n = vec.normalized
             
             let dy = -yMax - fixed.y

@@ -43,13 +43,13 @@ final class RootNode: Node {
 
         let mesh = Mesh(vertexBuffer: vertexBuffer, indexBuffer: indexBuffer, count: indices.count)
         
-        guard let piplineState = Material.texture(
+        guard let pipelineState = Material.texture(
             render: render,
             blendMode: .opaque,
             vertex: .local("vertexDepthFilter"),
             fragment: .local("fragmentDepthFilter")
         ) else { return nil }
-        let material = render.materialLibrary.register(state: piplineState)
+        let material = render.materialLibrary.register(state: pipelineState)
 
         material.textures.append(resource.textures[0])
         material.textures.append(resource.textures[1])
