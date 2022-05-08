@@ -93,7 +93,7 @@ extension ViewPortState {
     }
     
     func animate() {
-        self.viewPort.animate()
+//        self.viewPort.animate()
         self.objectWillChange.send()
     }
  

@@ -11,11 +11,22 @@ import simd
 
 struct ViewPort {
     
+    enum ModeState {
+        case corner
+        case body
+        case idle
+    }
+    
     let imageSize: Size
     
     private (set) var viewSize: Size      // full view size
     
     var cropWorld: Rect = .zero           // crop rectangle in world coord system
+    {
+        didSet {
+            nextWorld = cropWorld
+        }
+    }
     var nextWorld: Rect = .zero           // crop rectangle at next step (after animation) in world coord system
     var cropLocal: Rect = .zero           // crop rectangle in view coord system
     var nextLocal: Rect = .zero           // crop rectangle at next step (after animation) in view coord system
@@ -28,6 +39,8 @@ struct ViewPort {
     private (set) var inset: Float
     var transform = CoordSystemTransformer()
     var angle: Float = 0
+    
+    var modeState: ModeState = .idle
     
     init(imageSize iSize: CGSize, viewSize vSize: CGSize, inset: Float = 64) {
         imageSize = Size(size: iSize)

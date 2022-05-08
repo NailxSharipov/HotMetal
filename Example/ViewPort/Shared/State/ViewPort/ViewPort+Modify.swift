@@ -23,9 +23,11 @@ extension ViewPort {
     // move Corner
     
     func isCorner(point: CGPoint, sqrRadius: CGFloat) -> Rect.Corner.Layout? {
+        guard modeState == .idle else { return nil }
+
         let p = transform.screenToLocal(point: point)
         
-        let distanceList = cropLocal.corners.map({ Distance(sqrDist: $0.point.sqrDistance(p), corner: $0.layout) })
+        let distanceList = nextLocal.corners.map({ Distance(sqrDist: $0.point.sqrDistance(p), corner: $0.layout) })
         
         guard let nearest = distanceList.sorted(by: { $0.sqrDist < $1.sqrDist }).first else { return nil }
 
@@ -37,50 +39,55 @@ extension ViewPort {
     }
 
     mutating func move(corner: Rect.Corner.Layout, translation: CGSize) {
+        modeState = .corner
         self.cropView = self.translate(corner: corner, screen: translation)
     }
     
     mutating func endMove(corner: Rect.Corner.Layout, translation: CGSize) {
         let newLocal = self.translate(corner: corner, screen: translation)
-        
-        nextWorld = self.world(newLocal: newLocal)
-        cropWorld = nextWorld
         cropView = newLocal
         nextLocal = newLocal
+        nextWorld = self.world(newLocal: newLocal)
+
+        // TODO
+        // после таймера закончить
         
-        self.animate()
+        // обновить cropLocal
+        modeState = .idle
     }
     
     // move Body
     
     func isInside(point: CGPoint) -> Bool {
+        guard modeState == .idle else { return false }
         let local = transform.screenToLocal(point: point)
         return nextLocal.isContain(point: local)
     }
 
     mutating func move(translation: CGSize) {
-        nextWorld = self.clipTranslate(screen: translation).stretch
+        modeState = .body
+        cropWorld = self.clipTranslate(screen: translation).stretch
     }
     
     mutating func endMove(translation: CGSize) {
-        nextWorld = self.clipTranslate(screen: translation).fixed
-        cropWorld = nextWorld
+        cropWorld = self.clipTranslate(screen: translation).fixed
         transform = CoordSystemTransformer(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
+        modeState = .idle
     }
     
     // rotate
     
     mutating func set(angle: Float) {
+        guard modeState == .idle else { return }
         self.angle = angle
 
         let newWorld = world(newLocal: cropLocal)
         let clip = self.scaleClip(world: newWorld)
         if case let .overlap(rect) = clip {
-            nextWorld = rect
+            cropWorld = rect
         } else {
-            nextWorld = newWorld
+            cropWorld = newWorld
         }
-        cropWorld = nextWorld
         
         let maxCropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: cropWorld.size, inset: inset)
         
@@ -91,24 +98,19 @@ extension ViewPort {
         transform = CoordSystemTransformer(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
     }
     
-    mutating func animate() {
-        let maxCropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: cropWorld.size, inset: inset)
-        
-        self.cropLocal = maxCropLocal
-        self.cropView = cropLocal
-        self.nextLocal = cropLocal
-        
-        transform = .init(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
-    }
+//    mutating func animate() {
+//        let maxCropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: cropWorld.size, inset: inset)
+//
+//        self.cropLocal = maxCropLocal
+//        self.cropView = cropLocal
+//        self.nextLocal = cropLocal
+//
+//        transform = .init(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
+//    }
 
     private func world(newLocal: Rect) -> Rect {
-        let dCenter = newLocal.center - nextLocal.center
-        
-        let dSize = transform.localToWorld(size: Size(vector: dCenter))
+        let center = transform.localToWorld(point: newLocal.center)
 
-        let center = cropWorld.center + dSize
-        
-        // TODO
         let w = transform.scaleLocalToWorld(newLocal.width)
         let h = transform.scaleLocalToWorld(newLocal.height)
         
@@ -128,7 +130,7 @@ extension ViewPort {
     private func clipTranslate(screen translation: CGSize) -> ClipTranslation {
         let localTrans = -1 * transform.screenToLocal(size: translation)
         let worldTrans = transform.localToWorld(size: localTrans)
-        let newWorld = cropWorld.translate(size: worldTrans)
+        let newWorld = nextWorld.translate(size: worldTrans)
         let clip = self.rectClip(world: newWorld)
         guard clip.isOverlap else {
             return ClipTranslation(stretch: newWorld, fixed: newWorld)
@@ -138,8 +140,8 @@ extension ViewPort {
         let worldStretch = worldTrans + transform.localToWorld(size: localSize.stretch)
         let worldFixed = worldTrans + transform.localToWorld(size: localSize)
         
-        let stretch = cropWorld.translate(size: worldStretch)
-        let fixed = cropWorld.translate(size: worldFixed)
+        let stretch = nextWorld.translate(size: worldStretch)
+        let fixed = nextWorld.translate(size: worldFixed)
         
         return ClipTranslation(stretch: stretch, fixed: fixed)
     }
@@ -148,34 +150,34 @@ extension ViewPort {
         var rect = nextLocal
         
         let fixed = rect.corner(layout: rect.opossite(layout: corner))
-        let fixedWorld = transform.localToWorld(point: fixed.point) + cropWorld.center
+        let fixedWorld = transform.localToWorld(point: fixed.point)
         
         let trans = transform.screenToLocal(size: translation)
         var float = rect.cornerPoint(layout: corner) + trans
-        let floatWorld = transform.localToWorld(point: float) + cropWorld.center
+        let floatWorld = transform.localToWorld(point: float)
 
         // clip float corner
         
         let clip = self.clip(point: floatWorld)
         if clip.isOverlap {
-            float = transform.worldToLocal(point: clip.point - cropWorld.center)
+            float = transform.worldToLocal(point: clip.point)
         }
         
-        rect = Rect(fixed: fixed.point, float: float)
+        rect = Rect(a: fixed.point, b: float)
         
         let cw = rect.corner(layout: rect.clockWise(layout: corner))
-        let cwWorld = transform.localToWorld(point: cw.point) + cropWorld.center
+        let cwWorld = transform.localToWorld(point: cw.point)
 
         let ccw = rect.corner(layout: rect.counterClockWise(layout: corner))
-        let ccwWorld = transform.localToWorld(point: ccw.point) + cropWorld.center
+        let ccwWorld = transform.localToWorld(point: ccw.point)
         
         let cwClip = self.clip(fixed: fixedWorld, float: cwWorld)
         let ccwClip = self.clip(fixed: fixedWorld, float: ccwWorld)
         
         if cwClip.isOverlap || ccwClip.isOverlap {
-            let a = transform.worldToLocal(point: cwClip.point - cropWorld.center)
-            let b = transform.worldToLocal(point: ccwClip.point - cropWorld.center)
-            rect = Rect(fixed: fixed.point, a: a, b: b)
+            let a = transform.worldToLocal(point: cwClip.point)
+            let b = transform.worldToLocal(point: ccwClip.point)
+            rect = Rect(a: a, b: b)
         }
 
         // clip size
@@ -189,7 +191,7 @@ extension ViewPort {
             rect = Rect(corner: rect.corner(layout: fixed.layout), size: localSize)
         }
 
-        return rect.rounded
+        return rect
     }
 
 }
@@ -246,10 +248,10 @@ private extension Rect {
         return Rect(x: x, y: y, width: w, height: h)
     }
     
-    init(fixed: Vector2, float: Vector2) {
-        let delta = fixed - float
-        let size = Size(width: abs(delta.x), height: abs(delta.y))
-        let center = 0.5 * (fixed + float)
+    init(a: Vector2, b: Vector2) {
+        let ab = a - b
+        let size = Size(width: abs(ab.x), height: abs(ab.y))
+        let center = 0.5 * (a + b)
         
         self.init(center: center, size: size)
     }
@@ -277,23 +279,6 @@ private extension Rect {
         }
         
         self.init(x: x, y: y, width: size.width, height: size.height)
-    }
-    
-    init(fixed c: Vector2, a: Vector2, b: Vector2) {
-        let width: Float
-        let height: Float
-        
-        if abs(c.x - a.x) > abs(c.y - a.y) {
-            width = abs(c.x - a.x)
-            height = abs(c.y - b.y)
-        } else {
-            width = abs(c.x - b.x)
-            height = abs(c.y - a.y)
-        }
-        
-        let center = 0.5 * (a + b)
-        
-        self.init(center: center, width: width, height: height)
     }
     
     var rounded: Rect {

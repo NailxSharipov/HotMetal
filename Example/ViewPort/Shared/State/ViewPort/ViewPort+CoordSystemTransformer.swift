@@ -16,8 +16,8 @@ extension ViewPort {
         
         private let mScreenToLocal: float3x3
         private let mLocalToScreen: float3x3
-        private let mLocalToWorld: float3x3
-        private let mWorldToLocal: float3x3
+        private var mLocalToWorld: float3x3
+        private var mWorldToLocal: float3x3
         
         let isEmpty: Bool
     }
@@ -44,10 +44,16 @@ extension ViewPort.CoordSystemTransformer {
         mScreenToLocal = Self.screenToLocal(viewSize: viewSize)
         mLocalToScreen = Self.localToScreen(viewSize: viewSize)
 
-        mLocalToWorld = Self.localToWorld(scale: localToWorldScale, angle: angle)
+        mLocalToWorld = Self.localToWorld(scale: localToWorldScale, angle: angle, translate: world.center)
         mWorldToLocal = mLocalToWorld.inverse
         
         isEmpty = false
+    }
+    
+    mutating func update(worldPos: Vector2) {
+        mLocalToWorld.columns.2.x = worldPos.x
+        mLocalToWorld.columns.2.y = worldPos.y
+        mWorldToLocal = mLocalToWorld.inverse
     }
     
     private static func screenToLocal(viewSize: Size) -> float3x3 {
@@ -88,7 +94,7 @@ extension ViewPort.CoordSystemTransformer {
         return simd_mul(t, s)
     }
     
-    private static func localToWorld(scale: Float, angle: Float) -> float3x3 {
+    private static func localToWorld(scale: Float, angle: Float, translate t: Vector2) -> float3x3 {
         let sc = scale
         
         let s = float3x3(
@@ -106,7 +112,16 @@ extension ViewPort.CoordSystemTransformer {
             .init( 0,   0,  1)
         )
         
-        return simd_mul(r, s)
+        let t = float3x3(
+            .init(  1,  0,  0),
+            .init(  0,  1,  0),
+            .init( t.x, t.y,  1)
+        )
+        
+        let m0 = simd_mul(t, r)
+        let m1 = simd_mul(m0, s)
+        
+        return m1
     }
 }
 
