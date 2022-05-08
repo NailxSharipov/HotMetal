@@ -14,14 +14,14 @@ extension ViewPort {
     var cropRect: CGRect {
         guard !transform.isEmpty else { return .zero}
         
-        let center = transform.localToScreen(point: cropView.center)
+        let center = transform.localToScreen(point: frameLocal.center)
 
-        let x = center.x - 0.5 * cropView.width
-        let y = center.y - 0.5 * cropView.height
+        let x = center.x - 0.5 * frameLocal.width
+        let y = center.y - 0.5 * frameLocal.height
 
         return CGRect(
             origin: CGPoint(x: CGFloat(x), y: CGFloat(y)),
-            size: CGSize(size: cropView.size)
+            size: CGSize(size: frameLocal.size)
         )
     }
 

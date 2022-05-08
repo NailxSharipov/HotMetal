@@ -21,16 +21,12 @@ struct ViewPort {
     
     private (set) var viewSize: Size      // full view size
     
-    var cropWorld: Rect = .zero           // crop rectangle in world coord system
-    {
-        didSet {
-            nextWorld = cropWorld
-        }
-    }
-    var nextWorld: Rect = .zero           // crop rectangle at next step (after animation) in world coord system
-    var cropLocal: Rect = .zero           // crop rectangle in view coord system
-    var nextLocal: Rect = .zero           // crop rectangle at next step (after animation) in view coord system
-    var cropView: Rect = .zero            // crop rectangle at this moment even while editing in view coord system
+    var viewWorld: Rect = .zero
+    var viewLocal: Rect = .zero
+    
+    var frameLocal: Rect = .zero
+    var frameWorld: Rect = .zero
+
 
     var debugCamera: [CGPoint] = []
     var debugView: [CGPoint] = []
@@ -51,12 +47,11 @@ struct ViewPort {
             return
         }
 
-        cropWorld = Rect(center: .zero, size: imageSize)
-        nextWorld = cropWorld
+        viewWorld = Rect(center: .zero, size: imageSize)
+        frameWorld = viewWorld
 
-        cropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: nextWorld.size, inset: inset)
-        cropView = cropLocal
-        nextLocal = cropLocal
+        viewLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: viewWorld.size, inset: inset)
+        frameLocal = viewLocal
     }
     
     mutating func set(viewSize vSize: CGSize) {
@@ -64,13 +59,10 @@ struct ViewPort {
         
         viewSize = Size(size: vSize)
 
-        let maxCropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: nextWorld.size, inset: inset)
+        viewLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: viewWorld.size, inset: inset)
+        frameLocal = viewLocal
 
-        cropLocal = maxCropLocal
-        cropView = cropLocal
-        nextLocal = cropLocal
-
-        transform = CoordSystemTransformer(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
+        transform = CoordSystemTransformer(viewSize: viewSize, local: viewLocal, world: viewWorld, angle: angle)
     }
     
     static func calcMaxLocalCrop(viewSize: Size, worldSize: Size, inset: Float) -> Rect {

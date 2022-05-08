@@ -8,6 +8,9 @@
 extension ViewPort: Equatable {
 
     static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.viewSize == rhs.viewSize && lhs.cropView == rhs.cropView && lhs.angle == rhs.angle
+        lhs.viewSize == rhs.viewSize &&
+        lhs.frameLocal == rhs.frameLocal &&
+        lhs.frameWorld == rhs.frameWorld &&
+        lhs.angle == rhs.angle
     }
 }

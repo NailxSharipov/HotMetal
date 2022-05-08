@@ -49,6 +49,14 @@ extension Rect {
             height: Float(rect.height)
         )
     }
+    
+    init(a: Vector2, b: Vector2) {
+        let ab = a - b
+        let size = Size(width: abs(ab.x), height: abs(ab.y))
+        let center = 0.5 * (a + b)
+        
+        self.init(center: center, size: size)
+    }
 
 }
 
@@ -68,5 +76,22 @@ extension Rect {
         let isY = abs(center.y - point.y) < 0.5 * height
         
         return isX && isY
+    }
+    
+    var rounded: Rect {
+        let x = center.x.rounded
+        let y = center.y.rounded
+        let width = width.rounded
+        let height = height.rounded
+        
+        return Rect(x: x, y: y, width: width, height: height)
+    }
+}
+
+
+private extension Float {
+   
+    var rounded: Float {
+        0.5 * (self * 2).rounded(.toNearestOrAwayFromZero)
     }
 }

@@ -148,6 +148,20 @@ extension ViewPort.CoordSystemTransformer {
         return Vector2(x: v1.x, y: v1.y)
     }
     
+    func localToWorld(rect: Rect) -> Rect {
+        let center = self.localToWorld(point: rect.center)
+
+        let w = self.scaleLocalToWorld(rect.width)
+        let h = self.scaleLocalToWorld(rect.height)
+        
+        return Rect(
+            x: center.x,
+            y: center.y,
+            width: w,
+            height: h
+        )
+    }
+    
     func scaleLocalToWorld(_ value: Float) -> Float {
         value * localToWorldScale
     }

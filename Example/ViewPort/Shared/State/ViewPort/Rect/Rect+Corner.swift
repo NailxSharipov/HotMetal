@@ -69,4 +69,28 @@ extension Rect {
         Corner(layout: layout, point: self.cornerPoint(layout: layout))
     }
     
+    init(corner: Corner, size: Size) {
+        let x: Float
+        let y: Float
+        let dx = 0.5 * size.width
+        let dy = 0.5 * size.height
+
+        switch corner.layout {
+        case .topLeft:
+            x = corner.point.x + dx
+            y = corner.point.y - dy
+        case .topRight:
+            x = corner.point.x - dx
+            y = corner.point.y - dy
+        case .bottomLeft:
+            x = corner.point.x + dx
+            y = corner.point.y + dy
+        case .bottomRight:
+            x = corner.point.x - dx
+            y = corner.point.y + dy
+        }
+        
+        self.init(x: x, y: y, width: size.width, height: size.height)
+    }
+    
 }
