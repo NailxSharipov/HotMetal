@@ -10,8 +10,9 @@ import HotMetal
 import simd
 
 struct ViewPort {
-    
+
     let imageSize: Size
+    let minSize: Size
     let inset: Float
     private (set) var viewSize: Size
 
@@ -25,19 +26,19 @@ struct ViewPort {
     var angle: Float = 0
     var scale: Float = 1
     
-    init(imageSize iSize: CGSize, viewSize vSize: CGSize, inset: Float = 64) {
+    init(imageSize iSize: CGSize, viewSize vSize: CGSize, inset: Float = 64, minSize: Size = Size(width: 128, height: 128)) {
         imageSize = Size(size: iSize)
         viewSize = Size(size: vSize)
+        frameWorld = Rect(center: .zero, size: imageSize)
         self.inset = inset
+        self.minSize = minSize
     }
     
     mutating func set(viewSize vSize: CGSize) {
-        guard imageSize.height > 0 else { return }
-        
-        frameWorld = Rect(center: .zero, size: imageSize)
-        
-        viewSize = Size(size: vSize)
+        guard frameWorld.height > 0 else { return }
 
+        viewSize = Size(size: vSize)
+        
         self.setMaxSize()
     }
     

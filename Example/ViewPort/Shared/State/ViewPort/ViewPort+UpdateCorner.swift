@@ -9,9 +9,6 @@ import SwiftUI
 import HotMetal
 import CoreGraphics
 
-private let minLocalSize = Size(width: 64, height: 64)
-private let minWorldSize = Size(width: 128, height: 128)
-
 extension ViewPort {
     
     private struct Distance {
@@ -94,9 +91,9 @@ extension ViewPort {
 
         // clip size
         let worldSize = transform.scaleLocalToWorld(rect.size)
-        if worldSize.width < minWorldSize.width || worldSize.height < minWorldSize.height {
-            let width = max(worldSize.width, minWorldSize.width)
-            let height = max(worldSize.height, minWorldSize.height)
+        if worldSize.width < minSize.width || worldSize.height < minSize.height {
+            let width = max(worldSize.width, minSize.width)
+            let height = max(worldSize.height, minSize.height)
 
             let localSize = transform.scaleWorldToLocal(Size(width: width, height: height))
 

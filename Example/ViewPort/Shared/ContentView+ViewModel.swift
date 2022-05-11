@@ -13,6 +13,7 @@ extension ContentView {
     final class ViewModel: ObservableObject {
         
         let dragGestureState = DragGestureState()
+        let magnGestureState = MagnGestureState()
         let viewSizeState = ViewSizeState()
         let viewPortState: ViewPortState
         
@@ -26,7 +27,7 @@ extension ContentView {
         }
 
         init() {
-            viewPortState = ViewPortState(viewSizeState: viewSizeState, dragGestureState: dragGestureState)
+            viewPortState = ViewPortState(viewSizeState: viewSizeState, dragGestureState: dragGestureState, magnGestureState: magnGestureState)
             render = Render()
             render?.onViewReady = { [weak self] render, viewSize in
                 guard
@@ -50,10 +51,7 @@ extension ContentView {
                 self.onUpdate(viewPort: state.viewPort)
             }
         }
-        
-        func animate() {
-            viewPortState.animate()
-        }
+
     }
 }
 
@@ -63,6 +61,7 @@ extension ContentView.ViewModel {
         guard let scene = scene else { return }
 
         scene.vpCamera.update(viewPort: viewPort)
+        render?.redraw()
     }
     
     private func onUpdate() {

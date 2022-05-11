@@ -58,12 +58,12 @@ extension ViewPort {
         return RectClip(vector: Vector2(x: x, y: y), isOverlap: isOverlap)
     }
     
-    enum ScaleClip {
+    enum RotateClip {
         case noClipping
         case overlap(Rect)
     }
     
-    func scaleClip(world: Rect) -> ScaleClip {
+    func rotateClip(world: Rect, angle: Float) -> RotateClip {
         let points = world.rotate(angle: angle)
         
         let xMax = 0.5 * imageSize.width
@@ -75,7 +75,7 @@ extension ViewPort {
         // right
         if let p = points.max(by: { $0.x < $1.x }), p.x > xMax {
             let d0 = p.x - c.x  // big
-            let d1 = xMax - c.x   // small
+            let d1 = xMax - c.x // small
             let s = d1 / d0     // < 1
             ms = min(ms, s)
         }
@@ -206,6 +206,94 @@ extension ViewPort {
         } else {
             return PointClip(point: float, isOverlap: false)
         }
+    }
+    
+    enum ScaleClip {
+        case noClipping
+        case overlap(Rect)
+    }
+    
+    func scaleClip(world: Rect, angle: Float) -> ScaleClip {
+        let points = world.rotate(angle: angle)
+        
+        let xMax = 0.5 * imageSize.width
+        let yMax = 0.5 * imageSize.height
+        let xeMax = xMax + 0.001
+        let yeMax = yMax + 0.001
+        let xeMin = -xeMax
+        let yeMin = -yeMax
+
+        
+        var offset: Vector2 = .zero
+        var isOverlap = false
+        
+        let pxMin = points.min(by: { $0.x < $1.x })?.x ?? 0
+        let pxMax = points.max(by: { $0.x < $1.x })?.x ?? 0
+        let pyMin = points.min(by: { $0.y < $1.y })?.y ?? 0
+        let pyMax = points.max(by: { $0.y < $1.y })?.y ?? 0
+        
+        // right
+        if pxMax > xeMax {
+            let dx = xMax - pxMax
+            offset.x = dx
+            isOverlap = true
+        }
+
+        // left
+        if pxMin < xeMin {
+            let d = -xMax - pxMin
+            offset.x += d
+            isOverlap = true
+        }
+
+        // top
+        if pyMax > yeMax {
+            let dy = yMax - pyMax
+            offset.y = dy
+            isOverlap = true
+        }
+
+        // bottom
+        if pyMin < yeMin {
+            let dy = -yMax - pyMin
+            offset.y += dy
+            isOverlap = true
+        }
+        
+        guard isOverlap  else {
+            return .noClipping
+        }
+        
+        let dWidth = pxMax - pxMin
+        let dHeight = pyMax - pyMin
+        
+        let sx = dWidth / imageSize.width
+        let sy = dHeight / imageSize.height
+        
+        let s = 1 / max(sx, sy)
+
+        let size = Size(width: s * world.width, height: s * world.height)
+        
+        let cx: Float
+        
+        if sx > 1 {
+            cx = 0
+        } else {
+            cx = world.center.x + offset.x
+        }
+
+        let cy: Float
+        
+        if sy > 1 {
+            cy = 0
+        } else {
+            cy = world.center.y + offset.y
+        }
+
+        return .overlap(Rect(
+            center: Vector2(x: cx, y: cy),
+            size: size
+        ))
     }
     
 }

@@ -26,6 +26,14 @@ struct ContentView: View {
                 viewModel.dragGestureState.onEnded(data: data)
             }
         )
+        .gesture(MagnificationGesture()
+            .onChanged { data in
+                viewModel.magnGestureState.onChanged(data: data)
+            }
+            .onEnded { data in
+                viewModel.magnGestureState.onEnded(data: data)
+            }
+        )
     }
     
     private func content(size: CGSize) -> some View {
@@ -36,15 +44,10 @@ struct ContentView: View {
             VStack {
                 HStack {
                     Spacer()
-                    VStack {
-                        Button("Animate") {
-                            viewModel.animate()
-                        }
-                        Slider(
-                            value: $viewModel.angle,
-                            in: -Float.pi...Float.pi
-                        ).frame(width: size.width * 0.5)
-                    }
+                    Slider(
+                        value: $viewModel.angle,
+                        in: -Float.pi...Float.pi
+                    ).frame(width: size.width * 0.5)
                     Spacer()
                 }
                 Spacer()

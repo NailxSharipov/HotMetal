@@ -36,11 +36,6 @@ extension CropView.ViewModel {
     
     private func onUpdateViewPort(state: ViewPortState) {
         self.updateCropView(rect: state.viewPort.cropRect, size: CGSize(size: state.viewPort.viewSize))
-//        self.updateDebug(
-//            world: state.viewPort.debugWorld,
-//            camera: state.viewPort.debugCamera,
-//            view: state.viewPort.debugView
-//        )
         self.objectWillChange.send()
     }
     
@@ -95,7 +90,7 @@ extension CropView.ViewModel {
             bottomArea,
             leftArea,
             rightArea
-        ], color: Color(white: 0, opacity: 0.7))
+        ], color: Color(white: 0, opacity: 0.85))
         
     }
     

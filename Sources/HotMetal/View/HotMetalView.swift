@@ -28,9 +28,9 @@ public struct HotMetalView: UIViewRepresentable {
         return view
     }
     
-    public func updateUIView(_ uiView: MTKView, context: UIViewRepresentableContext<HotMetalView>) {
+    public func updateUIView(_ view: MTKView, context: UIViewRepresentableContext<HotMetalView>) {
         if let render = self.render {
-            render.attach(view: uiView)
+            render.attach(view: view)
         }
     }
 
@@ -54,9 +54,9 @@ public struct HotMetalView: NSViewRepresentable {
         return view
     }
     
-    public func updateNSView(_ nsView: MTKView, context: NSViewRepresentableContext<HotMetalView>) {
+    public func updateNSView(_ view: MTKView, context: NSViewRepresentableContext<HotMetalView>) {
         if let render = self.render {
-            render.attach(view: nsView)
+            render.attach(view: view)
         }
     }
 }

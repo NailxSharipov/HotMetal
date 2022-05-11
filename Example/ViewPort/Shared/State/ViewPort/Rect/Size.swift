@@ -30,6 +30,14 @@ extension Size {
         self.init(width: vector.x, height: vector.y)
     }
     
+    @inline(__always)
+    func scale(_ scale: Float) -> Size {
+        Size(
+            width: width * scale,
+            height: height * scale
+        )
+    }
+    
     static func +(left: Size, right: Size) -> Size {
         Size(width: left.width + right.width, height: left.height + right.height)
     }

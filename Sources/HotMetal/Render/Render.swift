@@ -130,5 +130,11 @@ public final class Render: NSObject {
         descriptor.depthAttachmentPixelFormat = self.depthAttachmentPixelFormat
         return descriptor
     }
+    
+    public func redraw() {
+        guard let view = view else { return }
+        assert(view.enableSetNeedsDisplay)
+        view.setNeedsDisplay(view.bounds)
+    }
 
 }

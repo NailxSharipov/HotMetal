@@ -66,7 +66,6 @@ struct CropView: View {
                 }
                 .fill(background.color)
             }
-
             if let net = viewModel.net {
                 Path { path in
                     for line in net.lines {

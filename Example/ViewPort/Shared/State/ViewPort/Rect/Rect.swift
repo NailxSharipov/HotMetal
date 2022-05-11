@@ -71,6 +71,14 @@ extension Rect {
         )
     }
     
+    @inline(__always)
+    func scale(_ scale: Float) -> Rect {
+        Rect(
+            center: center,
+            size: size.scale(scale)
+        )
+    }
+    
     func isContain(point: Vector2) -> Bool {
         let isX = abs(center.x - point.x) < 0.5 * width
         let isY = abs(center.y - point.y) < 0.5 * height

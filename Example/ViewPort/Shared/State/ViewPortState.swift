@@ -32,17 +32,23 @@ final class ViewPortState: ObservableObject {
     private (set) var viewPort: ViewPort = ViewPort(imageSize: .zero, viewSize: .zero)
     private var sizeStateReceiver = Receiver<ViewSizeState>()
     private var dragStateReceiver = Receiver<DragGestureState>()
+    private var magnGestureReceiver = Receiver<MagnGestureState>()
     private let sqrRadius: CGFloat = 25.magnitudeSquared
     private var activeCorner: Rect.Corner.Layout?
     private var activeBody: Bool = false
+    private var activeScale: Bool = false
 
-    init(viewSizeState: ViewSizeState, dragGestureState: DragGestureState) {
+    init(viewSizeState: ViewSizeState, dragGestureState: DragGestureState, magnGestureState: MagnGestureState) {
         sizeStateReceiver = Receiver(viewSizeState) { [weak self] sizeState in
             self?.update(viewSize: sizeState.viewSize)
         }
         
         dragStateReceiver = Receiver(dragGestureState) { [weak self] dragState in
             self?.drag(state: dragState.state)
+        }
+        
+        magnGestureReceiver = Receiver(magnGestureState) { [weak self] magnState in
+            self?.magn(state: magnState.state)
         }
     }
     
@@ -92,9 +98,32 @@ extension ViewPortState {
         }
     }
     
-    func animate() {
-//        self.viewPort.animate()
-        self.objectWillChange.send()
+    func magn(state: MagnGestureState.State) {
+        switch state {
+        case .blank:
+            break
+        case .start:
+            activeScale = viewPort.isScalePossible
+        case .changed(let data):
+            if activeScale {
+                viewPort.scale(Float(data.magnitude))
+                self.objectWillChange.send()
+            }
+        case .end(let data):
+            if activeScale {
+                guard let result = viewPort.endScale(Float(data.magnitude)) else { return }
+                if result.animate {
+                    withAnimation(.linear(duration: 1)) {
+                        self.viewPort.apply(result)
+                        self.objectWillChange.send()
+                    }
+                } else {
+                    viewPort.apply(result)
+                    objectWillChange.send()
+                }
+            }
+            activeScale = false
+        }
     }
  
     func set(angle: Float) {

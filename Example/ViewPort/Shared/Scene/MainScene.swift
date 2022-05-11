@@ -21,6 +21,8 @@ final class MainScene: Scene {
         guard let node = RootNode(render: render) else { return nil }
         self.node = node
         self.nodes.append(node)
+        render.view?.enableSetNeedsDisplay = true
+        render.view?.isPaused = true
     }
 
     func drawableSizeWillChange(render: Render, size: CGSize, scale: CGFloat) {}

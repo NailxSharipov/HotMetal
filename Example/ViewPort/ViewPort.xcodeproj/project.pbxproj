@@ -19,6 +19,10 @@
 		542119702827FF9900FAC453 /* ViewPort+UpdateBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5421196E2827FF9900FAC453 /* ViewPort+UpdateBody.swift */; };
 		542C8FA5282B6BF90088998E /* ViewPort+Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C8FA4282B6BF90088998E /* ViewPort+Transaction.swift */; };
 		542C8FA6282B6BF90088998E /* ViewPort+Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C8FA4282B6BF90088998E /* ViewPort+Transaction.swift */; };
+		542C8FA8282B7C9E0088998E /* ViewPort+UpdateScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C8FA7282B7C9E0088998E /* ViewPort+UpdateScale.swift */; };
+		542C8FA9282B7C9E0088998E /* ViewPort+UpdateScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C8FA7282B7C9E0088998E /* ViewPort+UpdateScale.swift */; };
+		542C8FAB282B7E120088998E /* MagnGestureState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C8FAA282B7E120088998E /* MagnGestureState.swift */; };
+		542C8FAC282B7E120088998E /* MagnGestureState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C8FAA282B7E120088998E /* MagnGestureState.swift */; };
 		5434FC58281EF72F00320445 /* ViewPort+Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5434FC57281EF72F00320445 /* ViewPort+Clip.swift */; };
 		5434FC59281EF72F00320445 /* ViewPort+Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5434FC57281EF72F00320445 /* ViewPort+Clip.swift */; };
 		5464608A281A70AD00B042D1 /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54646089281A70AD00B042D1 /* Rect.swift */; };
@@ -72,6 +76,8 @@
 		5421196B2827FF3B00FAC453 /* ViewPort+UpdateCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+UpdateCorner.swift"; sourceTree = "<group>"; };
 		5421196E2827FF9900FAC453 /* ViewPort+UpdateBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+UpdateBody.swift"; sourceTree = "<group>"; };
 		542C8FA4282B6BF90088998E /* ViewPort+Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Transaction.swift"; sourceTree = "<group>"; };
+		542C8FA7282B7C9E0088998E /* ViewPort+UpdateScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+UpdateScale.swift"; sourceTree = "<group>"; };
+		542C8FAA282B7E120088998E /* MagnGestureState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnGestureState.swift; sourceTree = "<group>"; };
 		5434FC57281EF72F00320445 /* ViewPort+Clip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewPort+Clip.swift"; sourceTree = "<group>"; };
 		54646089281A70AD00B042D1 /* Rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rect.swift; sourceTree = "<group>"; };
 		5464608F281A73BF00B042D1 /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
@@ -206,6 +212,7 @@
 				549BA25C28112D2300622F37 /* DragGestureState.swift */,
 				549BA25F28112D9E00622F37 /* ViewPortState.swift */,
 				549BA26228112DD700622F37 /* ViewSizeState.swift */,
+				542C8FAA282B7E120088998E /* MagnGestureState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -239,6 +246,7 @@
 				5400BA42281E706B00980108 /* ViewPort+CoordSystemTransformer.swift */,
 				5434FC57281EF72F00320445 /* ViewPort+Clip.swift */,
 				549C68152816E520006775A2 /* ViewPort+UpdateAngle.swift */,
+				542C8FA7282B7C9E0088998E /* ViewPort+UpdateScale.swift */,
 				5421196B2827FF3B00FAC453 /* ViewPort+UpdateCorner.swift */,
 				5421196E2827FF9900FAC453 /* ViewPort+UpdateBody.swift */,
 				542C8FA4282B6BF90088998E /* ViewPort+Transaction.swift */,
@@ -351,8 +359,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				54646090281A73BF00B042D1 /* Size.swift in Sources */,
+				542C8FA8282B7C9E0088998E /* ViewPort+UpdateScale.swift in Sources */,
 				549BA2522811290500622F37 /* ContentView+ViewModel.swift in Sources */,
 				5400BA46281EA06600980108 /* Rect+Corner.swift in Sources */,
+				542C8FAB282B7E120088998E /* MagnGestureState.swift in Sources */,
 				5421196F2827FF9900FAC453 /* ViewPort+UpdateBody.swift in Sources */,
 				549BA26328112DD700622F37 /* ViewSizeState.swift in Sources */,
 				5464608A281A70AD00B042D1 /* Rect.swift in Sources */,
@@ -384,8 +394,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				54646091281A73BF00B042D1 /* Size.swift in Sources */,
+				542C8FA9282B7C9E0088998E /* ViewPort+UpdateScale.swift in Sources */,
 				549BA2532811290500622F37 /* ContentView+ViewModel.swift in Sources */,
 				5400BA47281EA06600980108 /* Rect+Corner.swift in Sources */,
+				542C8FAC282B7E120088998E /* MagnGestureState.swift in Sources */,
 				542119702827FF9900FAC453 /* ViewPort+UpdateBody.swift in Sources */,
 				549BA26428112DD700622F37 /* ViewSizeState.swift in Sources */,
 				5464608B281A70AD00B042D1 /* Rect.swift in Sources */,
