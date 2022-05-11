@@ -24,7 +24,7 @@ extension ContentView {
         
         init() {
             self.render = Render()
-            self.render?.onViewReady = { [weak self] render in
+            self.render?.onViewReady = { [weak self] render, _ in
                 guard
                     let self = self,
                     let scene = CubeScene(render: render)

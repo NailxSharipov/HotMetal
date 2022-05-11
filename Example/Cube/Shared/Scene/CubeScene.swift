@@ -9,7 +9,7 @@ import MetalKit
 import HotMetal
 
 final class CubeScene: Scene {
-    
+
     var nodes = [Node]()
     
     var mainCamera: Camera
@@ -55,7 +55,7 @@ final class CubeScene: Scene {
         debugPrint("Cube pos: \(node.position)")
     }
     
-    func drawableSizeWillChange(render: Render, size: CGSize) {
+    func drawableSizeWillChange(render: Render, size: CGSize, scale: CGFloat) {
         let width = Float(size.width)
         let height = Float(size.height)
         let aspectRatio = width / height

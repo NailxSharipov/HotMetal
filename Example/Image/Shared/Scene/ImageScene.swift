@@ -13,7 +13,7 @@ final class ImageScene: Scene2d {
     private let node: ImageNode
     private var start: Vector3 = .zero
     
-    override init?(render: Render) {
+    init?(render: Render) {
         guard let node = ImageNode(render: render) else { return nil }
         self.node = node
         super.init(render: render)

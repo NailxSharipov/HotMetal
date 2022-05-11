@@ -30,7 +30,7 @@ extension ContentView {
         
         init() {
             self.render = Render()
-            self.render?.onViewReady = { [weak self] render in
+            self.render?.onViewReady = { [weak self] render, _ in
                 guard
                     let self = self,
                     let scene = MainScene(render: render, anchor: self.anchor)
@@ -54,7 +54,7 @@ extension ContentView.ViewModel {
             isDrag = true
             scene.onStartDrag()
         }
-        scene.onDrag(translation: translation.normolize(render: render))
+        scene.onDrag(translation: translation.normalize(render: render))
     }
  
     func onEnd(translation: CGSize) {
@@ -63,7 +63,7 @@ extension ContentView.ViewModel {
             let scene = scene
         else { return }
         
-        scene.onDrag(translation: translation.normolize(render: render))
+        scene.onDrag(translation: translation.normalize(render: render))
         isDrag = false
     }
     

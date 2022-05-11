@@ -28,7 +28,7 @@ final class MainScene: Scene2d {
         }
     }
     
-    override init?(render: Render) {
+    init?(render: Render) {
         guard let node = RootNode(render: render) else { return nil }
         self.node = node
         super.init(render: render)
