@@ -62,7 +62,26 @@ extension ViewPort {
         let newWorld = startFrame.scale(nScale)
         let clip = self.scaleClip(world: newWorld, angle: angle)
         guard case let .overlap(rect) = clip else {
-            return ClipScale(stretch: newWorld, fixed: newWorld, isOverlap: false)
+            if newWorld.width < minSize || newWorld.height < minSize {
+                let nSize: Size
+                if newWorld.width < newWorld.height {
+                    nSize = Size(
+                        width: minSize,
+                        height: minSize * newWorld.height / newWorld.width
+                    )
+                } else {
+                    nSize = Size(
+                        width: minSize * newWorld.width / newWorld.height,
+                        height: minSize
+                    )
+                }
+                
+                let nRect = Rect(center: newWorld.center, size: nSize)
+                
+                return ClipScale(stretch: nRect, fixed: nRect, isOverlap: false)
+            } else {
+                return ClipScale(stretch: newWorld, fixed: newWorld, isOverlap: false)
+            }
         }
         
         let stretch = Rect(center: rect.center, size: newWorld.size.stretch(max: rect.size))

@@ -91,9 +91,9 @@ extension ViewPort {
 
         // clip size
         let worldSize = transform.scaleLocalToWorld(rect.size)
-        if worldSize.width < minSize.width || worldSize.height < minSize.height {
-            let width = max(worldSize.width, minSize.width)
-            let height = max(worldSize.height, minSize.height)
+        if worldSize.width < minSize || worldSize.height < minSize {
+            let width = max(worldSize.width, minSize)
+            let height = max(worldSize.height, minSize)
 
             let localSize = transform.scaleWorldToLocal(Size(width: width, height: height))
 

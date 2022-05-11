@@ -12,7 +12,7 @@ import simd
 struct ViewPort {
 
     let imageSize: Size
-    let minSize: Size
+    let minSize: Float
     let inset: Float
     private (set) var viewSize: Size
 
@@ -26,7 +26,7 @@ struct ViewPort {
     var angle: Float = 0
     var scale: Float = 1
     
-    init(imageSize iSize: CGSize, viewSize vSize: CGSize, inset: Float = 64, minSize: Size = Size(width: 128, height: 128)) {
+    init(imageSize iSize: CGSize, viewSize vSize: CGSize, inset: Float = 64, minSize: Float = 128) {
         imageSize = Size(size: iSize)
         viewSize = Size(size: vSize)
         frameWorld = Rect(center: .zero, size: imageSize)
