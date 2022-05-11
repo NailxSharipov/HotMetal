@@ -9,36 +9,34 @@ import SwiftUI
 import HotMetal
 import CoreGraphics
 
-private var initWorldFrame: Rect = .zero
-private var initWorldView: Rect = .zero
-
 extension ViewPort {
     
     func isInside(point: CGPoint) -> Bool {
-        guard modeState == .idle else { return false }
+        guard activeTransaction == nil else { return false }
         let local = transform.screenToLocal(point: point)
         return frameLocal.isContain(point: local)
     }
 
     mutating func move(translation: CGSize) {
-        if modeState == .idle {
-            modeState = .body
-            initWorldFrame = frameWorld
-            initWorldView = viewWorld
+        if activeTransaction == nil {
+            activeTransaction = Transaction(worldFrame: frameWorld, viewPoint: viewPoint)
         }
-
-        let translation = self.clipTranslate(screen: translation).stretch
-        frameWorld = initWorldFrame.translate(size: translation)
-        viewWorld = initWorldView.translate(size: translation)
+        
+        if let transaction = activeTransaction {
+            let translation = self.clipTranslate(startFrame: transaction.startWorldFrame, screen: translation).stretch
+            frameWorld = transaction.startWorldFrame.translate(size: translation)
+            viewPoint = transaction.startViewPoint + translation
+        }
     }
 
     mutating func endMove(translation: CGSize) {
-        let translation = self.clipTranslate(screen: translation).fixed
-        frameWorld = initWorldFrame.translate(size: translation)
-        viewWorld = initWorldView.translate(size: translation)
+        guard let transaction = activeTransaction else { return }
+        let translation = self.clipTranslate(startFrame: transaction.startWorldFrame, screen: translation).fixed
+        frameWorld = transaction.startWorldFrame.translate(size: translation)
+        viewPoint = transaction.startViewPoint + translation
         
-        transform.update(worldPos: viewWorld.center)
-        modeState = .idle
+        transform.update(worldPos: viewPoint)
+        activeTransaction = nil
     }
     
     private struct ClipTranslation {
@@ -46,10 +44,10 @@ extension ViewPort {
         let fixed: Size
     }
     
-    private func clipTranslate(screen translation: CGSize) -> ClipTranslation {
+    private func clipTranslate(startFrame: Rect, screen translation: CGSize) -> ClipTranslation {
         let localTrans = -1 * transform.screenToLocal(size: translation)
         let worldTrans = transform.localToWorld(size: localTrans)
-        let newWorld = initWorldFrame.translate(size: worldTrans)
+        let newWorld = startFrame.translate(size: worldTrans)
         let clip = self.rectClip(world: newWorld)
         guard clip.isOverlap else {
             return ClipTranslation(stretch: worldTrans, fixed: worldTrans)

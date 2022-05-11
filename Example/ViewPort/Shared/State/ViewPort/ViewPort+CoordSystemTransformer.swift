@@ -38,13 +38,15 @@ extension ViewPort.CoordSystemTransformer {
         isEmpty = true
     }
     
-    init(viewSize: Size, local: Rect, world: Rect, angle: Float) {
-        localToWorldScale = world.width / local.width
+    init(viewSize: Size, scale: Float, angle: Float, translate: Vector2) {
+//        localToWorldScale = world.width / local.width
 
+        localToWorldScale = scale
+        
         mScreenToLocal = Self.screenToLocal(viewSize: viewSize)
         mLocalToScreen = Self.localToScreen(viewSize: viewSize)
 
-        mLocalToWorld = Self.localToWorld(scale: localToWorldScale, angle: angle, translate: world.center)
+        mLocalToWorld = Self.localToWorld(scale: localToWorldScale, angle: angle, translate: translate)
         mWorldToLocal = mLocalToWorld.inverse
         
         isEmpty = false
@@ -162,10 +164,6 @@ extension ViewPort.CoordSystemTransformer {
         )
     }
     
-    func scaleLocalToWorld(_ value: Float) -> Float {
-        value * localToWorldScale
-    }
-    
     // Screen to ...
 
     func screenToLocal(size s: CGSize) -> Size {
@@ -191,5 +189,29 @@ extension ViewPort.CoordSystemTransformer {
         let v0 = Vector3(x: p.x, y: p.y, z: 1)
         let v1 = simd_mul(mWorldToLocal, v0)
         return Vector2(x: v1.x, y: v1.y)
+    }
+    
+    // Scale
+    
+    func scaleLocalToWorld(_ value: Float) -> Float {
+        value * localToWorldScale
+    }
+    
+    func scaleWorldToLocal(_ value: Float) -> Float {
+        value / localToWorldScale
+    }
+
+    func scaleLocalToWorld(_ size: Size) -> Size {
+        Size(
+            width: scaleLocalToWorld(size.width),
+            height: scaleLocalToWorld(size.height)
+        )
+    }
+    
+    func scaleWorldToLocal(_ size: Size) -> Size {
+        Size(
+            width: scaleWorldToLocal(size.width),
+            height: scaleWorldToLocal(size.height)
+        )
     }
 }

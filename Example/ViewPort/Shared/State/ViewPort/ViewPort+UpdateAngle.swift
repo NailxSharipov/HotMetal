@@ -7,16 +7,18 @@
 
 import SwiftUI
 import HotMetal
-import CoreGraphics
 import simd
 
 extension ViewPort {
 
+    var isRotationPossible: Bool {
+        activeTransaction == nil
+    }
     
     // rotate
     
     mutating func set(angle: Float) {
-        guard modeState == .idle else { return }
+        guard activeTransaction == nil else { return }
         self.angle = angle
 
         let newWorld = transform.localToWorld(rect: frameLocal)
@@ -26,15 +28,7 @@ extension ViewPort {
         } else {
             frameWorld = newWorld
         }
-        
-//        transform.update(worldPos: <#T##Vector2#>)
-        
-//        let maxCropLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: frameWorld.size, inset: inset)
-//
-//        cropLocal = maxCropLocal
-//        cropLocal = cropLocal
-//        nextLocal = cropLocal
-//
-//        transform = CoordSystemTransformer(viewSize: viewSize, local: cropLocal, world: cropWorld, angle: angle)
+
+        self.setMaxSize()
     }
 }

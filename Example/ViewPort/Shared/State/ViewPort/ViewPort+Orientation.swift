@@ -5,9 +5,6 @@
 //  Created by Nail Sharipov on 25.04.2022.
 //
 
-import CoreGraphics
-import HotMetal
-
 extension ViewPort {
     
     enum Orientation {

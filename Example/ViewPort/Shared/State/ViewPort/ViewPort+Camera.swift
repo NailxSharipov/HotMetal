@@ -31,7 +31,7 @@ private extension ViewPort {
         let w = transform.localToWorldScale * viewSize.width
         let h = transform.localToWorldScale * viewSize.height
 
-        return Rect(center: viewWorld.center, width: w, height: h)
+        return Rect(center: viewPoint, width: w, height: h)
     }
 }
 

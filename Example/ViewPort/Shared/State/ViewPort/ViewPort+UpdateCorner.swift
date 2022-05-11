@@ -12,8 +12,6 @@ import CoreGraphics
 private let minLocalSize = Size(width: 64, height: 64)
 private let minWorldSize = Size(width: 128, height: 128)
 
-private var initLocalFrame: Rect = .zero
-
 extension ViewPort {
     
     private struct Distance {
@@ -24,7 +22,7 @@ extension ViewPort {
     // move Corner
     
     func isCorner(point: CGPoint, sqrRadius: CGFloat) -> Rect.Corner.Layout? {
-        guard modeState == .idle else { return nil }
+        guard activeTransaction == nil else { return nil }
 
         let p = transform.screenToLocal(point: point)
         
@@ -40,30 +38,28 @@ extension ViewPort {
     }
 
     mutating func move(corner: Rect.Corner.Layout, translation: CGSize) {
-        if modeState == .idle {
-            modeState = .corner
-            initLocalFrame = frameLocal
+        if activeTransaction == nil {
+            activeTransaction = Transaction(localFrame: frameLocal)
         }
-        frameLocal = self.translate(corner: corner, screen: translation)
+        
+        if let transaction = activeTransaction {
+            frameLocal = self.translate(startFrame: transaction.startLocalFrame, corner: corner, screen: translation)
+        }
     }
     
     mutating func endMove(corner: Rect.Corner.Layout, translation: CGSize) {
-        let newLocal = self.translate(corner: corner, screen: translation)
+        guard let transaction = activeTransaction else { return }
+        let newLocal = self.translate(startFrame: transaction.startLocalFrame, corner: corner, screen: translation)
         frameLocal = newLocal
         frameWorld = transform.localToWorld(rect: newLocal)
         
-//        transform.update(worldPos: frameWorld.center)
+        self.setMaxSize() // animate this
 
-        // TODO
-        // после таймера закончить
-//        viewLocal
-//        viewWorld
-
-        modeState = .idle
+        activeTransaction = nil
     }
     
-    private func translate(corner: Rect.Corner.Layout, screen translation: CGSize) -> Rect {
-        var rect = initLocalFrame
+    private func translate(startFrame: Rect, corner: Rect.Corner.Layout, screen translation: CGSize) -> Rect {
+        var rect = startFrame
         
         let fixed = rect.corner(layout: rect.opossite(layout: corner))
         let fixedWorld = transform.localToWorld(point: fixed.point)
@@ -97,12 +93,12 @@ extension ViewPort {
         }
 
         // clip size
-        let worldSize = transform.localToWorld(size: rect.size)
+        let worldSize = transform.scaleLocalToWorld(rect.size)
         if worldSize.width < minWorldSize.width || worldSize.height < minWorldSize.height {
             let width = max(worldSize.width, minWorldSize.width)
             let height = max(worldSize.height, minWorldSize.height)
 
-            let localSize = transform.worldToLocal(size: Size(width: width, height: height))
+            let localSize = transform.scaleWorldToLocal(Size(width: width, height: height))
 
             rect = Rect(corner: rect.corner(layout: fixed.layout), size: localSize)
         }

@@ -11,65 +11,50 @@ import simd
 
 struct ViewPort {
     
-    enum ModeState {
-        case corner
-        case body
-        case idle
-    }
-    
     let imageSize: Size
-    
-    private (set) var viewSize: Size      // full view size
-    
-    var viewWorld: Rect = .zero
-    var viewLocal: Rect = .zero
-    
+    let inset: Float
+    private (set) var viewSize: Size
+
     var frameLocal: Rect = .zero
     var frameWorld: Rect = .zero
 
-
-    var debugCamera: [CGPoint] = []
-    var debugView: [CGPoint] = []
-    var debugWorld: [CGPoint] = []
-
-    private (set) var inset: Float
     var transform = CoordSystemTransformer()
+    var activeTransaction: Transaction?
+
+    var viewPoint: Vector2 = .zero
     var angle: Float = 0
-    
-    var modeState: ModeState = .idle
+    var scale: Float = 1
     
     init(imageSize iSize: CGSize, viewSize vSize: CGSize, inset: Float = 64) {
         imageSize = Size(size: iSize)
         viewSize = Size(size: vSize)
         self.inset = inset
-        
-        guard imageSize.height > 0 else {
-            return
-        }
-
-        viewWorld = Rect(center: .zero, size: imageSize)
-        frameWorld = viewWorld
-
-        viewLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: viewWorld.size, inset: inset)
-        frameLocal = viewLocal
     }
     
     mutating func set(viewSize vSize: CGSize) {
         guard imageSize.height > 0 else { return }
         
+        frameWorld = Rect(center: .zero, size: imageSize)
+        
         viewSize = Size(size: vSize)
 
-        viewLocal = Self.calcMaxLocalCrop(viewSize: viewSize, worldSize: viewWorld.size, inset: inset)
-        frameLocal = viewLocal
-
-        transform = CoordSystemTransformer(viewSize: viewSize, local: viewLocal, world: viewWorld, angle: angle)
+        self.setMaxSize()
     }
     
-    static func calcMaxLocalCrop(viewSize: Size, worldSize: Size, inset: Float) -> Rect {
+    mutating func setMaxSize() {
+        frameLocal = Self.maxFrame(viewSize: viewSize, worldSize: frameWorld.size, inset: inset)
+
+        scale = frameWorld.width / frameLocal.width
+        
+        viewPoint = frameWorld.center
+        
+        transform = CoordSystemTransformer(viewSize: viewSize, scale: scale, angle: angle, translate: viewPoint)
+    }
+
+    static func maxFrame(viewSize: Size, worldSize: Size, inset: Float) -> Rect {
         let insetViewSize = Size(width: viewSize.width - 2 * inset, height: viewSize.height - 2 * inset)
-        
         let orient = Orientation(outerRect: insetViewSize, innerRect: worldSize)
-        
+
         let width: Float
         let height: Float
 
@@ -91,4 +76,5 @@ struct ViewPort {
             height: height
         )
     }
+    
 }
