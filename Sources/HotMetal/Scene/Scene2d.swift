@@ -26,5 +26,7 @@ open class Scene2d: Scene {
     open func drawableSizeWillChange(render: Render, size: CGSize, scale: CGFloat) {
         xyCamera.update(width: Float(size.width), height: Float(size.height))
     }
+    
+    open func encodePrepasses(render: Render, commandBuffer: MTLCommandBuffer) {}
 
 }

@@ -27,7 +27,7 @@ public extension Texture.Library {
     func get(id: UInt) -> Texture? {
         store[id]
     }
-
+    
     func loadTexture(
         image: CGImage,
         samplerDescriptor: MTLSamplerDescriptor = .linear,

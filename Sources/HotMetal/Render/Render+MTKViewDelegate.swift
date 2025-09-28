@@ -54,6 +54,8 @@ extension Render: MTKViewDelegate {
         if let scene = self.scene {
 
             scene.update(time: time)
+
+            scene.encodePrepasses(render: self, commandBuffer: commandBuffer)
             
             guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
                 return

@@ -39,8 +39,8 @@ public final class Render: NSObject {
         return CGSize(width: s * size.width, height: s * size.height)
     }
 
-    var enabledDepthStencilState: MTLDepthStencilState
-    var disabledDepthStencilState: MTLDepthStencilState
+    public let enabledDepthStencilState: MTLDepthStencilState
+    public let disabledDepthStencilState: MTLDepthStencilState
 
     var lastTime: TimeInterval
     let creationTime: TimeInterval
