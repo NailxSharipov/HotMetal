@@ -29,22 +29,21 @@ extension ContentView {
         init() {
             viewPortState = ViewPortState(viewSizeState: viewSizeState, dragGestureState: dragGestureState, magnGestureState: magnGestureState)
             render = Render()
-            render?.onViewReady = { [weak self] render, viewSize in
+            render?.onAttachScene = { [weak self] render, viewSize in
                 guard
                     let self = self,
                     let scene = MainScene(render: render)
-                else { return }
+                else { return nil }
                 self.scene = scene
-                render.attach(scene: scene)
                 
                 let width = scene.node.image?.width ?? 0
                 let height = scene.node.image?.height ?? 0
                 
                 self.viewPortState.set(
                     imageSize: CGSize(width: width, height: height),
-                    viewSize: viewSize,
-                    viewScale: render.scale
+                    viewSize: viewSize
                 )
+                return scene
             }
             receiverViewPort = .init(viewPortState) { [weak self] state in
                 guard let self = self else { return }

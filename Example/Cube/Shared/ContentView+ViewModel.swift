@@ -24,13 +24,11 @@ extension ContentView {
         
         init() {
             self.render = Render()
-            self.render?.onViewReady = { [weak self] render, _ in
-                guard
-                    let self = self,
-                    let scene = CubeScene(render: render)
-                else { return }
+            self.render?.onAttachScene = { [weak self] render, _ in
+                guard let self = self else { return nil }
+                let scene = CubeScene(render: render)
                 self.scene = scene
-                render.attach(scene: scene)
+                return scene
             }
         }
     }

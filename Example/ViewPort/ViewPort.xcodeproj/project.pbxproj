@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -324,6 +324,9 @@
 				Base,
 			);
 			mainGroup = 549BA21E281127E200622F37;
+			packageReferences = (
+				540FC06E2E82E755002D17C5 /* XCLocalSwiftPackageReference "../../../HotMetal" */,
+			);
 			productRefGroup = 549BA22C281127E400622F37 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -690,6 +693,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		540FC06E2E82E755002D17C5 /* XCLocalSwiftPackageReference "../../../HotMetal" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../HotMetal;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		549BA2462811285D00622F37 /* HotMetal */ = {

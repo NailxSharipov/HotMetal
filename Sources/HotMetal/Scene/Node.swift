@@ -30,7 +30,7 @@ open class Node {
     public var material: Material?
     public var nodes: [Node] = []
     
-    public init(mesh: Mesh, material: Material) {
+    public init(mesh: Mesh?, material: Material?) {
         self.mesh = mesh
         self.material = material
     }
@@ -79,4 +79,3 @@ open class Node {
     }
     
 }
-

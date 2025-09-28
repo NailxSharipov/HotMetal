@@ -42,16 +42,14 @@ extension ContentView {
         
         init() {
             self.render = Render()
-            self.render?.onViewReady = { [weak self] render, _ in
-                guard
-                    let self = self,
-                    let scene = MainScene(render: render)
-                else { return }
+            self.render?.onAttachScene = { [weak self] render, _ in
+                guard let self = self else { return nil }
+                let scene = MainScene(render: render)
                 self.scene = scene
-                scene.front = Float(self.front)
-                scene.rear = Float(self.rear)
-                scene.glow = Float(self.glow)
-                render.attach(scene: scene)
+                scene?.front = Float(self.front)
+                scene?.rear = Float(self.rear)
+                scene?.glow = Float(self.glow)
+                return scene
             }
         }
 

@@ -34,5 +34,5 @@ final class MainScene: Scene2d {
         super.init(render: render)
         self.nodes.append(node)
     }
-    
+
 }

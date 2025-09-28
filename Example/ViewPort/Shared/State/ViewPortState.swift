@@ -56,7 +56,7 @@ final class ViewPortState: ObservableObject {
 
 extension ViewPortState {
     
-    func set(imageSize: CGSize, viewSize: CGSize, viewScale: CGFloat) {
+    func set(imageSize: CGSize, viewSize: CGSize) {
         self.viewPort = ViewPort(imageSize: imageSize, viewSize: viewSize)
         self.objectWillChange.send()
     }

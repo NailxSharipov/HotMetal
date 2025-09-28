@@ -9,17 +9,28 @@ import MetalKit
 extension Render: MTKViewDelegate {
 
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        guard view.window != nil else { return }
-        if let onViewReady = self.onViewReady {
-            onViewReady(self, size)
-            self.onViewReady = nil
-        } else {
+        if size.width > 0 && size.height > 0 {
+            pendingDrawableSize = size
+        }
+
+        if let scene = self.scene {
             self.onSizeWillChange?(size)
-            self.scene?.drawableSizeWillChange(render: self, size: size, scale: view.scale)
+            scene.drawableSizeWillChange(render: self, size: size, scale: view.scale)
+        } else {
+            _ = self.attachSceneIfNeeded()
         }
     }
 
     public func draw(in view: MTKView) {
+        let drawableSize = view.drawableSize
+        if drawableSize.width > 0 && drawableSize.height > 0 {
+            pendingDrawableSize = drawableSize
+        }
+
+        guard self.attachSceneIfNeeded() else {
+            return
+        }
+
         guard let descriptor = view.currentRenderPassDescriptor else {
             return
         }

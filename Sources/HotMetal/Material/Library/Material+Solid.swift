@@ -7,7 +7,7 @@
 
 import Metal
 
-extension Material {
+public extension Material {
 
     static func solid(
         render: Render,

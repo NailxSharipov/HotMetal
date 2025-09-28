@@ -18,14 +18,10 @@ extension ContentView {
         
         init() {
             self.render = Render()
-            self.render?.onViewReady = { [weak self] render, _ in
-                guard
-                    let self = self,
-                    let scene = ImageScene(render: render)
-                else { return }
-                
-                self.scene = scene
-                render.attach(scene: scene)
+            self.render?.onAttachScene = { [weak self] render, _ in
+                guard let self = self else { return nil }
+                self.scene = ImageScene(render: render)
+                return self.scene
             }
         }
     }
