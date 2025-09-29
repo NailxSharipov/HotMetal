@@ -16,6 +16,7 @@ open class Scene2d: Scene {
         xyCamera.camera
     }
 
+    @MainActor
     public init?(render: Render, anchor: XYCamera.Anchor = .center) {
         let size = render.screenSize
         let height = Float(size.height)
@@ -23,6 +24,7 @@ open class Scene2d: Scene {
         xyCamera = XYCamera(width: width, height: height, anchor: anchor)
     }
 
+    @MainActor
     open func drawableSizeWillChange(render: Render, size: CGSize, scale: CGFloat) {
         xyCamera.update(width: Float(size.width), height: Float(size.height))
     }

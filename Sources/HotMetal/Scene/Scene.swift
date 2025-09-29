@@ -28,6 +28,7 @@ public extension Scene {
     
     func encodePrepasses(render: Render, commandBuffer: MTLCommandBuffer) {}
 
+    @MainActor
     func draw(context: DrawContext) {
         context.camera = mainCamera
         for node in nodes {

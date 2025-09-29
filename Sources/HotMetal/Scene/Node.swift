@@ -29,12 +29,14 @@ open class Node {
     public var mesh: Mesh?
     public var material: Material?
     public var nodes: [Node] = []
-    
+
+    @MainActor
     public init(mesh: Mesh?, material: Material?) {
         self.mesh = mesh
         self.material = material
     }
     
+    @MainActor
     public init() {
         self.mesh = nil
         self.material = nil
@@ -46,6 +48,7 @@ open class Node {
         }
     }
 
+    @MainActor
     open func draw(context: DrawContext, parentTransform: Matrix4) {
         guard !isHidden else { return }
         
