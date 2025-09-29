@@ -17,6 +17,7 @@ final class RenderToTexturePipline {
     private let rectNode: RectNode
     private let passDescriptor = MTLRenderPassDescriptor()
     private var targetSize: CGSize
+    private var isCleared = false
     
     init?(render: Render, size: CGSize) {
         guard let rectNode = RectNode(render: render) else { return nil }
@@ -26,6 +27,7 @@ final class RenderToTexturePipline {
         self.camera = XYCamera(width: Float(sanitized.width), height: Float(sanitized.height), anchor: .center)
         configurePassDescriptor()
         guard prepareTarget(render: render, size: sanitized) else { return nil }
+        isCleared = false
     }
     
     func resize(render: Render, size: CGSize) {
@@ -35,6 +37,7 @@ final class RenderToTexturePipline {
         camera.update(width: Float(sanitized.width), height: Float(sanitized.height))
         rectNode.update(size: sanitized)
         _ = prepareTarget(render: render, size: sanitized)
+        isCleared = false
     }
     
     func render(render: Render, time: Time, commandBuffer: MTLCommandBuffer) -> Texture? {
@@ -46,9 +49,13 @@ final class RenderToTexturePipline {
             return nil
         }
         attachment.texture = targetTexture
-        attachment.loadAction = .clear
+        if isCleared {
+            attachment.loadAction = .load
+        } else {
+            attachment.loadAction = .clear
+            attachment.clearColor = MTLClearColor(red: 0.05, green: 0.05, blue: 0.08, alpha: 1)
+        }
         attachment.storeAction = .store
-        attachment.clearColor = MTLClearColor(red: 0.05, green: 0.05, blue: 0.08, alpha: 1)
 
         if let depth = depthTexture, let depthAttachment = passDescriptor.depthAttachment {
             depthAttachment.texture = depth
@@ -63,7 +70,7 @@ final class RenderToTexturePipline {
 
         let context = DrawContext(render: render, encoder: encoder)
 
-        // Fill the entire target texture with a solid color
+        rectNode.advance(deltaTime: time.updateTime)
 
         guard let uniformBuffer = render.uniformBuffers.getNext() else {
             encoder.endEncoding()
@@ -87,6 +94,8 @@ final class RenderToTexturePipline {
         commandBuffer.addCompletedHandler { [weak render] _ in
             render?.uniformBuffers.release(buffer: uniformBuffer)
         }
+
+        isCleared = true
 
         return texture
     }
@@ -145,6 +154,7 @@ final class RenderToTexturePipline {
 
         rectNode.update(size: size)
         camera.update(width: Float(size.width), height: Float(size.height))
+        isCleared = false
 
         return texture != nil
     }
