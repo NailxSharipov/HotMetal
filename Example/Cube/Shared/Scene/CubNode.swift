@@ -10,6 +10,7 @@ import HotMetal
 
 final class CubNode: Node {
 
+    @MainActor
     init?(render: Render) {
         guard
             let mesh = Primitive.cube(render: render, size: 1, colors: [

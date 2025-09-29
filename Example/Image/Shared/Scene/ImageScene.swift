@@ -13,6 +13,7 @@ final class ImageScene: Scene2d {
     private let node: ImageNode
     private var start: Vector3 = .zero
     
+    @MainActor
     init?(render: Render) {
         guard let node = ImageNode(render: render) else { return nil }
         self.node = node

@@ -24,6 +24,7 @@ final class SphereScene: Scene {
     private let node: SphereNode
     private var start: Vector3 = .zero
     
+    @MainActor
     init?(render: Render) {
         guard let node = SphereNode(render: render) else { return nil }
         let width = render.view?.bounds.width ?? 1

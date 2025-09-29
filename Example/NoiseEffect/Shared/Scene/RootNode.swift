@@ -13,6 +13,7 @@ final class RootNode: Node {
     public var varData = VarData(size: 200)
     private let image = CGImage.load(name: "TwoSea")
     
+    @MainActor
     init?(render: Render) {
         guard let image = self.image else { return nil }
         let color = Vector4(CGColor(gray: 1, alpha: 1))

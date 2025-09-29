@@ -22,6 +22,7 @@ extension ContentView {
         private var scene: SphereScene?
         private var isDrag: Bool = false
         
+        @MainActor
         init() {
             self.render = Render()
             self.render?.onAttachScene = { [weak self] render, _ in

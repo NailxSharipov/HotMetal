@@ -14,6 +14,7 @@ final class SpriteNode: Node {
     private let name: String
 #endif
     
+    @MainActor
     init?(render: Render, name: String, scale: Float = 1) {
 #if DEBUG
         self.name = name

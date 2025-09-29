@@ -17,7 +17,7 @@ public final class Render: NSObject {
     public let textureLibrary: Texture.Library
     public let commandQueue: MTLCommandQueue
     public let pixelFormat: MTLPixelFormat
-    public let clearColor: MTLClearColor
+    let mainPipline: MainRenderPipline
     public let depthAttachmentPixelFormat: MTLPixelFormat
 
     public private(set) var scene: Scene?
@@ -56,7 +56,7 @@ public final class Render: NSObject {
         onSizeWillChange: ((CGSize) -> Void)? = nil
     ) {
         self.pixelFormat = pixelFormat
-        self.clearColor = clearColor
+        self.mainPipline = MainRenderPipline(clearColor: clearColor)
         self.depthAttachmentPixelFormat = depthAttachmentPixelFormat
         self.onSizeWillChange = onSizeWillChange
 
@@ -122,7 +122,7 @@ public final class Render: NSObject {
         view.colorPixelFormat = self.pixelFormat
         view.depthStencilPixelFormat = self.depthAttachmentPixelFormat
         view.framebufferOnly = true
-        view.clearColor = clearColor
+        view.clearColor = self.mainPipline.clearColor
         view.enableSetNeedsDisplay = false
         view.isPaused = false
 #if os(macOS)

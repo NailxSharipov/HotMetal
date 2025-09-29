@@ -46,7 +46,7 @@ public extension Render {
         
         if let attachment = descriptor.colorAttachments[0] {
             attachment.loadAction = .clear
-            attachment.clearColor = self.clearColor
+            attachment.clearColor = self.mainPipline.clearColor
         }
 
         let context = DrawContext(render: self, encoder: encoder)

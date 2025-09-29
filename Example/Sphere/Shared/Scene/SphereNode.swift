@@ -10,6 +10,7 @@ import HotMetal
 
 final class SphereNode: Node {
 
+    @MainActor
     init?(render: Render) {
         guard
             let mesh = Primitive.tetrahedron(render: render, radius: 1, colors: [

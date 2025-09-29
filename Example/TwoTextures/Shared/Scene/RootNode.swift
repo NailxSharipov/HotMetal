@@ -13,6 +13,7 @@ final class RootNode: Node {
     public var data = Vector3(0, 0, 0)
     private let imageLoader = HeicLoader()
     
+    @MainActor
     init?(render: Render) {
         guard let resource = imageLoader.load(render: render, fileName: "Tiger") else {
             return nil

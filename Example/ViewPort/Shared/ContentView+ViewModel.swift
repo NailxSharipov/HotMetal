@@ -26,6 +26,7 @@ extension ContentView {
             }
         }
 
+        @MainActor
         init() {
             viewPortState = ViewPortState(viewSizeState: viewSizeState, dragGestureState: dragGestureState, magnGestureState: magnGestureState)
             render = Render()

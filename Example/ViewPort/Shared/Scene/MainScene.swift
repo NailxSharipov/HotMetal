@@ -17,6 +17,7 @@ final class MainScene: Scene {
     
     let node: RootNode
     
+    @MainActor
     init?(render: Render) {
         guard let node = RootNode(render: render) else { return nil }
         self.node = node

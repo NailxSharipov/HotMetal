@@ -12,6 +12,7 @@ final class ImageNode: Node {
 
     let image = CGImage.load(name: "TwoSea")
     
+    @MainActor
     init?(render: Render) {
         guard let image = self.image else { return nil }
         

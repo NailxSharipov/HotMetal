@@ -24,6 +24,7 @@ final class MainScene: Scene {
     private var width: Float
     private var height: Float
     
+    @MainActor
     init?(render: Render, anchor: XYCamera.Anchor) {
         guard
             let mainNode = SpriteNode(render: render, name: "CoordSystem"),

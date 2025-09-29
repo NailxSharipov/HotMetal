@@ -16,6 +16,7 @@ extension ContentView {
         private var scene: ImageScene?
         private var isDrag: Bool = false
         
+        @MainActor
         init() {
             self.render = Render()
             self.render?.onAttachScene = { [weak self] render, _ in
