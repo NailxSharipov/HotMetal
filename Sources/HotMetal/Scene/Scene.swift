@@ -13,20 +13,22 @@ public protocol Scene {
     var mainCamera: Camera { get }
     
     func update(time: Time)
-    func encodePrepasses(render: Render, commandBuffer: MTLCommandBuffer)
+    func encodePrepasses(render: Render, time: Time, descriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer)
     func draw(context: DrawContext)
     func drawableSizeWillChange(render: Render, size: CGSize, scale: CGFloat)
 }
 
 public extension Scene {
 
+    @MainActor
     func update(time: Time) {
         for node in nodes {
             node.update(time: time)
         }
     }
     
-    func encodePrepasses(render: Render, commandBuffer: MTLCommandBuffer) {}
+    @MainActor
+    func encodePrepasses(render: Render, time: Time, descriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer) {}
 
     @MainActor
     func draw(context: DrawContext) {

@@ -55,44 +55,9 @@ extension Render: MTKViewDelegate {
 
             scene.update(time: time)
 
-            scene.encodePrepasses(render: self, commandBuffer: commandBuffer)
+            scene.encodePrepasses(render: self, time: time, descriptor: descriptor, commandBuffer: commandBuffer)
             
             self.mainPipline.render(render: self, scene: scene, time: time, descriptor: descriptor, commandBuffer: commandBuffer)
-            
-//            guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
-//                return
-//            }
-//            
-//            let attachment = descriptor.colorAttachments[0]
-//            attachment?.loadAction = .clear
-//            attachment?.clearColor = self.clearColor
-//
-//            let context = DrawContext(render: self, encoder: encoder)
-//            
-//            // The uniform buffers store values that are constant across the entire frame
-//            guard let uniformBuffer = uniformBuffers.getNext() else {
-//                return
-//            }
-//            let uniformContent = uniformBuffer.contents().bindMemory(to: Uniforms.self, capacity: 1)
-//
-//            let viewMatrix = scene.mainCamera.viewMatrix
-//
-//            uniformContent.pointee.time = Float(time.totalTime)
-//            uniformContent.pointee.view = viewMatrix
-//            uniformContent.pointee.inverseView = viewMatrix.inverse
-//            uniformContent.pointee.viewProjection = scene.mainCamera.projectionMatrix * viewMatrix
-//
-//            encoder.setVertexBuffer(uniformBuffer, offset: 0, index: 0)
-//            encoder.setFragmentBuffer(uniformBuffer, offset: 0, index: 0)
-//            
-//            scene.draw(context: context)
-//
-//            encoder.endEncoding()
-            
-//            commandBuffer.addCompletedHandler { [weak self] _ in
-//                guard let self = self else { return }
-//                self.uniformBuffers.release(buffer: uniformBuffer)
-//            }
         }
 
         commandBuffer.present(drawable)

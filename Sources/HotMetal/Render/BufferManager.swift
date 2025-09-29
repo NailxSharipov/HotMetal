@@ -8,7 +8,7 @@
 import Metal
 import Foundation
 
-final class BufferManager {
+public final class BufferManager {
 
     private var buffers: [MTLBuffer] = []
     private let device: MTLDevice
@@ -19,7 +19,7 @@ final class BufferManager {
         self.length = length
     }
     
-    func getNext() -> MTLBuffer? {
+    public func getNext() -> MTLBuffer? {
         assert(Thread.isMainThread)
         guard !buffers.isEmpty else {
             let buffer = device.makeBuffer(length: length, options: [])
@@ -29,7 +29,7 @@ final class BufferManager {
         return buffers.removeLast()
     }
 
-    func release(buffer: MTLBuffer) {
+    public func release(buffer: MTLBuffer) {
         if Thread.isMainThread {
             buffers.append(buffer)
         } else {

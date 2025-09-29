@@ -45,6 +45,6 @@ public extension Matrix3 {
 
 }
 
-func *(left: Matrix3, right: Vector3) -> Vector3 {
+public func *(left: Matrix3, right: Vector3) -> Vector3 {
     matrix_multiply(left, right)
 }

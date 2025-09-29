@@ -44,7 +44,7 @@ public final class Render: NSObject {
 
     var lastTime: TimeInterval
     let creationTime: TimeInterval
-    let uniformBuffers: BufferManager
+    public let uniformBuffers: BufferManager
 
     public var onAttachScene: ((Render, CGSize) -> Scene?)?
     public var onSizeWillChange: ((CGSize) -> Void)?

@@ -7,12 +7,8 @@
 
 import MetalKit
 
-protocol RenderPipline {
-    func render(render: Render, scene: Scene, time: Time, descriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer)
-}
+final class MainRenderPipline {
 
-final class MainRenderPipline: RenderPipline {
-    
     let clearColor: MTLClearColor
     
     init(clearColor: MTLClearColor) {

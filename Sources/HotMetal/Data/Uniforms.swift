@@ -5,11 +5,11 @@
 //  Created by Nail Sharipov on 12.04.2022.
 //
 
-struct Uniforms {
+public struct Uniforms {
     
-    var time: Float
-    var view: Matrix4
-    var inverseView: Matrix4
-    var viewProjection: Matrix4
+    public var time: Float
+    public var view: Matrix4
+    public var inverseView: Matrix4
+    public var viewProjection: Matrix4
     
 }

@@ -15,7 +15,7 @@ public final class DrawContext {
 
     private var currentMaterialId: UInt?
 
-    init(render: Render, encoder: MTLRenderCommandEncoder) {
+    public init(render: Render, encoder: MTLRenderCommandEncoder) {
         self.render = render
         self.encoder = encoder
     }

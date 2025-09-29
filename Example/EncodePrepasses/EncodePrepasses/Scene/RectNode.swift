@@ -1,5 +1,5 @@
 //
-//  MainNode.swift
+//  RectNode.swift
 //  EncodePrepasses
 //
 //  Created by Nail Sharipov on 29.09.2025.
@@ -8,25 +8,21 @@
 import MetalKit
 import HotMetal
 
-final class MainNode: Node {
+final class RectNode: Node {
 
     private struct SolidParams {
         var color: SIMD4<Float>
     }
 
-    private let textureFlow: RenderToTextureFlow
-    private var params = SolidParams(color: SIMD4<Float>(0.2, 0.6, 0.9, 1.0))
+    private var params = SolidParams(color: SIMD4<Float>(0.9, 0.4, 0.2, 1.0))
     
     @MainActor
-    init?(render: Render, size: CGSize = .init(width: 240, height: 180)) {
-        let halfWidth = Float(size.width * 0.5)
-        let halfHeight = Float(size.height * 0.5)
-
+    init?(render: Render) {
         let vertices: [Vertex3] = [
-            .init(x: -halfWidth, y: -halfHeight, z: 0),
-            .init(x: -halfWidth, y:  halfHeight, z: 0),
-            .init(x:  halfWidth, y:  halfHeight, z: 0),
-            .init(x:  halfWidth, y: -halfHeight, z: 0)
+            .init(x: -0.1, y: -0.1, z: 0),
+            .init(x: -0.1, y:  0.1, z: 0),
+            .init(x:  0.1, y:  0.1, z: 0),
+            .init(x:  0.1, y: -0.1, z: 0)
         ]
 
         let indices: [UInt16] = [0, 1, 2, 0, 2, 3]
@@ -58,6 +54,11 @@ final class MainNode: Node {
         super.init(mesh: mesh, material: material)
     }
     
+    func update(size: CGSize) {
+        guard size.width > 0, size.height > 0 else { return }
+        scale = Vector3(Float(size.width), Float(size.height), 1)
+    }
+        
     override func draw(context: DrawContext, parentTransform: Matrix4) {
         var params = self.params
         context.encoder.setFragmentBytes(&params, length: MemoryLayout<SolidParams>.stride, index: 2)
