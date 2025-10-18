@@ -1,6 +1,6 @@
 //
 //  RenderToTexturePipline.swift
-//  EncodePrepasses
+//  EncodePrepassesFixedSizeTexture
 //
 //  Created by Nail Sharipov on 29.09.2025.
 //
@@ -16,25 +16,23 @@ final class RenderToTexturePipline {
     private var camera: XYCamera
     private let rectNode: RectNode
     private let passDescriptor = MTLRenderPassDescriptor()
-    private var targetSize: CGSize
+    private let targetSize: CGSize
     
-    init?(render: Render, size: CGSize) {
+    init?(render: Render, size: CGSize = CGSize(width: 1024, height: 1024)) {
         guard let rectNode = RectNode(render: render) else { return nil }
         self.rectNode = rectNode
-        let sanitized = size.sanitize
-        self.targetSize = sanitized
-        self.camera = XYCamera(width: Float(sanitized.width), height: Float(sanitized.height), anchor: .center)
+        self.targetSize = size
+        self.camera = XYCamera(width: Float(size.width), height: Float(size.height), anchor: .center)
         configurePassDescriptor()
-        guard prepareTarget(render: render, size: sanitized) else { return nil }
+        guard prepareTarget(render: render, size: size) else { return nil }
     }
     
     func resize(render: Render, size: CGSize) {
         let sanitized = size.sanitize
         guard sanitized != targetSize else { return }
-        targetSize = sanitized
         camera.update(width: Float(sanitized.width), height: Float(sanitized.height))
         rectNode.update(size: sanitized)
-        _ = prepareTarget(render: render, size: sanitized)
+//        _ = prepareTarget(render: render, size: sanitized)
     }
     
     func render(render: Render, time: Time, commandBuffer: MTLCommandBuffer) -> Texture? {
@@ -142,8 +140,8 @@ final class RenderToTexturePipline {
             texture = nil
         }
 
-        rectNode.update(size: size)
-        camera.update(width: Float(size.width), height: Float(size.height))
+//        rectNode.update(size: size)
+//        camera.update(width: Float(size.width), height: Float(size.height))
 
         return texture != nil
     }
@@ -154,5 +152,4 @@ private extension CGSize {
     var sanitize: CGSize {
         CGSize(width: max(self.width, 1), height: max(self.height, 1))
     }
-    
 }
